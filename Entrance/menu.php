@@ -24,5 +24,11 @@
 			<?php
 		}
 		?>
+
+		<HR>
+
+		<DIV>
+			<IMG SRC="/icons/apache_pb.png" STYLE="background-color: white; width: 100%">
+		</DIV>
 	</BODY>
 </HTML>
