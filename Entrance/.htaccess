@@ -1,0 +1,25 @@
+RewriteEngine On
+
+#---------------リダイレクト---------------
+#rumi-room.net/etc → etc.rumi-room.net
+RewriteRule ^etc/?(.*)$ https://etc.rumi-room.net/$1 [R=308,L]
+
+#rumi-room.net/Blog → blog.rumi-room.net
+RewriteRule ^Blog/?(.*)$ https://blog.rumi-room.net/$1 [R=308,L]
+
+#rumi-room.net/SINch/prof.html → rumi-room.net/profile.html
+RewriteRule ^SINch/prof.html$ https://rumi-room.net/profile.html [R=308,L]
+
+#rumi-room.net/SINch/policy.html → rumi-room.net/policy.html
+RewriteRule ^SINch/policy.html$ https://rumi-room.net/policy.html [R=308,L]
+
+#rumi-room.net/rumiart/dairi → rumi-room.net/art/shiryou.html
+RewriteRule ^rumiart/dairi https://rumi-room.net/art/shiryou.html [R=308,L]
+
+#rumi-room.net/rumiart → rumi-room.net/art
+RewriteRule ^rumiart https://rumi-room.net/art [R=308,L]
+
+#---------------ルート変更(index.phpへ)---------------
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]

@@ -1,0 +1,5 @@
+RewriteEngine On
+
+#---------------リダイレクト---------------
+#バナー
+RewriteRule ^rumisan_room/BANNR.png https://rumi-room.net/Asset/bannar/v1.png [R=308,L]

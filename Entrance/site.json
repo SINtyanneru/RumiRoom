@@ -1,0 +1,51 @@
+[
+	{
+		"URL": "/",
+		"TITLE": "るみさんのお部屋",
+		"PATH": "top.php",
+		"SHOW_MENU": false
+	},
+	{
+		"URL": "/profile.html",
+		"TITLE": "プロフィール",
+		"PATH": "profile.php",
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "/policy.html",
+		"TITLE": "ポリシー",
+		"PATH": "policy.html",
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "/sns.html",
+		"TITLE": "SNS",
+		"PATH": "sns.php",
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "https://form.rumia.me/contact/?to=RUMI",
+		"TITLE": "連絡",
+		"PATH": null,
+		"SHOW_MENU": true
+	},
+
+	{
+		"URL": "/art",
+		"TITLE": "#るみあーと",
+		"PATH": "/art/index.php",
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "/art/shiryou.html",
+		"TITLE": "代理",
+		"PATH": "/art/shiryou.html",
+		"SHOW_MENU": false
+	},
+	{
+		"URL": "/art/view.php",
+		"TITLE": "閲覧",
+		"PATH": "/art/view.php",
+		"SHOW_MENU": false
+	}
+]
