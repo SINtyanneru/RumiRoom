@@ -1,0 +1,18 @@
+.BLOG_CONTENTS > video{
+	max-width: 100%;
+	max-height: 300px;
+}
+
+.BLOG_CONTENTS > a > img{
+	max-width: 100%;
+	max-height: 300px;
+}
+
+.RMD_CODE_BLOCK{
+	background-color: black;
+	color: white;
+
+	white-space: pre;
+
+	padding: 10px;
+}

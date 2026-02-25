@@ -1,0 +1,23 @@
+.COMMENT_LIST{
+	margin: 10px;
+}
+
+.COMMENT_ITEM{
+	border: solid 1px;
+	border-radius: 5px;
+
+	padding: 5px;
+}
+
+.COMMENT_ITEM > .USER > img{
+	width: 45px;
+	height: 45px;
+
+	vertical-align: middle;
+
+	margin-right: 5px;
+}
+
+.COMMENT_ITEM > .TEXT{
+	margin-left: calc(45px + 5px);
+}
