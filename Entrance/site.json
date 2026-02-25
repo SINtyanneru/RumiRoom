@@ -35,6 +35,18 @@
 		"PATH": null,
 		"SHOW_MENU": true
 	},
+	{
+		"URL": "https://blog.rumi-room.net/",
+		"TITLE": "ブログ",
+		"PATH": null,
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "https://dev.rumi-room.net/",
+		"TITLE": "ラボ",
+		"PATH": null,
+		"SHOW_MENU": true
+	},
 
 	{
 		"URL": "/art",
