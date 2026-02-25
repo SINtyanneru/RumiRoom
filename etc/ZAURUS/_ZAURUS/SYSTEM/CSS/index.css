@@ -1,0 +1,14 @@
+.INDEX_HOME{
+	position: relative;
+
+	display: grid;
+	grid-template-columns: repeat(auto-fill, 50px);
+	gap: 11px;
+	grid-auto-rows: minmax(10px, auto);
+
+	justify-content: left;
+}
+
+.NAME{
+	text-align: center;
+}

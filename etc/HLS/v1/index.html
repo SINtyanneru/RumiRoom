@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>HLS</TITLE>
+
+		<META CHARSET="UTF-8">
+
+		<STYLE>
+			.VIDEO_PLAYER{
+				width: 800px;
+				height: 500px;
+
+				overflow: hidden;
+
+				border: solid 1px;
+			}
+
+			.VIDEO_PLAYER > .VIEW_PORT{
+				background-color: black;
+
+				width: 800px;
+				height: 450px;
+			}
+
+			.VIDEO_PLAYER > .VIEW_PORT > *{
+				position: absolute;
+
+				width: 800px;
+				height: 450px;
+			}
+
+			.VIDEO_PLAYER > .CONTROLE{
+				position: absolute;
+				top: calc(500px - 25px);
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<DIV CLASS="VIDEO_PLAYER">
+			<DIV CLASS="VIEW_PORT">
+				<VIDEO ID="VIDEO"></VIDEO>
+				<CANVAS ID="ZHIMAKU"></CANVAS>
+			</DIV>
+			<DIV CLASS="CONTROLE">
+				<BUTTON onclick="VIDEO_EL.play();">再生</BUTTON>
+				<INPUT TYPE="range" MIN="0" MAX="149" ID="SEEKBAR" STYLE="width: 500px;">
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>
+<SCRIPT SRC="./RHL.js"></SCRIPT>
+<SCRIPT>
+	let VIDEO_EL = document.getElementById("VIDEO");
+	let SEEKBAR_EL = document.getElementById("SEEKBAR");
+
+	let ID = "VP9";
+
+	const VIDEO_LIST = [
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_000.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_001.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_002.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_003.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_004.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_005.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_006.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_007.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_008.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_009.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_010.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_011.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_012.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_013.webm"
+		},
+		{
+			URI:"./VIDEO/" + ID + "/MOJ_JE_TATA_014.webm"
+		}
+	];
+
+	window.addEventListener("load", async (E)=>{
+		VIDEO_EL.volume = 0.2;
+
+		let RHL_OBJ = new RHL(VIDEO_EL, SEEKBAR_EL);
+
+		RHL_OBJ.SET_RHL(VIDEO_LIST);
+
+		await RHL_OBJ.INIT();
+
+		RHL_OBJ.PLAY();
+	});
+</SCRIPT>

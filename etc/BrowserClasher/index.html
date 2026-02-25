@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>ブラウザクラッシャー</TITLE>
+
+		<STYLE>
+			button{
+				display: block;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<H1 STYLE="color: red;">ブラウザが落ちる(かもしれない)ので別プロセスで起動しましょう。</H1>
+		様々なブラウザが落ちる(もしくはタブが落ちる)方法をまとめてみました。<BR>
+
+		<DIV STYLE="margin-top: 20px;">
+			<BUTTON onclick="uithread_block();">UIスレッドのブロッキング</BUTTON>
+			<BUTTON onclick="bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom(); bom();">Image爆弾</BUTTON>
+		</DIV>
+	</BODY>
+
+	<SCRIPT>
+		function uithread_block() {
+			while(true) {
+				//?
+			}
+		}
+
+		async function bom() {
+			let list = [];
+			let canvas = document.createElement("CANVAS");
+			const ctx = canvas.getContext("2d");
+
+			setInterval(() => {
+				let img = ctx.createImageData(1980, 1080);
+				let d = img.data;
+				for (let i = 0; i < d.length; i++) {
+					d[i + 0] = Math.floor(Math.random() * 256);
+					d[i + 1] = Math.floor(Math.random() * 256);
+					d[i + 2] = Math.floor(Math.random() * 256);
+					d[i + 3] = 255;
+				}
+
+				ctx.putImageData(img, 0, 0);
+				const url = canvas.toDataURL("image/png");
+				let im = new Image();
+				im.src = url
+				list.push(im);
+			}, 1);
+		}
+	</SCRIPT>
+</HTML>

@@ -1,0 +1,41 @@
+@font-face {
+	font-family: 'vfdfont';
+	/* フォント名 */
+	/* フォーマットごとにパスを指定 */
+	src: url('/font/vfd/vfdfont.ttf') format('opentype');
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	background-color: aquamarine;
+}
+
+.vfd {
+	font-family: vfdfont;
+	background-color: black;
+}
+
+vfdtext {
+	color: rgb(0, 192, 255);
+}
+
+#display {
+	display: block;
+	margin: 1em 0;
+	background-color: black;
+}
+
+#open-file {
+	background-color: rgb(212, 212, 212);
+	color: rgb(0, 0, 0);
+	text-align: center;
+	padding: 0.5em 1em;
+	cursor: pointer;
+}
+
+#file-input {
+	display: none;
+}

@@ -1,0 +1,34 @@
+<HTML>
+	<HEAD>
+		<TITLE>コピーライトジェネレーター</TITLE>
+
+		<LINK REL="stylesheet" HREF="./style.css">
+	</HEAD>
+	<BODY>
+		<DIV>
+			<SELECT ID="SIMBOL">
+				<OPTION value="©">©</OPTION>
+				<OPTION value="Copyright">Copyright</OPTION>
+			</SELECT>
+			<SELECT ID="Y_MODE">
+				<OPTION value="NW">今の西暦(<?php echo Date("Y"); ?>)</OPTION>
+				<OPTION value="AUTO">自動で西暦を更新する(<?php echo Date("Y"); ?>)</OPTION>
+				<OPTION value="PHP_AUTO">PHPで西暦を更新する(<?php echo Date("Y"); ?>)</OPTION>
+				<OPTION value="Y_NW">特定の西暦 - 今の西暦(1999 - <?php echo Date("Y"); ?>)</OPTION>
+				<OPTION value="Y_AUTO">特定の西暦 - 自動で西暦を更新する(1999 - <?php echo Date("Y"); ?>)</OPTION>
+				<OPTION value="Y_PHP_AUTO">特定の西暦 - PHPで西暦を更新する(1999 - <?php echo Date("Y"); ?>)</OPTION>
+			</SELECT>
+			<INPUT PLACEHOLDER="会社名" ID="CORP_NAME">
+			<LABEL><INPUT TYPE="checkbox" value="TRUE" ID="ARR">All rights reserved</LABEL>
+			<DIV>
+				<BUTTON onclick="START();">START</BUTTON>
+			</DIV>
+		</DIV>
+
+		<DIV ID="CPR_RESULT">
+
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT SRC="./Main.js"></SCRIPT>

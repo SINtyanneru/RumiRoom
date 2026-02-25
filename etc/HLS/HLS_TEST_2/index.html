@@ -1,0 +1,96 @@
+<?php
+session_start();
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
+
+//変数類
+$Login = "N";
+?>
+<?php
+if (isset($_SESSION['UID'])){
+  /**
+  * ==================================ログイン
+  */
+  // データベースに接続するために必要なデータソースを変数に格納
+    // mysql:host=ホスト名;dbname=データベース名;charset=文字エンコード
+    $dsn = 'mysql:host=192.168.0.130;dbname=account;charset=utf8';
+  
+    // データベースのユーザー名
+  $user = 'user';
+  
+    // データベースのパスワード
+  $password = 'sin1234zxntv';
+  
+  // tryにPDOの処理を記述
+  try {
+      
+    // PDOインスタンスを生成
+    $dbh = new PDO($dsn, $user, $password);
+    
+  // エラー（例外）が発生した時の処理を記述
+  } catch (PDOException $e) {
+    
+    // エラーメッセージを表示させる
+    echo 'データベースにアクセスできません！' . $e->getMessage();
+    
+    // 強制終了
+    exit;
+  }
+
+  // SELECT文を変数に格納
+  $sql = "SELECT * FROM `account` ";
+  
+  // SQLステートメントを実行し、結果を変数に格納
+  $stmt_account = $dbh->query($sql);
+  foreach ($stmt_account as $row_account) {
+    if (hash("sha3-512", $row_account['uid']) == $_SESSION['UID']){
+      session_regenerate_id();
+      $Login = "Y";
+    }
+  }
+}
+?>
+
+
+<HTML>
+  <HEAD>
+    <TITLE>HLSのテスト(VIDEOTUBE => RumiVIDEO V2.0)</TITLE>
+    <link rel="stylesheet" href="./style.css" media="screen and (min-width: 600px)">
+  </HEAD>
+  <BODY>
+    <DIV CLASS="HEADER">
+      <IMG src="/Asset/VIDEOTUBE/vt_sm.png" onmouseover="this.src='/Asset/VIDEOTUBE/vt_sm_pika.png'" onmouseout="this.src='/Asset/VIDEOTUBE/vt_sm.png'" width="100" onclick="home()">
+      <HR>
+      <IMG src="/Asset/VIDEOTUBE/Search.svg" onclick="search_window_oc()" width="90"></IMG>
+      <HR>
+      <IMG src="/Asset/VIDEOTUBE/upload.svg" onclick="document.location = ('./Upload')" width="90"></IMG>
+      <HR>
+      <IMG src="/Asset/VIDEOTUBE/status.svg" onclick="status_window_oc()" width="90"></IMG>
+    </DIV>
+    <DIV CLASS="CONTENTS">
+      <IFRAME src="./video_index.php" id="CONTENTS_IFRAME"></IFRAME>
+    </DIV>
+
+    <!--検索ウィンドウ-->
+    <DIV class="SEARCH_WINDOW" id="Search_Window">
+      <BUTTON onclick="search_window_oc()">X</BUTTON>
+      検索<BR>
+      <INPUT type="text" placeholder="検索する内容を入力" id="Search_input">
+      <BUTTON onclick="serach_start()" class="sbmit">検索</BUTTON>
+    </DIV>
+    <DIV class="STATUS" id="STATUS">
+      <BUTTON onclick="status_window_oc()">X</BUTTON>
+      <?php
+        if ($Login == "Y"){
+          echo '
+          <IFRAME src="/rumiserveraccount/online/list.php?UL=all"></IFRAME>
+          ';
+        }else{
+          echo '<IFRAME src="./error/login.html"></IFRAME>';
+        }
+      ?>
+    </DIV>
+    <script src="./Script.js"></script>
+  </BODY>
+</HTML>

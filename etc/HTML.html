@@ -1,0 +1,44 @@
+ 
+<SCRIPT>
+function htmlToAssociativeArray(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+
+  function traverse(element) {
+    const tag = element.tagName;
+    const config = Array.from(element.attributes).reduce((acc, attr) => {
+      acc[attr.name] = attr.value;
+      return acc;
+    }, {});
+    const kids = Array.from(element.children).map(traverse);
+	const text = element.innerText;
+
+    return {
+      TAG: tag,
+      CONFIG: config,
+      KID: kids,
+	  TEXT: text
+    };
+  }
+
+  const result = traverse(doc.documentElement);
+  return [result];
+}
+
+// HTMLファイルの内容
+const html = `
+<html>
+  <head>
+    <title>Sample HTML</title>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>
+    <p>This is a sample HTML file.</p>
+  </body>
+</html>
+`;
+
+const associativeArray = htmlToAssociativeArray(html);
+console.log(associativeArray);
+
+</SCRIPT>

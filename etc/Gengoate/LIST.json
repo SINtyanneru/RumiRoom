@@ -1,0 +1,86 @@
+[
+	{
+		"NAME": "日本語",
+		"LETTER": [
+			"HIRAGANA",
+			"KATAKANA",
+			"KANZHI"
+		],
+		"TENSHA": [
+			"LATIN"
+		],
+		"GOZHUN": "SOV",
+		"TYPE": 0,
+		"KOUYOU": [
+			"JP"
+		],
+		"AUTHOR": null
+	},
+	{
+		"NAME": "エスペラント語",
+		"LETTER": [
+			"LATIN"
+		],
+		"TENSHA": [],
+		"GOZHUN": "SVO",
+		"TYPE": 1,
+		"KOUYOU": [],
+		"AUTHOR": "ZAMENHOH"
+	},
+	{
+		"NAME": "るみ語",
+		"LETTER": [
+			"RUMI",
+			"KILIL"
+		],
+		"TENSHA": [
+			"LATIN"
+		],
+		"GOZHUN": "SOV",
+		"TYPE": 2,
+		"KOUYOU": [],
+		"AUTHOR": "RUMISAN"
+	},
+	{
+		"NAME": "英語",
+		"LETTER": [
+			"LATIN"
+		],
+		"TENSHA": [
+			"SHOO"
+		],
+		"GOZHUN": "SVO",
+		"TYPE": 0,
+		"KOUYOU": [
+			"AMERIKA",
+			"INGLAND"
+		],
+		"AUTHOR": null
+	},
+	{
+		"NAME": "ロシア語",
+		"LETTER": [
+			"KILIL"
+		],
+		"TENSHA": [
+			"LATIN"
+		],
+		"GOZHUN": "SVO",
+		"TYPE": 0,
+		"KOUYOU": [
+			"RASSIJA"
+		],
+		"AUTHOR": null
+	},
+	{
+		"NAME": "エジプト語",
+		"LETTER": [
+			"HIELOGLIH"
+		],
+		"TENSHA": [],
+		"GOZHUN": "VSO",
+		"TYPE": 0,
+		"KOUYOU": [],
+		"AUTHOR": null
+	}
+]

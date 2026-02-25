@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>RSPA</TITLE>
+
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/reset.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/DEFAULT.css">
+		<LINK REL="stylesheet" HREF="https://cdn.rumia.me/CSS/font.css">
+
+		<STYLE>
+			.HEADER > .BUTTON{
+				display: flex;
+			}
+
+			.HEADER > .BUTTON > a{
+				flex: 1;
+			}
+
+			.HEADER > .BUTTON > a > button{
+				width: 100%;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<DIV CLASS="HEADER">
+			<H1>RSPA</H1>
+			<DIV CLASS="BUTTON">
+				<A HREF="/etc/RSPA/"><BUTTON>はじめに</BUTTON></A>
+				<A HREF="./shijourei"><BUTTON>使用例</BUTTON></A>
+				<A HREF="./cukaikata"><BUTTON>使い方</BUTTON></A>
+				<A HREF="./baka"><BUTTON>なんで作った？</BUTTON></A>
+			</DIV>
+			<HR>
+		</DIV>
+		<DIV CLASS="CONTENTS" ID="CONTENTS">
+
+		</DIV>
+	</BODY>
+</HTML>
+<SCRIPT SRC="https://cdn.rumia.me/LIB/RSPA.js?V=1.0"></SCRIPT>
+<SCRIPT>
+	let rspa = new RSPA();
+	let EL = {
+		CONTENTS: document.getElementById("CONTENTS")
+	};
+
+	//設定、内容はコード見ろ
+	rspa.SETTING({
+		BASE_URL: "/etc/RSPA",
+		CONTENTS_EL: EL.CONTENTS
+	});
+
+	//ページロード完了
+	window.addEventListener("load", (E) => {
+		//之を実行すれば、pagechangeイベントも発火する
+		rspa.LOAD_OK();
+	});
+
+	//ページ移動したというイベント
+	rspa.addEventListener("pagechange", (E) => {
+		//ページ設定もエンポ設定もないならページがない
+		if (!E.PAGE_EXISTS && !E.ENDPOINT_EXISTS) {
+			EL.CONTENTS.innerHTML = `
+				${E.PATH}は無いです！404
+			`;
+		}
+	});
+
+	//ここでページを設定している
+	rspa.SET_PAGE("/", `
+		るみさんの自作SPAライブラリ
+	`);
+
+	rspa.SET_PAGE("/shijourei", `
+		私の作品でSPAな物はすべて、、、<BR>
+		無論、るみ鯖も
+	`);
+
+	rspa.SET_PAGE("/cukaikata", `
+		クライアント側でインポートするだけ、<BR>
+		後はこのページのコードを見て考えて
+	`);
+
+	rspa.SET_PAGE("/baka", `
+		React、Svelte、Vue、<BR>
+		Svleteは違うが、どれも重い。<BR>
+		そしてJS必須なのが気に入らないので作った<BR>
+		軽い代わりに、基本的に自分で実装しろ方式です。。。<BR>
+		しかし、自分で0からHTML書くのが楽しいから之でいい、違うならプログラマーやめてしまえ<BR>
+	`);
+</SCRIPT>

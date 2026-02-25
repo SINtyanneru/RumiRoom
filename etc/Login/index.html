@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>Auth関係</TITLE>
+	</HEAD>
+	<BODY>
+		「MiAuthは扱った事あるし、るみ鯖にAuthも自作したけど、他のサービスのも試すか」ということで作りました。<BR>
+		(サーバーにはトークンは保存してません)<BR>
+		<BR>
+
+		<BUTTON onclick="misskey();">Misskey</BUTTON>
+	</BODY>
+	<SCRIPT SRC="https://cdn.rumia.me/LIB/DIALOG.js?V=LATEST"></SCRIPT>
+	<SCRIPT defer>
+		const dialog = new DIALOG_SYSTEM();
+
+		async function misskey() {
+			const q = await dialog.INPUT("インスタンスのホスト名は？", {TYPE:"TEXT", NAME:"例：eth.rumiserver.com"})
+			if (q == null) return;
+			const host = q;
+			const session = crypto.randomUUID().toString();
+
+			const url = `https://${host}/miauth/${session}/?name=${encodeURIComponent("るみさんの実験場")}&callback=${encodeURIComponent(`https://rumi-room.net/etc/Login/auth.php?TYPE=MISSKEY&HOST=${encodeURIComponent(host)}`)}&permission=read%3Aaccount%2Cwrite%3Anotes`;
+			window.location.href = url;
+		}
+	</SCRIPT>
+</HTML>

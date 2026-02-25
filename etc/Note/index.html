@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>ノート</TITLE>
+
+		<STYLE>
+			.CANVAS{
+				width: 400px;
+				height: 271px;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<TEXTAREA ID="TEXT" PLACEHOLDER="本文"></TEXTAREA>
+		<HR>
+		<CANVAS ID="CANVAS" CLASS="CANVAS"></CANVAS>
+	</BODY>
+</HTML>
+<SCRIPT>
+	let CANVAS_EL = document.getElementById("CANVAS");
+	let CTX = CANVAS_EL.getContext("2d");
+
+	const TWEET_SIZE = {
+		X:20,
+		Y:20,
+		W:400,
+		H:271,
+		R:6
+	}
+
+	window.addEventListener("load", (E)=>{
+		CANVAS_EL.width = TWEET_SIZE.W + 40;
+		CANVAS_EL.height = TWEET_SIZE.H + 40;
+
+		DRAW();
+	});
+
+	function DRAW(){
+		CTX.beginPath();
+
+		//影
+		CTX.shadowColor = "black";
+		CTX.shadowBlur = 1;
+
+		//色
+		CTX.fillStyle = "white";
+
+		//枠
+		drawRoundRect(TWEET_SIZE.X, TWEET_SIZE.Y, TWEET_SIZE.W, TWEET_SIZE.H, TWEET_SIZE.R);
+
+		DRAW_TEXT();
+	}
+
+	function drawRoundRect(X, Y, W, H, R) {
+		CTX.beginPath();
+
+		CTX.moveTo(X + R, Y);
+
+		CTX.arcTo(X + W, Y, X + W, Y + H, R);
+		CTX.arcTo(X + W, Y + H, X, Y + H, R);
+		CTX.arcTo(X, Y + H, X, Y, R);
+		CTX.arcTo(X, Y, X + W, Y, R);
+
+		CTX.closePath();
+
+		CTX.fill();
+	}
+
+	function DRAW_TEXT(){
+		//色
+		CTX.fillStyle = "black";
+
+		CTX.font = "48px serif";
+		CTX.fillText("Hello world", 20, 80);
+	}
+</SCRIPT>

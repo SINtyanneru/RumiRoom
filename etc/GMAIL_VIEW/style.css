@@ -1,0 +1,138 @@
+body{
+	margin: 0px;
+
+	background-color: rgb(246, 248, 252);
+}
+
+.SIDE_MENU{
+	width: 256px;
+	height: 100vh;
+
+
+}
+
+
+.SIDE_MENU > button{
+	width: 100%;
+	height: 32px;
+
+	text-align: left;
+
+	background-color: transparent;
+
+	border: none;
+	border-radius: 0px 20px 20px 0px;
+}
+
+.SIDE_MENU > button:hover{
+	background-color: rgb(206, 208, 212);
+}
+
+.SIDE_MENU > button > img{
+	width: 20px;
+	height: 20px;
+}
+
+.CREATE_BTN{
+	width: 120px;
+	height: 56px;
+
+	border-radius: 10px 10px 10px 10px;
+	border: none;
+
+	background-color: rgb(194, 231, 255);
+
+	margin-left: 10px;
+}
+
+.CREATE_BTN:hover{
+	box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),0 4px 8px 3px rgba(60,64,67,0.149);
+}
+
+.CREATE_BTN > img{
+	width: 50px;
+	height: 50px;
+}
+
+.TOP_MENU{
+	position: absolute;
+	top: 0px;
+	left: 256px;
+
+	width: calc(100vw - 256px);
+	height: 64px;
+}
+
+.TOP_MENU > input{
+	width: 722px;
+	height: 46px;
+}
+
+.CONTENTS{
+	position: absolute;
+	top: 64px;
+	left: 256px;
+
+	background-color: white;
+
+	border-radius: 10px 10px 10px 10px;
+
+	width: calc(100vw - 260px);
+	height: calc(100vh - 64px);
+}
+
+.EDITER{
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+
+	width: 581px;
+	height: 597px;
+
+	background-color: rgb(255, 255, 255);
+
+	box-shadow: 0 1px 3px 0 rgba(60,64,67,0.302),0 4px 8px 3px rgba(60,64,67,0.149);
+
+	text-align: center;
+}
+
+.EDITER > .TITLE_BAR{
+	background-color: rgb(246, 248, 252);
+}
+
+.EDITER > .INPUT_{
+	width: 100%;
+	height: 36px;
+}
+
+.EDITER > .INPUT_ > input{
+	width: 90%;
+	height: 100%;
+}
+
+.EDITER > .EDIT_TEXT{
+	width: 549px;
+	height: 460px;
+
+	resize: none;
+}
+
+.EDITER > .EDIT_BTN{
+	text-align: left;
+
+	width: 100%;
+}
+
+.MAIL_TITLE{
+	width: 100%;
+	font-size: 1.375rem;
+
+	margin-left: 100px;
+}
+
+.MAIL_TEXT{
+	width: 100%;
+	height: 90%;
+
+	border: none;
+}

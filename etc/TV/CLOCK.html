@@ -1,0 +1,38 @@
+<HTML>
+	<HEAD>
+		<TITLE>テレビの時計</TITLE>
+	</HEAD>
+	<BODY style="background-color: rgb(0, 255, 0);">
+		<R class="CLOCK" id="CLOCK" style="font-size: 100px;"></R><R class="CLOCK_SEC" id="CLOCK_SEC"  style="font-size: 80px;"></R>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+	var CLOCK = document.getElementById("CLOCK");
+	var CLOCK_SEC = document.getElementById("CLOCK_SEC");
+	setInterval(() => {
+		var DATE = new Date();
+		CLOCK.innerHTML = DATE.getHours() + ":" + DATE.getMinutes() + ".";
+		CLOCK_SEC.innerHTML = " " + DATE.getSeconds();
+	}, 100);
+</SCRIPT>
+
+<STYLE>
+@font-face {
+	font-family: 'sv_seg';
+	/* フォント名 */
+	/* フォーマットごとにパスを指定 */
+	src: url('./DSEG7ModernMini-Regular.ttf') format('truetype');
+}
+
+.CLOCK{
+	font-family: sv_seg;
+
+	color: white;
+}
+
+.CLOCK_SEC{
+	font-family: sv_seg;
+	color: white;
+}
+</STYLE>

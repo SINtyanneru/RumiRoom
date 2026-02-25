@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>すきゅーもふゐずむ</TITLE>
+
+		<STYLE>
+			.skeuomorphic-button {
+				/* サイズと形状 */
+				width: 200px;
+				height: 80px;
+				border-radius: 12px;
+						
+				/* グラデーションの背景 */
+				background: linear-gradient(145deg, #e0e0e0, #bababa); /* 光源の角度で調整 */
+				box-shadow: 
+					inset 2px 2px 5px rgba(0, 0, 0, 0.2),   /* 内側の影 */
+					inset -2px -2px 5px rgba(255, 255, 255, 0.5), /* 内側のハイライト */
+					4px 4px 10px rgba(0, 0, 0, 0.3),       /* 外側の影 */
+					-4px -4px 10px rgba(255, 255, 255, 0.5); /* 外側の光沢 */
+						
+				/* テキストのスタイリング */
+				font-size: 24px;
+				font-weight: bold;
+				color: #333;
+				text-align: center;
+				line-height: 80px;
+				user-select: none;
+						
+				/* リアル感の追加 */
+				position: relative;
+			}
+			
+			.skeuomorphic-button:after {
+				content: '';
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				border-radius: 12px;
+			
+				/* 中央のハイライト線 */
+				background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0) 50%);
+				mix-blend-mode: overlay; /* ハイライトを柔らかく重ねる */
+				pointer-events: none;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		ChatGPTが生成した<BR>
+		<DIV class="skeuomorphic-button">Button</DIV>
+	</BODY>
+</HTML>

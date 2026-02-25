@@ -1,0 +1,36 @@
+<HTML>
+	<HEAD>
+		<TITLE>辞書変換</TITLE>
+
+		<LINK REL="stylesheet" HREF="./style.css">
+			
+		<META PROPERTY="og:url" CONTENT="http://rumiserver.com/rumisns"/>
+		<META PROPERTY="og:title" CONTENT="辞書変換ツール"/>
+		<META PROPERTY="og:site_name" CONTENT="るみさんの物置小屋"/>
+		<META PROPERTY="og:type" CONTENT=" website"/>
+		<META PROPERTY="og:description" CONTENT="IMEの辞書を相互変換できる(作成中)"/>
+	</HEAD>
+	<BODY>
+		<SELECT ID="BF">
+			<OPTION VALUE="G_IME">GoogleIME(Google日本語入力)</OPTION>
+			<OPTION VALUE="G_B">GBord</OPTION>
+		</SELECT>
+		<SELECT ID="LF_TYPE">
+			<OPTION VALUE="N">\n</OPTION>
+		</SELECT>
+		
+		<INPUT TYPE="file" ID="DIC">
+		
+		<SELECT ID="AF">
+			<OPTION VALUE="G_IME">GoogleIME(Google日本語入力)</OPTION>
+			<OPTION VALUE="G_B">GBord</OPTION>
+		</SELECT>
+		
+		<BUTTON onclick="START();">START</BUTTON>
+		
+		<PRE CLASS="RESULT" ID="RESULT">
+		
+		</PRE>
+	</BODY>
+</HTML>
+<SCRIPT SRC="./Main.js"></SCRIPT>

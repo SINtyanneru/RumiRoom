@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>COCORO AIR</TITLE>
+	</HEAD>
+	<BODY>
+		<INPUT ID="EL_SESSION" PLACEHOLDER="セッション">
+		<SELECT ID="EL_DEVICE_ID"></SELECT>
+		<BUTTON onclick="OFF();">オフ</BUTTON>
+		<BUTTON onclick="COOL();">冷房</BUTTON>
+	</BODY>
+</HTML>
+<SCRIPT>
+	let DEVICE_LIST = {};
+
+	window.addEventListener("load", async (E)=>{
+		const RESULT = await GET_DEVICE_LIST();
+		if(RESULT.STATUS){
+			for (let I = 0; I < RESULT["LIST"].length; I++) {
+				const DEVICE = RESULT["LIST"][I];
+
+				//SELECTに入れる
+				EL_DEVICE_ID.innerHTML += `<OPTION VALUE="${DEVICE["ID"]}">${DEVICE["NAME"]}(${DEVICE["MODEL"]})</OPTION>`;
+
+				//デバイス一覧に入れる
+				DEVICE_LIST[DEVICE["ID"]] = DEVICE;
+			}
+		} else {
+			alert("エラー、たぶんCOCORO AIRのAPIが変わった");
+		}
+	});
+
+	async function GET_DEVICE_LIST(){
+		const SESSION = EL_SESSION.value;
+
+		let AJAX = await fetch("./SEND.php?MODE=DEVICEU", {
+			method:"POST",
+			body:JSON.stringify({
+				"SESSION":SESSION,
+				"DEVICE":"null",
+				"MODEL":"null",
+				"DATA":[{}]
+			})
+		});
+
+		return await AJAX.json();
+	}
+
+	async function OFF(){
+		const SESSION = EL_SESSION.value;
+		const DEVICE_ID = EL_DEVICE_ID.value;
+		const DEVICE_MODEL = DEVICE_LIST[DEVICE_ID]["MODEL"];
+
+		let AJAX = await fetch("./SEND.php?MODE=CONT", {
+			method:"POST",
+			body:JSON.stringify({
+				"SESSION":SESSION,
+				"DEVICE":DEVICE_ID,
+				"MODEL":DEVICE_MODEL,
+				"DATA":[{"epc":"0x80","edt":"0x30"},{"epc":"0xCF","edt":"0x41"},{"epc":"0xB0","edt":"0x44"}]
+			})
+		});
+	}
+
+	async function COOL(){
+		const SESSION = EL_SESSION.value;
+		const DEVICE_ID = EL_DEVICE_ID.value;
+		const DEVICE_MODEL = DEVICE_LIST[DEVICE_ID]["MODEL"];
+
+		let AJAX = await fetch("./SEND.php?MODE=CONT", {
+			method:"POST",
+			body:JSON.stringify({
+				"SESSION":SESSION,
+				"DEVICE":DEVICE_ID,
+				"MODEL":DEVICE_MODEL,
+				"DATA":[{"epc":"0x80","edt":"0x30"},{"epc":"0xCF","edt":"0x41"},{"epc":"0xB0","edt":"0x42"},{"opc":"k4","odt":{"s3":"2f","s5":"00"}}]
+			})
+		});
+	}
+</SCRIPT>

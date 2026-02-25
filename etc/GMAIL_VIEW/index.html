@@ -1,0 +1,84 @@
+<HTML>
+	<HEAD>
+		<TITLE>メールビュワー</TITLE>
+		
+		<LINK REL="stylesheet" HREF="./style.css">
+	</HEAD>
+	<BODY>
+		<DIV CLASS="SIDE_MENU">
+			<DIV>
+				<A HREF="./WHAT.html"><IMG SRC="./ASSETS/LOGO.png" STYLE="margin-left: 50px;"></A>
+				<BUTTON CLASS="CREATE_BTN" onclick="START_EDIT()"><IMG SRC="./ASSETS/PEN.svg">作成</BUTTON>
+			</DIV>
+			<BUTTON><IMG SRC="./ASSETS/mail.svg">受信トレイ</BUTTON>
+			<BUTTON><IMG SRC="./ASSETS/star.svg">スター付き</BUTTON>
+			<BUTTON><IMG SRC="./ASSETS/clock.svg">スヌーズ中</BUTTON>
+			<BUTTON><IMG SRC="./ASSETS/wow.svg">送信済み</BUTTON>
+			<BUTTON><IMG SRC="./ASSETS/fuck.svg">下書き</BUTTON>
+		</DIV>
+		<DIV CLASS="TOP_MENU">
+			<INPUT CLASS="SEARCH_BOX" PLACEHOLDER="特になし()">
+			<DIV CLASS="SIDE">
+				
+			</DIV>
+		</DIV>
+		<DIV CLASS="CONTENTS" ID="CONTENTS">
+			<DIV CLASS="MAIL" ID="MAIL">
+				<DIV CLASS="MAIL_TITLE" ID="MAIL_TITLE"></DIV>
+				<DIV>
+					<IMG SRC="/Data/API/user_icon.php?UID=Rumisan" STYLE="width: 40px; height: 40px;">
+					<R STYLE="vertical-align: top;">MAIL WA MUZUI</R>
+				</DIV>
+				<IFRAME CLASS="MAIL_TEXT" ID="MAIL_TEXT">
+					
+				</IFRAME>
+			</DIV>
+		</DIV>
+
+		<DIV CLASS="EDITER" ID="EDITER" style="display: none;">
+			<DIV CLASS="TITLE_BAR">
+				新規メッセージ
+				<BUTTON onclick="END_EDIT()">X</BUTTON>
+			</DIV>
+			<DIV CLASS="INPUT_">
+				宛先：<INPUT>
+			</DIV>
+			<DIV CLASS="INPUT_">
+				件名：<INPUT ID="EDIT_TITLE">
+			</DIV>
+
+			<TEXTAREA CLASS="EDIT_TEXT" ID="EDIT_TEXT" onkeyup="EDIT_VIEW()"></TEXTAREA>
+
+			<DIV CLASS="EDIT_BTN">
+				<BUTTON>ダウンロード</BUTTON>
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+	let CONTENTS = document.getElementById("CONTENTS");
+	let EDITER = document.getElementById("EDITER");
+	let EDIT_TITLE = document.getElementById("EDIT_TITLE");
+	let EDIT_TEXT = document.getElementById("EDIT_TEXT");
+	let MAIL = document.getElementById("MAIL");
+	let MAIL_TITLE = document.getElementById("MAIL_TITLE");
+	let MAIL_TEXT = document.getElementById("MAIL_TEXT");
+
+	function START_EDIT(){
+		EDITER.style.display = "block";
+
+		EDIT_VIEW();
+	}
+
+	function END_EDIT(){
+		EDITER.style.display = "none";
+	}
+
+	function EDIT_VIEW(){
+		MAIL_TITLE.innerText = EDIT_TITLE.value;
+		const blob = new Blob([EDIT_TEXT.value], {type: "text/html"});
+
+		MAIL_TEXT.src = URL.createObjectURL(blob);
+	}
+</SCRIPT>

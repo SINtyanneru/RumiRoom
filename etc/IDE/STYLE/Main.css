@@ -1,0 +1,45 @@
+.TEXTEDIT{
+	margin: 10px;
+
+	border: solid 1px;
+
+	overflow: hidden;
+
+	font-family: "PC-9800";
+
+	width: calc(100% - 20px);
+	height: calc(100vh - 20px);
+}
+
+.TEXTEDIT > .EDITOR{
+	width: 100%;
+	height: calc(100% - 60px);
+
+	overflow: scroll;
+}
+
+.TEXT_LINE{
+	background-color: white;
+}
+
+.TEXT_LINE[select="true"]{
+	background-color: rgb(181, 220, 255);
+}
+
+.TEXT_LINE > .LN{
+	display: inline-block;
+
+	user-select: none;
+
+	width: 100px;
+
+	border-right: solid 1px;
+
+	text-align: right;
+}
+
+.TEXT_LINE > .LC{
+	margin-left: 5px;
+
+	white-space: pre-wrap;
+}

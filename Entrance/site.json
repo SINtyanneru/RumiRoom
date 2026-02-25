@@ -29,6 +29,12 @@
 		"PATH": null,
 		"SHOW_MENU": true
 	},
+	{
+		"URL": "https://etc.rumi-room.net/",
+		"TITLE": "物置部屋",
+		"PATH": null,
+		"SHOW_MENU": true
+	},
 
 	{
 		"URL": "/art",

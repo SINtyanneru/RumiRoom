@@ -1,0 +1,199 @@
+<HTML>
+	<HEAD>
+		<TITLE>Time Progress</TITLE>
+	</HEAD>
+
+	<BODY>
+		<!--デスクトップ-->
+		<DIV class="DESKTOP">
+			<R onclick="window.location = 'https://twitter.com/RUMISAN_SYTEM32'" class="APP_ICON">
+				<IMG src="./Twitter.svg" width="50">
+				<BR>
+				Twitter
+			</R>
+			<BR>
+			<R onclick="window.location = 'https://www.youtube.com/@rumich'" class="APP_ICON">
+				<IMG src="./Youtube.svg" width="50">
+				<BR>
+				Youtube
+			</R>
+		</DIV>
+
+		<!--ウィンドウ-->
+		<DIV class="WINDOW">
+			<DIV class="TITLEBAR">時間</DIV>
+			<DIV class="CONTENTS">
+				1秒の進捗度<BR>
+				<PROGRESS id="SEC_PRO" max="100"></PROGRESS><R id="SEC_TEXT"></R>
+				<BR>
+				1分の進捗度<BR>
+				<PROGRESS id="MIN_PRO" max="100"></PROGRESS><R id="MIN_TEXT"></R>
+				<BR>
+				1時間の進捗度<BR>
+				<PROGRESS id="HOR_PRO" max="100"></PROGRESS><R id="HOR_TEXT"></R>
+				<BR>
+				1日の進捗度<BR>
+				<PROGRESS id="DAY_PRO" max="100"></PROGRESS><R id="DAY_TEXT"></R>
+				<BR>
+				1ヶ月の進捗度<BR>
+				<PROGRESS id="MOT_PRO" max="100"></PROGRESS><R id="MOT_TEXT"></R>
+				<BR>
+				今年の進捗度<BR>
+				<PROGRESS id="YER_PRO" max="100"></PROGRESS><R id="YER_TEXT"></R>
+			</DIV>
+		</DIV>
+		<!--タスクバー-->
+		<DIV class="TASKBAR"><BUTTON onclick="STARTBTN_OC()" style="height: 100%;">スタート</BUTTON></DIV>
+		<!--スタートメニュ-->
+		<DIV class="STARTMENU" id="STARTMENU" style="display: none;">
+			<DIV class="STARTMENU_TITLE">RumiDows</DIV>
+			<DIV class="APPLIST">
+				ぱわーど ばい るみさん<BR>
+				2022/12/9/ 16:17<BR>
+				<BR>
+				アイコン：https://icon-rainbow.com/
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>
+
+<STYLE>
+body{
+	background-color: darkcyan;
+}
+
+/*デスクトップ*/
+.APP_ICON{
+	text-align: center;
+}
+.APP_ICON > img:hover{
+	border: solid;
+	border-width: 1px;
+	border-color: white;
+	border-style: dotted;
+}
+
+/*タスクバー*/
+.TASKBAR{
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+
+	background-color: darkgray;
+
+	width: 100%;
+	height: 30px;
+}
+/*スタートメニュー*/
+.STARTMENU{
+	position: fixed;
+	left: 0px;
+	bottom: 30px;
+
+	background-color: darkgray;
+
+	width: 300px;
+	height: 500px;
+}
+
+.STARTMENU_TITLE{
+	transform: rotateZ(-90deg);
+
+	background-color: blue;
+	color: white;
+
+	width: 500px;
+
+	position: fixed;
+	bottom: 268px;
+	left: -240px;
+}
+
+.APPLIST{
+	position: fixed;
+	left: 25px;
+}
+
+/*ウィンドウ関連*/
+.WINDOW{
+	user-select: none;
+
+	background-color: darkgray;
+
+	width: 50%;
+	height: 350px;
+
+	margin: 0 auto;
+
+	border: solid;
+	border-color: rgb(116, 116, 116);
+	border-width: 2px;
+}
+.TITLEBAR{
+	background: linear-gradient(to right, blue, white);
+	width: 100%;
+
+	color: white;
+}
+</STYLE>
+
+<SCRIPT>
+	window.addEventListener("load", (e)=>{
+		setInterval(()=>{
+		var DATE = new Date();
+		var MSEC = DATE.getMilliseconds();
+		var SEC = DATE.getSeconds();
+		var MIN = DATE.getMinutes();
+		var HOR = DATE.getHours();
+		var DAY = DATE.getDate();
+		var FDAY = FULLDAY();
+		var MOT = DATE.getMonth();
+
+		var SEC_PRO_MATH = (MSEC / 1000)*100;
+		var MIN_PRO_MATH = (SEC / 60)*100;
+		var HOR_PRO_MATH = (MIN / 60)*100;
+		var DAY_PRO_MATH = (HOR / 24)*100;
+		var MOT_PRO_MATH = (DAY / 31)*100;
+		var YER_PRO_MATH = (FDAY / 365)*100;
+
+		document.getElementById("SEC_PRO").value = SEC_PRO_MATH;
+		document.getElementById("SEC_TEXT").innerHTML = Math.floor(SEC_PRO_MATH) + "%";
+
+		document.getElementById("MIN_PRO").value = MIN_PRO_MATH;
+		document.getElementById("MIN_TEXT").innerHTML = Math.floor(MIN_PRO_MATH) + "%";
+
+		document.getElementById("HOR_PRO").value = HOR_PRO_MATH;
+		document.getElementById("HOR_TEXT").innerHTML = Math.floor(HOR_PRO_MATH) + "%";
+
+		document.getElementById("DAY_PRO").value = DAY_PRO_MATH;
+		document.getElementById("DAY_TEXT").innerHTML = Math.floor(DAY_PRO_MATH) + "%";
+
+		document.getElementById("MOT_PRO").value = MOT_PRO_MATH;
+		document.getElementById("MOT_TEXT").innerHTML = Math.floor(MOT_PRO_MATH) + "%";
+
+		document.getElementById("YER_PRO").value = YER_PRO_MATH;
+		document.getElementById("YER_TEXT").innerHTML = Math.floor(YER_PRO_MATH) + "%";
+	},10)
+	});
+
+	function FULLDAY(){
+		date = new Date();
+		year = date.getFullYear();
+		if((year % 4 == 0 && year % 100 != 0 ) || year % 400 == 0) {
+			count = new Array(0,31,60,91,121,152,182,213,244,274,305,335);
+		}else{
+			count = new Array(0,31,59,90,120,151,181,212,243,273,304,334);
+		}
+		var date_count = count[date.getMonth()] + date.getDate();
+		return date_count;
+	}
+
+	function STARTBTN_OC(){
+		const STARTMENU = document.getElementById("STARTMENU");
+		if(STARTMENU.style.display == "block"){
+			STARTMENU.style.display = "none";
+		}else{
+			STARTMENU.style.display = "block";
+		}
+	}
+</SCRIPT>

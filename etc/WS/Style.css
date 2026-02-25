@@ -1,0 +1,33 @@
+body{
+	margin: 0px;
+}
+
+.MSG_LIST{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+
+	width: 50%;
+	height: calc(100vh - 100px);
+
+	border-right: solid 1px;
+
+	overflow: auto;
+
+}
+
+.FORM{
+	position: absolute;
+	top: calc(100vh - 100px);
+	left: 0px;
+}
+
+.FORM > textarea{
+	resize: none;
+}
+
+.USER_LIST{
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}

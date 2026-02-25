@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>TENGA</TITLE>
+
+		<META NAME="description" CONTENT="TENGA EGG">
+		<LINK REL="icon" TYPE="image/gif" SIZES="96x96" HREF="./1307667778823524372.gif">
+
+		<STYLE>
+			body{
+				white-space: nowrap;
+			}
+
+			img{
+				width: 25px;
+				height: 25px;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+	</BODY>
+	<SCRIPT>
+		const size = 25 + 8;
+
+		for (let y = 0; y < window.innerHeight / size; y++) {
+			for (let x = 0; x < window.innerWidth / size; x++) {
+				let img = document.createElement("IMG");
+				img.src = "./1307667778823524372.gif";
+				document.body.append(img);
+			}
+			let br = document.createElement("BR");
+			document.body.append(br);
+		}
+	</SCRIPT>
+</HTML>

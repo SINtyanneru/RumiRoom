@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>HLSJSのテスト3ぐらい</TITLE>
+	</HEAD>
+	<BODY>
+		<VIDEO ID="V" controls STYLE="width: 680px; height: 480px;"></VIDEO>
+		<DIV>
+			<SELECT ID="LEVEL_SELECT"></SELECT>
+			<DIV ID="LEVEL_STATUS"></DIV>
+		</DIV>
+	</BODY>
+</HTML>
+<SCRIPT SRC="https://cdn.jsdelivr.net/npm/hls.js@1"></SCRIPT>
+<SCRIPT>
+	let VIDEO_EL = document.getElementById("V");
+	let LEVEL_SELECT_EL = document.getElementById("LEVEL_SELECT");
+	let LEVEL_STATUS_EL = document.getElementById("LEVEL_STATUS");
+
+	let PLAYLIST_DATA = [];
+	let HLS;
+
+	if (Hls.isSupported()) {
+		HLS = new Hls();
+
+		HLS.loadSource('https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'); // m3u8ファイルのURL
+		HLS.attachMedia(VIDEO_EL);
+
+		HLS.on(Hls.Events.MANIFEST_PARSED, function(event, data) {
+			//プレイリスト取得
+			PLAYLIST_DATA = HLS.levels;
+
+			//回してSELECTに入れる
+			for (let I = 0; I < PLAYLIST_DATA.length; I++) {
+				const LEVEL = PLAYLIST_DATA[I];
+				LEVEL_SELECT_EL.innerHTML += `<OPTION onclick="SELECT_LEVEL(${I})">${LEVEL.name}</OPTION>`;
+			}
+		});
+	}
+
+	VIDEO_EL.addEventListener("loadeddata", (E) => {
+		//入れる
+		LEVEL_STATUS_EL.innerText = "現在のレベル：" + PLAYLIST_DATA[HLS.currentLevel].name;
+	});
+
+	function SELECT_LEVEL(LEVEL_INDEX){
+		HLS.currentLevel = LEVEL_INDEX;
+	}
+</SCRIPT>

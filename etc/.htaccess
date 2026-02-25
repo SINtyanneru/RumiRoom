@@ -1,0 +1,56 @@
+<IfModule mod_autoindex.c>
+	IndexOptions +FancyIndexing HTMLTable
+
+	HeaderName /RumiRoom/etc/HEADER.html
+	ReadmeName /RumiRoom/etc/README.html
+	IndexIgnore .??* *~ *# HEADER* README* RCS CVS *,v *,t
+	IndexIgnore ..
+
+	IndexOptions +DescriptionWidth=*,+SuppressHTMLPreamble
+
+	#説明
+	AddDescription "ActivityPubの何かを作るんだったんじゃないか？" ActivityPub
+	AddDescription "BASICのエミュレーターを作ろうとした" BASIC
+	AddDescription "カレンダーのテスト" CALENDAR
+	AddDescription "愛媛CATVのお知らせチャンネルの再現" CATV
+	AddDescription "世界時計を作りたかった" CLOCK
+	AddDescription "作りかけの関数電卓" Calc
+	AddDescription "なにこれ" Console
+	#AddDescription "広島に寝取られた企業の、フジの25thサイトをコピーしようとした" FUJI
+	AddDescription "FXみたいなグラフを描画するやつ、作りかけ" FX
+	AddDescription "HTMLメールのビュワーを作ろうとした" GMAIL_VIEW
+	AddDescription "るみビデオのテスト1" HLS_TEST
+	AddDescription "るみビデオのテスト2" HLS_TEST_2
+	AddDescription "ブラウザとかの情報" INFO
+	AddDescription "カラオケのあれを作った" KARAOKE
+	AddDescription "カラオケのあれを作った2" KARAOKE_2
+	AddDescription "マイクの音声の音程を解析" KARAOKE_MAZIMONO_DAYO
+	AddDescription "LINUX用のアプリのテスト" LINUXTEST-1.0-SNAPSHOT.jar
+	AddDescription "もうCSS起来" LOGO
+	AddDescription "マップを作ろうとした" MAP
+	AddDescription "名しジェネレーター" MEISI
+	AddDescription "自分の紹介サイトを作ろうとした" MY_NAME_IS_RUMI
+	AddDescription "マイニング" Min
+	AddDescription "たしか、北海道テレビ放送のNTTTモノスコープを作ろうとしたはず" NTT
+	AddDescription "PHPメーラー" PHPM
+	AddDescription "PHPからDiscordにウェブホック" PHP_WEBHOCK
+	AddDescription "な、なにこれ" RAS
+	AddDescription "BMLの自作版" RBML
+	AddDescription "DVDプレイヤーを作ろうとした" RDRIVE
+	AddDescription "VSCode的なものを作ろうと、「htm」と打てば分かる" RIDE
+	AddDescription "私が喋るトークソフトｗｗｗｗ" RUMI_SPEEK
+	AddDescription "個人的に、LINEスタンプをDiscordで使いたいので作った、勝手に使うなよ" LINE_Sticker
+	AddDescription "JAVAで作ったやつ" JAVA
+	AddDescription "とある事情で作った" UHC_m
+	AddDescription "誰かに貰ったやつ、だれだっけ？" Win11_Glass
+	AddDescription "SnowFlakeを生成しようとした、それっぽいからおｋ" SnowFlake.php
+	AddDescription "文法エラーをPHPは何も言ってくれないことを体現した" bunpou.php
+	AddDescription "JSONをいい感じにするやつ、なんか動かんけど" JSON.html
+	#AddDescription "Aタグで動くSPAの実験用、これがSPA.jsになった" A
+	AddDescription "COCORO AIRを操作するやつ、SHARPはAPIを公開しろ💢" COCORO_AIR
+	AddDescription "辞書変換ツール" DIC
+</IfModule>
+
+<FilesMatch ^(README.html|HEADER.html)$>
+	ForceType text/html
+</FilesMatch>

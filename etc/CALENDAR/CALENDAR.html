@@ -1,0 +1,49 @@
+<!--カレンダー本体ちゃん-->
+<TABLE class="CALENDAR" id="CALENDAR" border="1">
+	<TR>
+		<TH style="color: red;">日</TH>
+		<TH>月</TH>
+		<TH>火</TH>
+		<TH>水</TH>
+		<TH>木</TH>
+		<TH>金</TH>
+		<TH style="color: blue;">土</TH>
+	</TR>
+</TABLE>
+
+<SCRIPT>
+	var formdata = new FormData();
+	formdata.append("MOT", "12")
+	var ajax = new XMLHttpRequest();
+	ajax.open("POST", "./CALENDAR.php");
+	ajax.addEventListener("load", (e)=>{
+		const CALENDAR_JSON = JSON.parse(ajax.responseText);
+		var CALENDAR_TABLE = document.getElementById("CALENDAR");
+		console.log(CALENDAR_JSON);
+
+		var COUNT = 0;
+		var CALENDAR_HTML = "<TR>";
+		CALENDAR_JSON.forEach(element => {
+			if(COUNT > 5){
+				//一行分終了
+				CALENDAR_HTML += "<TD class=\"CALENDAR_DAY\"><R style=\"font-size: 30px;\">" + element.DAY + "</R>" + "<HR><TEXTAREA>" + element.DATA + "</TEXTAREA></TD></TR><TR>";
+				COUNT = 0;
+			}else{
+				CALENDAR_HTML += "<TD class=\"CALENDAR_DAY\"><R style=\"font-size: 30px;\">" + element.DAY + "</R>" + "<HR><TEXTAREA>" + element.DATA + "</TEXTAREA></TD>";
+				COUNT++;
+			}
+		});
+
+		CALENDAR_TABLE.innerHTML += CALENDAR_HTML;
+	});
+	ajax.send(formdata);
+</SCRIPT>
+
+<STYLE>
+	.CALENDAR_DAY > textarea{
+		width: 100px;
+		height: 100px;
+
+		resize: none;
+	}
+</STYLE>

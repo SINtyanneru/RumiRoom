@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>RVS</TITLE>
+	</HEAD>
+	<BODY>
+		<VIDEO ID="VIDEO" controls></VIDEO>
+	</BODY>
+</HTML>
+<SCRIPT>
+	let VIDEO = document.getElementById("VIDEO");
+	const PATH = "VIDEO/VP9/";
+	const MIME = "video/webm; codecs=\"vp9\"";
+	let MEDIA_SOURCE;
+	let SOURCE_BUFFER;
+	let LATEST_DURATION = 0.0;
+	
+	const VLIST = [
+		"MOJ_JE_TATA_000.webm",
+		"MOJ_JE_TATA_001.webm",
+		"MOJ_JE_TATA_002.webm",
+		"MOJ_JE_TATA_003.webm"
+	];
+
+	Main();
+
+	async function getVideoFile(NAME) {
+		let AJAX = await fetch(NAME);
+
+		if (AJAX.ok) {
+			return await AJAX.arrayBuffer();
+		} else {
+			return null;
+		}
+	}
+
+	async function Main() {
+		MEDIA_SOURCE = new MediaSource();
+
+		VIDEO.src = URL.createObjectURL(MEDIA_SOURCE);
+
+		MEDIA_SOURCE.addEventListener("sourceopen", async (E) => {
+			console.log("MediaSource準備完了");
+
+			SOURCE_BUFFER = MEDIA_SOURCE.addSourceBuffer(MIME);
+
+			//動画ファイルを全て読み込む
+			for (let I = 0; I < VLIST.length; I++) {
+				const ROW = VLIST[I];
+				const DATA = await getVideoFile(PATH + ROW);
+
+				if (DATA != null) {
+					
+				}
+			}
+		});
+	}
+
+	async function GET_WEBM_DURATION(BUFFER) {
+		return new Promise((resolve) => {
+			let TEMP_VIDEO_EL = document.createElement("VIDEO");
+			TEMP_VIDEO_EL.muted = true;
+			TEMP_VIDEO_EL.src = URL.createObjectURL(new Blob([BUFFER], { type: MIME }));
+			TEMP_VIDEO_EL.addEventListener("loadedmetadata", () => {
+				resolve(TEMP_VIDEO_EL.duration);
+			});
+		});
+	}
+</SCRIPT>

@@ -1,0 +1,126 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="./style.css" media="screen and (min-width: 600px)">
+
+
+<div class="upload">
+  <H1 class="Upload_text">動画をアップロード</H1>
+  <form method="post" name="Upload_Form" id="Upload_Form" class="Upload_Form">	
+    <BR><input type="file" name="video_file" accept="video/mp4" class="Video_upload">MP4ファイル(動画)
+    <BR><input type="file" name="img_file" accept="image/png" id="thumbnail_file" class="thumbnail_upload">PNGファイル(サムネイル)
+    <BR><input type="text" name="Title" id="Title" placeholder="タイトル">
+    <BR><textarea name="Explanation" maxlength="100" placeholder="概要欄" id="Explanation"></textarea>
+    <BR><input type="button" value="アップロード" id="Upload_Button" onclick="Upload_Click()" class="submit">
+  </form>
+  <div id="progress_bar" style="color: greenyellow; background-color: black;"></div>
+</div>
+
+<script>
+    function Upload_Click(){
+        const button = document.getElementById("Upload_Button");
+        button.disabled = true
+
+        Pic_Upload();
+    }
+
+    function Pic_Upload (){
+    console.log("[ *** ]動画をアップロードしています.....");
+    
+    var formdata = new FormData($('#Upload_Form').get()[0]);
+
+    const element_Title = document.getElementById('Title');
+
+    const element_Explanation = document.getElementById('Explanation');
+
+    console.log(element_Title.value);
+    console.log(element_Explanation.value);
+
+    formdata.append("Title", element_Title.value);
+    formdata.append("Explanation", element_Explanation.value);
+    $.ajax({
+      async: true,
+      xhr : function(){
+          XHR = $.ajaxSettings.xhr();
+            if(XHR.upload){
+		          XHR.upload.addEventListener('progress',function(e){
+                progre = parseInt(e.loaded/e.total*10000)/100 ;
+                if(progre == 100){
+                  console.log("変換しています...");
+                  document.getElementById('progress_bar').innerHTML = "形式を変換しています...."
+                }else{
+                  console.log(progre+"%");
+                  document.getElementById('progress_bar').innerHTML += "|||"
+                }
+            }, false); 
+	        }
+		    return XHR;
+	    },
+        url  : "./Upload.php",
+        type : "POST",
+        data : formdata,
+        processData : false,
+        contentType : false
+    }).done(function(data) {
+      alert(data);
+      console.log( data );
+        location.href = '../index.html'; // 通常の遷移
+     }).fail(function(data) {
+      alert(data);
+      console.log( data );
+        location.href = '../index.html'; // 通常の遷移
+     });
+}  
+
+</script>
+
+
+<?php
+session_start();
+
+if (isset($_SESSION['UID'])){
+  
+}
+else{
+  header('Location: /rumiserveraccount/Login/index.html?rd=sinch/etc/HLS_TEST_2');
+}
+
+// データベースに接続するために必要なデータソースを変数に格納
+  // mysql:host=ホスト名;dbname=データベース名;charset=文字エンコード
+$dsn = 'mysql:host=192.168.0.130;dbname=account;charset=utf8';
+ 
+  // データベースのユーザー名
+$user = "user";
+ 
+  // データベースのパスワード
+$password = "sin1234zxntv";
+ 
+// tryにPDOの処理を記述
+try {
+ 
+  // PDOインスタンスを生成
+  $dbh = new PDO($dsn, $user, $password);
+ 
+// エラー（例外）が発生した時の処理を記述
+} catch (PDOException $e) {
+ 
+  // エラーメッセージを表示させる
+  echo 'データベースにアクセスできません！' . $e->getMessage();
+ 
+  // 強制終了
+  exit;
+ 
+}
+
+// SELECT文を変数に格納
+$sql = "SELECT * FROM `account` ";
+ 
+// SQLステートメントを実行し、結果を変数に格納
+$stmt = $dbh->query($sql);
+ 
+// foreach文で配列の中身を一行ずつ出力
+foreach ($stmt as $row) {
+  if (hash("sha3-512", $row['uid']) == $_SESSION['UID']){
+    session_regenerate_id();
+      $ACOUNT_UID = $row['uid'];
+  }
+}
+?>

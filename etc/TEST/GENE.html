@@ -1,0 +1,48 @@
+<HTML>
+	<HEAD>
+		<TITLE>本人確認をするなにか</TITLE>
+	</HEAD>
+	<BODY>
+		ハッシュ値生成↓<BR>
+		<HR>
+		<DIV>
+			<INPUT ID="PASS" PLACEHOLDER="パスワード">
+			<BR>
+			<TEXTAREA ID="TEXT" PLACEHOLDER="本文"></TEXTAREA>
+			<BR>
+			<INPUT ID="Y" PLACEHOLDER="年"><INPUT ID="M" PLACEHOLDER="月"><INPUT ID="D" PLACEHOLDER="日">
+			<BR>
+			<BUTTON onclick="GENELATE();">生成</BUTTON>
+			<DIV ID="RESULT">
+				
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+	let PASS = document.getElementById("PASS");
+	let TEXT = document.getElementById("TEXT");
+	let Y = document.getElementById("Y");
+	let M = document.getElementById("M");
+	let D = document.getElementById("D");
+
+	let RESULT = document.getElementById("RESULT");
+
+	function GENELATE(){
+		let formdata = new FormData();
+		formdata.append("PASS", PASS.value);
+		formdata.append("TEXT", TEXT.value);
+		formdata.append("Y", Y.value);
+		formdata.append("M", M.value);
+		formdata.append("D", D.value);
+
+		let ajax = new XMLHttpRequest();
+		ajax.open("POST", "./GENE.php");
+		ajax.addEventListener("load", (e)=>{
+			const RESULT_JSON = JSON.parse(ajax.responseText);
+			RESULT.innerHTML = "<TABLE BORDER=\"1\"><TR><TH>ハッシュ値</TH><TD>" + RESULT_JSON.GENE + "</TD></TR>" + "<TR><TH>公開パスワード</TH><TD>" + RESULT_JSON.PASS + "</TD></TR></TABLE>";
+		});
+		ajax.send(formdata);
+	}
+</SCRIPT>

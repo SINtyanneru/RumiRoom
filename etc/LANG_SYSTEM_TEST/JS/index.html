@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>言語システムのテスト</TITLE>
+	</HEAD>
+	<BODY>
+		<BUTTON onclick="CH_LANG('JP_JAP')">標準日本語</BUTTON>
+		<BUTTON onclick="CH_LANG('US_ENG')">アメリカ英語</BUTTON>
+		<BUTTON onclick="CH_LANG('RU_RUS')">ロシア語</BUTTON>
+
+		<DIV>
+			<H1>LANG{TITLE}</H1>
+			LANG{TEXT}
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+function CH_LANG(ID){
+	window.location.href = "./?lang=" + ID;
+}
+
+function LOAD_LANG(ID){
+	const AJAX = new XMLHttpRequest();
+	AJAX.open("GET", "../LANG/" + ID + ".json");
+	AJAX.addEventListener("load", (E) => {
+		const RESULT = JSON.parse(AJAX.responseText);
+		const REGEX = /LANG\{(.*?)\}/g;
+
+		const LANG_MATCH = [...window.document.body.innerHTML.matchAll(REGEX)];
+		for (let I = 0; I < LANG_MATCH.length; I++) {
+			const MATCH = LANG_MATCH[I];
+			const LANG_DATA = RESULT[MATCH[1]];
+			if(LANG_DATA){
+				window.document.body.innerHTML = window.document.body.innerHTML.replace(MATCH[0], LANG_DATA);
+			}
+		}
+	});
+	AJAX.send();
+}
+
+window.addEventListener("load", (E)=>{
+	// URIを解析してパラメーターを取得
+	var urlParams = new URLSearchParams(window.location.search);
+
+	// 特定のパラメーターの値を取得
+	var LANG_ID = urlParams.get('lang');
+	if(LANG_ID){
+		LOAD_LANG(LANG_ID);
+	}
+});
+</SCRIPT>

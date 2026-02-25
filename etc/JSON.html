@@ -1,0 +1,50 @@
+<SCRIPT>
+let JSON_DATA = {
+	"HOGE":"FUGA",
+	"USERS":[
+		{
+			"NAME":"あいうえお",
+			"ID":"0"
+		}
+	],
+	"SERVER":{
+		"NAME":"るみるみるみ〜",
+		"URL":"https://rumiserver.com",
+		"STAR":0
+	}
+}
+
+function CHECK_KEYS(OBJ){
+	return Object.keys(OBJ);
+}
+
+function CHECK_OBJ_TYPE(OBJ){
+	return typeof OBJ;
+}
+
+function RUN(OBJ){
+	let KEYS = CHECK_KEYS(OBJ);
+	for (let i = 0; i < KEYS.length; i++) {
+		const KEY = KEYS[i];
+		let TYPE = CHECK_OBJ_TYPE(OBJ[KEY]);
+		console.log("[" + KEY + "]");
+		switch(TYPE){
+			case "string":
+				console.log("├" + OBJ[KEY]);
+				break;
+			case "number":
+				console.log("├" + OBJ[KEY]);
+				break;
+			case "object":
+				RUN(OBJ[KEY]);
+				break;
+			case "boolean":
+				console.log("├" + OBJ[KEY]);
+				break;
+			case "function":
+				console.log("├" + OBJ[KEY]);
+				break;
+		}
+	}
+}
+</SCRIPT>

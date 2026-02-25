@@ -1,0 +1,39 @@
+.STAMP_LIST{
+	width: 100vw;
+	height: calc(100vh - 100px);
+
+	overflow: auto;
+}
+
+.MSG_BOX_OWNER {
+	position: fixed;
+	top: 0px;
+	right: 0px;
+}
+
+.MSG_BOX_OWNER>.MSG_BOX {
+	border: solid 1px;
+	border-radius: 5px;
+
+	background-color: white;
+
+	animation-name: MSG_BOX_FADEOUT;
+	animation-duration: 3s;
+	animation-direction: normal;
+	animation-fill-mode: forwards;
+	animation-timing-function: ease;
+}
+
+@keyframes MSG_BOX_FADEOUT {
+	0% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+	}
+}

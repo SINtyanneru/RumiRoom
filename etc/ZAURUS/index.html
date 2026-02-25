@@ -1,0 +1,49 @@
+<!--推奨サイズ、240*318-->
+<HTML>
+	<HEAD>
+		<TITLE>ZAURUS MI-E1</TITLE>
+		<LINK REL="stylesheet" href="./_ZAURUS/SYSTEM/CSS/style.css">
+		<LINK REL="stylesheet" href="./_ZAURUS/SYSTEM/CSS/control_style.css">
+		<LINK REL="stylesheet" href="./_ZAURUS/SYSTEM/CSS/index.css">
+
+		<SCRIPT src="./_ZAURUS/SYSTEM/JS/script.js"></SCRIPT>
+		<SCRIPT src="./_ZAURUS/SYSTEM/JS/index.js"></SCRIPT>
+	</HEAD>
+	<BODY>
+		<DIV class="INDEX" id="INDEX">
+			<DIV class="HEADER">
+				<SELECT class="INDEX_SELECT" id="INDEX_SELECT" onchange="Index_onch()">
+					<OPTION value="HOME1">ホームインデックス-1</OPTION>
+					<OPTION value="HOME2">ホームインデックス-2</OPTION>
+					<OPTION value="ORIGINAL">オリジナルインデックス</OPTION>
+					<OPTION value="DATA">データ通信</OPTION>
+					<OPTION value="SYSTEM_SETTING">システム設定</OPTION>
+					<OPTION value="SYSTEM">本体機能インデックス</OPTION>
+					<OPTION value="MORE">MOREインデックス</OPTION>
+				</SELECT>
+	
+				<IMG class="LOGO" src="./_ZAURUS/SYSTEM/Texture/logo.png" width="50px">
+			</DIV>
+
+			<DIV class="HEADER_MENU">
+				<R style="font-size: 10px;">
+					ENTERTAINMENT<BR>
+					& COMMUNICATION
+				</R>
+	
+				<BUTTON class="BUTTON_G" style="position: absolute; top: 31px; right: 60px;">編集</BUTTON>
+				<BUTTON class="BUTTON_O" style="position: absolute; top: 31px; right: 0px;" onclick="index_close()">閉じる</BUTTON>
+			</DIV>
+
+			<DIV class="INDEX_HOME" id="INDEX_HOME">
+
+			</DIV>
+
+			<DIV class="FOOTER">
+				<R style="font-size: 10px;">接続先：LAN</R>
+				<BR>
+				<R style="font-size: 10px;">機器：LAN</R>
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>

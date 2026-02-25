@@ -1,0 +1,344 @@
+<HTML>
+	<HEAD>
+		<TITLE>Minesweeper</TITLE>
+	</HEAD>
+	<BODY>
+		<DIV CLASS="START_MENU" ID="START_MENU">
+			注意：このゲームは音が鳴ります、はい。自動再生有効化しようね<BR>
+			<BUTTON onclick="START()" STYLE="font-size: 50px;">תתחיל את המשחק</BUTTON>
+			<HR>
+			<INPUT TYPE="range" MIN="0" MAX="100" onchange="BGM_VOL = (this.value / 100);">BGMの音量
+			<BR>
+			<INPUT TYPE="range" MIN="0" MAX="100" onchange="SE_VOL = (this.value / 100);">SEの音量
+		</DIV>
+		<TABLE CLASS="GAME_TABLE" id="GAME_TABLE" STYLE="display: none;"></TABLE>
+		<DIV CLASS="DIALOG" ID="DIALOG" STYLE="display: none;">
+			<DIV CLASS="DIALOG_TEXT" ID="DIALOG_TEXT">
+
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+let GAME_TABLE_EL = document.getElementById("GAME_TABLE");
+let DIALOG_EL = document.getElementById("DIALOG");
+
+let board;
+let BGM = new Audio();
+let SE = new Audio();
+
+//設定とか
+let BGM_VOL = 0.4;
+let SE_VOL = 0.8;
+
+//マインスイーパーのセルを表すオブジェクト
+const cell = {
+	isMine: false, //このセルに地雷があるかどうか
+	isRevealed: false, //このセルが開かれているかどうか
+	isFlagged: false, //このセルにフラグが立っているかどうか
+	neighboringMines: 0 //このセルの周囲の地雷の数
+};
+
+//マインスイーパーのセルを生成する関数
+function createCell() {
+	return { ...cell }; //cellオブジェクトのコピーを返す
+}
+
+//マインスイーパーの盤面を生成する関数
+function createBoard(rows, cols, numMines) {
+	const board = [];
+
+	//rows x colsのセルを生成してboardに格納する
+	for (let i = 0; i < rows; i++) {
+		const row = [];
+		for (let j = 0; j < cols; j++) {
+		  row.push(createCell());
+		}
+		board.push(row);
+	}
+
+	//numMines個の爆弾をランダムに配置する
+	for (let i = 0; i < numMines; i++) {
+		let row, col;
+		do {
+			//ランダムな位置を決定する
+			row = Math.floor(Math.random() * rows);
+			col = Math.floor(Math.random() * cols);
+		} while (board[row][col].isMine); //すでに爆弾がある場合は再試行する
+
+		board[row][col].isMine = true;
+
+		//爆弾の周囲のセルのneighboringMinesを増やす
+		for (let r = row - 1; r <= row + 1; r++) {
+			for (let c = col - 1; c <= col + 1; c++) {
+				if (r >= 0 && r < rows && c >= 0 && c < cols && !board[r][c].isMine) {
+					board[r][c].neighboringMines++;
+				}
+			}
+		}
+	}
+
+	return board;
+}
+
+function RENDER(){
+	let BOARD_HTML = "";
+	let row = 0;
+	let col = 0;
+	board.forEach(element_row => {
+		BOARD_HTML += "<TR>";
+		element_row.forEach(element_cols => {
+			//console.log(element_cols);
+			let TEXT = "";
+			let CLASS = "";
+			if(!element_cols.isRevealed){//マスが空いているか
+				//空いてない
+				if(!element_cols.isFlagged){//フラグが立っているか？
+					//立っていない
+					TEXT = "□";
+					CLASS = "NOMAL";
+				}else{
+					//立っている
+					TEXT = "🚩";
+					CLASS = "NOMAL";
+				}
+			}else{
+				//開いてる
+				if(!element_cols.isMine){//そのマスは爆弾？
+					//Нет
+					TEXT = "" + element_cols.neighboringMines + "";
+					CLASS = "NOMAL";
+				}else{
+					//Да
+					TEXT = "💣";
+					CLASS = "BOM";
+				}
+				
+			}
+
+			BOARD_HTML += "<TD><BUTTON CLASS=\"" + CLASS + "\" onclick=\"SE_PLAY('FLAG.mp3');OPENCELL(" + row + ", " + col + ")\" oncontextmenu=\"SE_PLAY('FLAG.mp3');FLAG(" + row + ", " + col + ")\">" + TEXT + "</BUTTON> </TD>";
+			col++;
+		});
+		BOARD_HTML += "</TR>";
+		col = 0;
+		row++;
+	});
+
+	GAME_TABLE_EL.innerHTML = BOARD_HTML;
+}
+
+//セルを開く関数
+function OPENCELL(row, col){
+	console.log("[ *** ]OPENING...");
+	//ボードの範囲外の場合は何もしない
+	if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) {
+		console.log("[ LOG ]IS BORDER OVER RUN");
+		return;
+	}
+
+	const cell = board[row][col];
+
+	//すでに開かれている場合は何もしない
+	if (cell.isRevealed) {
+		console.log("[ LOG ]IS REVEALED");
+		return;
+	}
+
+	//セルにフラグが立っている場合は何もしない
+	if (cell.isFlagged) {
+		console.log("[ LOG ]IS FRAGGED");
+		return;
+	}
+
+	cell.isRevealed = true;
+
+	//爆弾がある場合はゲームオーバー
+	if(cell.isMine){
+		console.log("[ LOG ]GAME OVER");
+		GAME_OVER();
+		console.log("[ *** ]RENDERING....");
+		RENDER();
+		console.log("[ OK ]RENDERED");
+		return;
+	}
+
+	//周囲の地雷の数が0の場合、周囲のセルも再帰的に開く
+	if (cell.neighboringMines === 0) {
+		for (let r = row - 1; r <= row + 1; r++) {
+			for (let c = col - 1; c <= col + 1; c++) {
+				OPENCELL(r, c);
+			}
+		}
+	}
+
+	console.log("[ *** ]RENDERING....");
+	RENDER();
+	console.log("[ OK ]RENDERED");
+}
+
+function FLAG(row, col){
+	console.log("[ *** ]FLAGING...");
+
+	//ボードの範囲外の場合は何もしない
+	if (row < 0 || row >= board.length || col < 0 || col >= board[0].length) {
+		console.log("[ LOG ]IS BORDER OVER RUN");
+		return;
+	}
+
+	const cell = board[row][col];
+
+	//すでに開かれている場合は何もしない
+	if (cell.isRevealed) {
+		console.log("[ LOG ]IS REVEALED");
+		return;
+	}
+
+	//セルにフラグが立っている場合はフラグを消す
+	if (cell.isFlagged) {
+		console.log("[ LOG ]IS FRAGGED");
+		cell.isFlagged = false;
+
+		console.log("[ *** ]RENDERING....");
+		RENDER();
+		console.log("[ OK ]RENDERED");
+		return;
+	}
+
+	cell.isFlagged = true;
+
+	console.log("[ *** ]RENDERING....");
+	RENDER();
+	console.log("[ OK ]RENDERED");
+}
+
+window.addEventListener("load", (e)=>{
+	//使ってねえじゃねえか！
+});
+
+window.addEventListener("contextmenu", (e)=>{
+	e.preventDefault();
+});
+
+//ゲームスタート
+function START(){
+	board = [];
+	
+	//マスを作成
+	board = createBoard(10, 10, 10);
+
+	//うんこを消す
+	document.getElementById("START_MENU").style.display = "none";
+	GAME_TABLE.style.display = "block";
+
+	//描画開始
+	RENDER();
+
+	SE.pause();
+
+	//BGMを流す
+	BGM.src = "./Kazakg.mp3";
+	BGM.volume = BGM_VOL;
+	BGM.play();
+}
+
+//ゲームオーバー
+function GAME_OVER(){
+	//BGMを止める
+	BGM.pause();
+	//ゲームオーバーのSEを流す
+	SE.src = "./USSR.mp3";
+	SE.volume = 1;
+	SE.play();
+
+	//背景を真っ赤に
+	document.body.style.backgroundColor = "red";
+
+	DIALOG_SHOW("<H1>" + "הפסד שלך" + "</H1>"+
+				"Вы проиграли смертельную игру!<BR>"+
+				"Вы являетесь целью чистки!<BR>"/*+
+				"<BUTTON onclick=\"START();\">もっかいやる</BUTTON>"*/);
+}
+
+//ダイアログを出す
+function DIALOG_SHOW(TEXT){
+	DIALOG_EL.style.display = "block";
+	DIALOG_EL.querySelector("#DIALOG_TEXT").innerHTML = TEXT;
+}
+
+//SEを鳴らす
+function SE_PLAY(PATH){
+	//SEを鳴らす
+	SE.src = "./" + PATH;
+	SE.volume = SE_VOL;
+	SE.play();
+
+}
+</SCRIPT>
+
+<STYLE>
+body{
+	margin: 0px;
+}
+
+.START_MENU{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+
+	text-align: center;
+}
+
+.GAME_TABLE{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+
+	border: 1px solid black;
+	width: fit-content;
+	height: fit-content;
+	text-align: center;
+}
+
+.NOMAL{
+	border: none;
+}
+
+.BOM{
+	border: none;
+	background-color: red;
+}
+
+.DIALOG{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+
+	width: 100vw;
+	height: 100vh;
+
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.DIALOG > .DIALOG_TEXT{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+
+	width: 500px;
+	height: fit-content;
+
+	background-color: white;
+
+	text-align: center;
+}
+</STYLE>

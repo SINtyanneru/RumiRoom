@@ -1,0 +1,149 @@
+<HTML>
+	<HEAD>
+		<TITLE>WebSocket TEST</TITLE>
+
+		<LINK REL="stylesheet" HREF="./Style.css">
+	</HEAD>
+	<BODY>
+		<DIV CLASS="MSG_LIST" ID="MSG_LIST">
+
+		</DIV>
+		<DIV CLASS="FORM">
+			<TEXTAREA ID="TEXT" PLACEHOLDER="CTRL + ENTERで送信できるよ"></TEXTAREA><BUTTON onclick="SEND();">送信</BUTTON>
+		</DIV>
+		<DIV CLASS="USER_LIST" ID="USER_LIST">
+
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+let MSG_LIST_EL = document.getElementById("MSG_LIST");
+let USER_LIST_EL = document.getElementById("USER_LIST");
+let TEXT_EL = document.getElementById("TEXT");
+
+let WS_NAME = "ws://";
+if(window.location.protocol === "https:"){
+	WS_NAME = "wss://";
+}
+
+const WS = new WebSocket(WS_NAME + window.location.host + "/WS/TEST/");
+
+WS.addEventListener('open', function(e) {
+	MSG_EL_ADD("WebSocketに接続しました");
+});
+
+WS.addEventListener('message', function(e) {
+	const RESULT = JSON.parse(e.data);
+
+	if(RESULT.TYPE === "NEW_LOGIN"){//ログイン
+		MSG_EL_ADD("<SPAN STYLE=\"text-algn: center;\">"+
+			RESULT.USER + "さんが侵入しました"+
+			"<SPAN>");
+	}
+	
+	if(RESULT.TYPE === "MSG_RSV"){//メッセージ
+		MSG_EL_ADD("[" + RESULT.USER + "]" + RESULT.TEXT.replaceAll("\n", "<BR>"));
+
+		MSG_LIST_EL.scrollTop = MSG_LIST_EL.scrollHeight - MSG_LIST_EL.clientHeight;
+	}
+
+	if(RESULT.TYPE === "USER_LIST_UPDATE"){
+		USER_LIST_EL.innerHTML = "";
+		for (let I = 0; I < RESULT.USER_LIST.length; I++) {
+			const USER = RESULT.USER_LIST[I];
+
+			let ITEM_EL = document.createElement("DIV");
+			ITEM_EL.id = "USER_LIST_ITEM_" + USER.replaceAll(".", "");
+			ITEM_EL.innerHTML = USER;
+
+			USER_LIST_EL.append(ITEM_EL);
+		}
+	}
+
+	if(RESULT.TYPE === "TYPING"){
+		const TYPING_KEYS = Object.keys(RESULT.TYPING_LIST);
+		TYPING_KEYS.forEach(KEY => {
+			const USER = RESULT.TYPING_LIST[KEY];
+			let ULI_EL = document.getElementById("USER_LIST_ITEM_" + KEY.replaceAll(".", ""));
+			if(ULI_EL !== undefined && ULI_EL !== null){
+				if(USER.TYPING){
+					ULI_EL.innerHTML = "[入力中]" + KEY;
+				}else{
+					ULI_EL.innerHTML = KEY;
+				}
+			}
+		});
+	}
+});
+
+WS.addEventListener('close', function(e) {
+	MSG_EL_ADD("<SPAN STYLE=\"color red;\">WebSocketが切断されました</SPAN>");
+});
+
+WS.addEventListener('error', function(e) {
+	MSG_EL_ADD("<SPAN STYLE=\"color red;\">WebSocketでエラーが発生しました</SPAN>");
+});
+
+TEXT_EL.addEventListener("keydown", (E)=>{
+	if(E.ctrlKey){
+		if(E.key === "Enter"){
+			SEND();
+
+			WS.send(JSON.stringify({
+				"TYPE":"TYPING",
+				"TYPEING":false
+			}));
+			return;
+		}
+	}
+});
+
+/*
+let TEMP_TEXT_EL_VALUE = "";
+setInterval(() => {
+	if(TEMP_TEXT_EL_VALUE !== TEXT_EL.value){
+		TEMP_TEXT_EL_VALUE = TEXT_EL.value;
+		if(TEXT_EL.value !== ""){
+			WS.send(JSON.stringify({
+				"TYPE":"TYPING",
+				"TYPEING":true
+			}));
+		}else{
+			WS.send(JSON.stringify({
+				"TYPE":"TYPING",
+				"TYPEING":false
+			}));
+		}
+	}
+}, 1);
+*/
+
+function SEND(){
+	WS.send(JSON.stringify({
+		"TYPE":"MSG_SEND",
+		"TEXT":TEXT_EL.value
+	}));
+	TEXT_EL.value = "";
+}
+
+function MSG_EL_ADD(TEXT){
+	MSG_LIST_EL.innerHTML += "<DIV>" + TEXT + "</DIV>";
+}
+
+//クッキーを取得
+function GET_COOKIE(CNAME){
+	const COOKIES = document.cookie.split(';');
+	
+	for(let i = 0; i < COOKIES.length; i++){
+		const COOKIE = COOKIES[i].trim();
+		const [name, value] = COOKIE.split('=');
+		
+		if(name === CNAME){
+			return decodeURIComponent(value);
+		}
+	}
+	
+	return false;
+}
+</SCRIPT>

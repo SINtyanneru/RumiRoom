@@ -1,0 +1,28 @@
+body{
+	margin: 0px;
+
+	background-color: darkcyan;
+}
+
+.TITLE_BAR{
+	width: 100vw;
+	height: 25px;
+
+	background-color: white;
+}
+
+.VIDEO_CONTAINER{
+	width: 100vw;
+	height: calc(100vh - 25px);
+
+	background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(21,41,59,1) 35%, rgba(23,50,75,1) 50%, rgba(21,72,117,1) 65%, rgba(0,0,0,1) 100%);
+}
+
+.VIDEO_CONTAINER > video{
+	width: 100%;
+	height: 100%;
+}
+
+.CONTROLE{
+
+}

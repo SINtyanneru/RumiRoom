@@ -1,0 +1,122 @@
+body{
+    background-color: aquamarine;
+}
+
+.HEADER{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100px;
+    height: 100%;
+    border: solid;
+    margin: 0px;
+
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+
+    z-index: 1;
+}
+.CONTENTS>iframe{
+    position: relative;
+    left: 100;
+    right: 0;
+    margin: auto;
+    width: calc(100% - 100px);
+    height: calc(100vh - 30px);
+
+    border: solid;
+
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+
+    z-index: 0;
+}
+/*===========================================[ ホーム画面(動画) ]===========================================*/
+.home_video{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 300px);
+    gap: 11px;
+    grid-auto-rows: minmax(100px, auto);
+    margin: auto;
+}
+
+/*===========================================[ 検索窓 ]===========================================*/
+.SEARCH_WINDOW{
+    /*ボーダー*/
+    border: solid;
+
+    /*色*/
+    background-color: rgba(255, 255, 255, 0.5);
+
+    /*ポジション*/
+    position: absolute;
+    padding: 20px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    /*サイズ*/
+    width: 500px;
+    height: 200px;
+
+    /*レイヤ＾*/
+    z-index: 1;
+}
+.SEARCH_WINDOW>input{
+    transition: 0.5s ;
+    border: solid;
+    border-color: aliceblue;
+    width: 100%;
+    height: 50px;
+    font-size: 30px;
+}
+.SEARCH_WINDOW>input:hover{
+    transition: 0.5s ;
+    border-color: orange;
+}
+.SEARCH_WINDOW>input:focus{
+    transition: 0.5s ;
+    border-color: red;
+}
+.SEARCH_WINDOW>.sbmit{
+    transition: 0.5s ;
+    border: solid;
+    border-color: aliceblue;
+    background-color: aliceblue;
+    width: 100%;
+}
+.SEARCH_WINDOW>.sbmit:hover{
+    transition: 0.5s ;
+    border-color: rgba(255, 166, 0, 0.753);
+    background-color: rgba(255, 166, 0, 0.753);
+}
+.SEARCH_WINDOW>.sbmit:focus{
+    transition: 0.5s ;
+    border-color: orange;
+    background-color: orange;
+}
+/*===========================================[ ステータス表示 ]===========================================*/
+.STATUS>iframe{
+    /*ボーダー*/
+    border: solid;
+
+    /*色*/
+    background-color: rgba(255, 255, 255, 0.5);
+    
+    /*ポジション*/
+    position: absolute;
+    padding: 20px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    /*サイズ*/
+    width: 1000px;
+    height: 500px;
+    
+    /*レイヤ＾*/
+    z-index: 1;
+}

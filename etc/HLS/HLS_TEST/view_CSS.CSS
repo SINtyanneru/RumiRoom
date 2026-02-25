@@ -1,0 +1,25 @@
+.HLS_VIDEO {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 5px double #333333;
+    width: 1000px;
+    height: 560px;
+    background-color: aquamarine;
+    position:absolute;
+    top: 0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;//ここまで6行 要素を真ん中に配置する
+}
+.ETC_VIDEO{
+    position:absolute;
+    top: 1000;
+    left: 0;
+    right: 0;
+    background-color: rgb(83, 255, 198);
+}
+
+body{
+    background-color: rgb(92, 187, 155);
+}

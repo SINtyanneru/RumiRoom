@@ -1,0 +1,67 @@
+<div class="wrapper" id="logo">
+<H1>学校やだああああああああああああああああああ</H1>
+<H1>Fuck!!!!!!!Сука Блядь!!!!!!</H1>
+<H1>学校滅べええ！！！！！</H1>
+</div>
+
+<STYLE>
+	html, body, .wrapper, svg {
+    width: 100%;
+    height: 100%;
+}
+body {
+    margin: 0;
+    position: relative;
+}
+.wrapper {
+    box-sizing: border-box;
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</STYLE>
+
+<SCRIPT>
+// あらかじめgetUserMediaのポリフィルが読み込まれています
+// https://github.com/lig-dsktschy/ligfes20160426/blob/gh-pages/01/js/getusermedia-commented.js
+
+'use strict';
+
+var ctx, analyser, frequencies, getByteFrequencyDataAverage, elLogo, draw;
+
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+ctx = new AudioContext();
+
+analyser = ctx.createAnalyser();
+frequencies = new Uint8Array(analyser.frequencyBinCount);
+
+getByteFrequencyDataAverage = function() {
+    analyser.getByteFrequencyData(frequencies);
+    return frequencies.reduce(function(previous, current) {
+        return previous + current;
+    }) / analyser.frequencyBinCount;
+};
+
+navigator.mediaDevices.getUserMedia({audio: true})
+    .then(function(stream) {
+        window.hackForMozzila = stream;
+        ctx.createMediaStreamSource(stream)
+          // AnalyserNodeに接続
+          .connect(analyser);
+    })
+    .catch(function(err) {
+        console.log(err.message);
+    });
+
+// 角度を変更する要素
+elLogo = document.getElementById('logo');
+// 可能な限り高いフレームレートで音量を取得し、角度に反映する
+(draw = function() {
+    // rotateの範囲である0deg〜360degに変換
+    var deg = (getByteFrequencyDataAverage() / 255 * 360) + 'deg';
+    elLogo.style.transform = 'rotateZ(' + deg + ')';
+    requestAnimationFrame(draw);
+})();
+</SCRIPT>

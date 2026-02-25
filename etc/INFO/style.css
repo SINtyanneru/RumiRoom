@@ -1,0 +1,35 @@
+body{
+	margin: 0px;
+}
+
+.HEADER{
+	border-bottom: solid 1px;
+}
+
+.CONTENTS{
+	margin: 10px;
+
+	border: solid 1px;
+}
+
+.CONTENTS > .TITLE{
+	background-color: darkgray;
+	color: white;
+
+	border-bottom: solid 1px;
+}
+
+.HELP_POP{
+	position: fixed;
+	top: 0px;
+	left: 0px;
+
+	border: solid 1px;
+	border-radius: 10px;
+
+	background-color: white;
+}
+
+.OS_IMAGE{
+	height: 200px;
+}

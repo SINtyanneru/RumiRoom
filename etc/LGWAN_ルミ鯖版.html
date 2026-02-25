@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>LGWANのやつが面白すぎたので自作した</TITLE>
+
+		<STYLE>
+			:root{
+				--CANVAS_WIDTH: 1169px;
+				--CANVAS_HEIGHT: 600px;
+			}
+
+			body{
+				background-color: aqua;
+			}
+
+			.CONTENTS{
+				width: var(--CANVAS_WIDTH);
+				height: var(--CANVAS_HEIGHT);
+
+				background-color: white;
+			}
+
+			.REINBOU{
+				background: linear-gradient(90deg, rgba(255,0,0,1), rgba(255,134,0,1), rgba(251,255,0,1), rgba(0,255,6,1), rgba(1,0,255,1));
+				background-clip: text;
+				-webkit-text-fill-color: transparent;
+				
+				width: fit-content;
+			}
+
+			.HONMONO{
+				position: absolute;
+				top: 360px;
+				left: calc(var(--CANVAS_WIDTH) - 300px);
+
+				border: solid 1px black;
+				border-radius: 10px;
+
+				width: fit-content;
+
+				padding: 10px;
+				padding-left: 50px;
+				padding-right: 50px;
+
+				background-color: red;
+				color: white;
+
+				font-size: 40px;
+				font-weight: 600;
+			}
+
+			.YAZHIRUSHI{
+				position: absolute;
+				top: 150px;
+				left: calc(var(--CANVAS_WIDTH) - 200px);
+
+				font-size: 250px;
+				color: red;
+			}
+			
+			.DESC{
+				position: absolute;
+				top: calc(var(--CANVAS_HEIGHT) - 150px);
+
+				font-size: 40px;
+			}
+
+			.CENTER{
+				margin: auto;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<DIV CLASS="CONTENTS">
+			<DIV CLASS="REINBOU CENTER" STYLE="font-size: 120px;">LANケーブル</DIV>
+			<DIV CLASS="REINBOU CENTER" STYLE="font-size: 90px;">(自宅鯖専用ネットワーク)</DIV>
+			<DIV CLASS="REINBOU CENTER" STYLE="font-size: 90px;">絶対触れるな！</DIV>
+
+			<DIV CLASS="HONMONO">(本物)</DIV>
+			<DIV CLASS="YAZHIRUSHI">➡</DIV>
+
+			<DIV CLASS="DESC">
+				<DIV>
+					るみ鯖等の顧客2人程度が使用中！！
+				</DIV>
+				<DIV STYLE="color: rgb(32, 73, 255);">
+					全ての顧客が困る！
+				</DIV>
+				<DIV STYLE="color: blueviolet;">
+					絶対に　LANケーブル　抜くな！　切るな！！
+				</DIV>
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>

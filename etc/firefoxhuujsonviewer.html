@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>FireFox風JSONビュワー</TITLE>
+
+		<STYLE>
+			.JSON_VIEWER_ITEM{
+			}
+			.JSON_VIEWER_ITEM:hover{
+				background-color: #0074e8;
+			}
+
+			.JSON_VIEWER_KEY{
+				color: #4b9def;
+			}
+
+			.JSON_VIEWER_VAL{
+			}
+
+			.JSON_VIEWER_CHILD{
+				margin-left: 30px;
+			}
+
+			.JSON_VIEWER_STRING{
+				color: pink;
+			}
+
+			.JSON_VIEWER_INT{
+				color: #52af4f;
+			}
+
+			.JSON_VIEWER_BOOL{
+				color: #52af4f;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+
+	</BODY>
+</HTML>
+<SCRIPT>
+	const DATA = {
+					"a": "b",
+					"c": 256,
+					"users": [
+						{
+							"id": 1,
+							"name": "Alice",
+							"email": "alice@example.com",
+							"roles": ["admin", "editor"],
+							"active": true,
+							"profile": {
+								"age": 30,
+								"country": "USA",
+								"preferences": {
+									"theme": "dark",
+									"notifications": true
+								}
+							}
+						},
+						{
+							"id": 2,
+							"name": "Bob",
+							"email": "bob@example.com",
+							"roles": ["viewer"],
+							"active": false,
+							"profile": {
+								"age": 25,
+								"country": "Japan",
+								"preferences": {
+									"theme": "light",
+									"notifications": false
+								}
+							}
+						}
+					],
+					"settings": {
+						"version": "1.0.0",
+						"enableFeatureX": true,
+						"lastUpdated": "2024-12-26T10:00:00Z"
+					}
+				};
+
+	document.body.innerHTML += "<TABLE>" + GenJSONViewer(DATA, "", 0) + "</TABLE>";
+
+	function GenJSONViewer(DATA, KEY, LEVEL) {
+		const MARGIN_LEFT = LEVEL * 20;
+		let HTML = "";
+
+		Object.keys(DATA).forEach(KEY => {
+			if (typeof DATA[KEY] === "object") {
+				//連想配列
+				HTML += `
+					<TR CLASS="JSON_VIEWER_ITEM" data-key="${KEY}" data-level="${LEVEL}">
+						<TD CLASS="JSON_VIEWER_KEY"><SPAN STYLE="margin-left: ${MARGIN_LEFT}px;">${KEY}:</SPAN></TD>
+						<TD CLASS="JSON_VIEWER_VAL">
+							{↓}
+						</TD>
+					</TR>
+					${GenJSONViewer(DATA[KEY], KEY, LEVEL + 1)}
+				`;
+			} else {
+				//値
+				let VAL_HTML = "";
+				switch (typeof DATA[KEY]) {
+					case "string": {
+						VAL_HTML = `<TD CLASS="JSON_VIEWER_VAL JSON_VIEWER_STRING">${DATA[KEY]}</TD>`;
+						break;
+					}
+
+					case "bigint":
+					case "number": {
+						VAL_HTML = `<TD CLASS="JSON_VIEWER_VAL JSON_VIEWER_INT">${DATA[KEY]}</TD>`;
+						break;
+					}
+
+					case "boolean": {
+						if (DATA[KEY]) {
+							VAL_HTML = `<TD CLASS="JSON_VIEWER_VAL JSON_VIEWER_BOOL">true</TD>`;
+						} else {
+							VAL_HTML = `<TD CLASS="JSON_VIEWER_VAL JSON_VIEWER_BOOL">false</TD>`;
+						}
+						break;
+					}
+
+					case "undefined": {
+						VAL_HTML = `<TD CLASS="JSON_VIEWER_VAL JSON_VIEWER_NULL">null</TD>`;
+					}
+				}
+
+				HTML += `
+					<TR CLASS="JSON_VIEWER_ITEM" data-key="${KEY}" data-level="${LEVEL}">
+						<TD CLASS="JSON_VIEWER_KEY"><SPAN STYLE="margin-left: ${MARGIN_LEFT}px;">${KEY}:</SPAN></TD>
+						${VAL_HTML}
+					</TR>
+				`;
+			}
+		});
+		return HTML;
+	}
+</SCRIPT>

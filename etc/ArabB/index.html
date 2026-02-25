@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>アラビアンな文章をプレゼンテーションフォルムスBに変換するやつ</TITLE>
+	</HEAD>
+	<BODY>
+		<H1>アラビアンな文章をプレゼンテーションフォルムスBに変換するやつ</H1>
+		<HR>
+		<TEXTAREA ID="EL_TEXT" STYLE="width: 100%; height: 200px; border: solid 1px; resize: none;"></TEXTAREA>
+		<BR>
+		<BUTTON onclick="CONV();">↓変換↓</BUTTON>
+		<BR>
+		<TEXTAREA ID="EL_CONVERT_TEXT" STYLE="width: 100%; height: 200px; border: solid 1px; overflow: auto;" readonly></TEXTAREA>
+
+		<DETAILS>
+			<SUMMARY>説明</SUMMARY>
+			アラビア文字を正しく表示できない環境でも表示できるようにするやつに変換するものです！<BR>
+			対応文字は「アラビア文字」「ペルシャ文字」です。<BR>
+			私のコードが間違えていなければ正しく変換できます、対応していない文字はそのまま出力します。<BR>
+			<BR>
+			Q.APIとして使いたい<BR>
+			A.http://rumi-room.net/etc/ArabB/conv.phpにPOSTで文字列を送信してください、プレーンテキストでいいです、<BR>
+			<A HREF="./CONVERT_LIST.json">CONVERT_LIST.json</A>に文字の相互表があります、ご自由にお使いください<BR>
+		</DETAILS>
+	</BODY>
+</HTML>
+<SCRIPT>
+	async function CONV(){
+		let AJAX = await fetch("./conv.php", {
+			method:"POST",
+			body:EL_TEXT.value
+		});
+		if(AJAX.ok){
+			EL_CONVERT_TEXT.value = await AJAX.text();
+		} else {
+			EL_CONVERT_TEXT.value = "エラー";
+		}
+	}
+</SCRIPT>

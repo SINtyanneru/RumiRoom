@@ -1,0 +1,32 @@
+<TITLE>HLSのテスト(VIDEOTUBE => RumiVIDEO V2.0)</TITLE>
+<!--RBA(AHRC)がいなくなっちゃった！-->
+<?php
+/**
+ * ==================================SQLからブログのデータを取得
+ */
+// データベースに接続するために必要なデータソースを変数に格納
+// mysql:host=ホスト名;dbname=データベース名;charset=文字エンコード
+$dsn = 'mysql:host=192.168.0.130;dbname=RumiVideo;charset=utf8';
+$user = 'user';// データベースのユーザー名
+$password = 'sin1234zxntv';// データベースのパスワード
+// tryにPDOの処理を記述
+try {
+  // PDOインスタンスを生成
+  $dbh = new PDO($dsn, $user, $password);
+// エラー（例外）が発生した時の処理を記述
+} catch (PDOException $e) {
+  // 強制終了
+  exit;
+}
+
+// SELECT文を変数に格納
+$sql = "SELECT * FROM `Video_Data` ORDER BY `Video_Data`.`DATE` DESC ";
+ 
+// SQLステートメントを実行し、結果を変数に格納
+$stmt = $dbh->query($sql);
+ 
+// foreach文で配列の中身を一行ずつ出力
+foreach ($stmt as $row) {
+  echo "<a href='./view.php?ID=".$row['ID']."'>".$row['TITLE']."</a><BR>";
+}
+?>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>言語マップ</TITLE>
+	</HEAD>
+	<BODY>
+		<CANVAS ID="CANVAS"></CANVAS>
+	</BODY>
+</HTML>
+<script>
+	// Canvas要素の取得
+	let canvas = document.getElementById('CANVAS');
+	let context = canvas.getContext('2d');
+
+	//マウスの座標
+	let mouseX, mouseY;
+
+	// ポリゴンの座標配列
+	var polygonPoints = [
+		{ x: 0, y: 0 },
+		{ x: 50, y: 0 },
+		{ x: 50, y: 50 },
+		{ x: 55, y: 60 },
+		{ x: 60, y: 80 },
+		{ x: 0, y: 50 },
+		{ x: 0, y: 0 },
+	];
+
+	// ポリゴンを描画する関数
+	function drawPolygon(POINTS, X, Y) {
+		context.beginPath();
+		context.moveTo(POINTS[0].x + X, POINTS[0].y + Y);
+
+		for (let i = 1; i < POINTS.length; i++) {
+			context.lineTo(POINTS[i].x + X, POINTS[i].y + Y);
+		}
+
+		// ポリゴンを閉じる
+		context.closePath();
+
+		// マウスがポリゴン内にあるかどうかを検出
+		if (context.isPointInPath(mouseX, mouseY)) {
+			context.fillStyle = "rgba(0, 255, 0, 1)"; // マウスがポリゴン内にある場合の色
+		} else {
+			context.fillStyle = "rgba(0, 200, 0, 1)";
+		}
+			
+		context.fill();
+
+		// ポリゴンの輪郭を描く
+		context.lineWidth = 1;
+		context.strokeStyle = '#000';
+		context.stroke();
+	}
+
+	// マウスが移動したときの処理
+	canvas.addEventListener('mousemove', function (event) {
+		mouseX = event.clientX - canvas.getBoundingClientRect().left;
+		mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+		// ポリゴンを再描画
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		drawPolygon(polygonPoints, 10, 10);
+	});
+
+	// ポリゴンを描画
+	drawPolygon(polygonPoints, 10, 10);
+</script>

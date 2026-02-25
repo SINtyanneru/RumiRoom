@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>Aタグテスト</TITLE>
+	</HEAD>
+	<BODY>
+		<A HREF="./">概要</A>
+		<A HREF="./test">テスト</A>
+		<A HREF="https://rumiserver.com/">るみ鯖</A>
+	</BODY>
+</HTML>
+<SCRIPT>
+	window.addEventListener("click", (E) => {
+		E.preventDefault();
+		if(E.target.tagName.toUpperCase() === "A"){
+			//Aタグ検知
+			const URI = new URL(E.target.href)
+
+			//URLのホスト名が一致するか
+			if(URI.host === window.location.host){
+				//すでに開いている(pathが同じ)なら開かない
+				if(URI.pathname !== window.location.pathname){
+					//一致
+					OPEN_URI(URI.href);
+				}
+			} else {
+				//違うので新しいタブで開く
+				window.open(URI.href, "_blank");
+			}
+		}
+	});
+
+	function OPEN_URI(URI){
+		//URL書き換え
+		history.pushState("", "", URI);
+	}
+</SCRIPT>

@@ -1,0 +1,53 @@
+<H1>[<?php echo $_GET['word']; ?>]の検索結果</H1>
+<?php
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
+
+//変数
+$hit_count = 0;
+$Serach_hit_index = array();
+?>
+
+<?php
+/**
+ * ==================================SQLからブログのデータを取得
+ */
+// データベースに接続するために必要なデータソースを変数に格納
+// mysql:host=ホスト名;dbname=データベース名;charset=文字エンコード
+$dsn = 'mysql:host=192.168.0.130;dbname=RumiVideo;charset=utf8';
+$user = 'user';// データベースのユーザー名
+$password = 'sin1234zxntv';// データベースのパスワード
+// tryにPDOの処理を記述
+try {
+  // PDOインスタンスを生成
+  $dbh = new PDO($dsn, $user, $password);
+// エラー（例外）が発生した時の処理を記述
+} catch (PDOException $e) {
+  // 強制終了
+  exit;
+}
+
+// SELECT文を変数に格納
+$sql = "SELECT * FROM `Video_Data` ORDER BY `Video_Data`.`DATE` DESC ";
+ 
+// SQLステートメントを実行し、結果を変数に格納
+$stmt = $dbh->query($sql);
+ 
+// foreach文で配列の中身を一行ずつ出力
+foreach ($stmt as $row) {
+    if(strpos($row['TITLE'],$_GET['word']) !== false){
+        $hit_count++;
+        if (file_exists($_SERVER['DOCUMENT_ROOT']."/Data_Server/DATA/RumiVideo/thumbnail/".$row['ID'].".png")) {
+            array_push($Serach_hit_index, "<DIV class='Serach_index' style='border: solid;'><a href='./view.php?ID=".$row['ID']."'><IMG src='/Data/DATA/RumiVideo/thumbnail/".$row['ID'].".png' width='500'>".$row['TITLE']."</a></DIV>");
+        }else{
+            array_push($Serach_hit_index, "<DIV class='Serach_index' style='border: solid;'><a href='".$row['ID']."'><IMG src='/Data/DATA/RumiVideo/thumbnail/!error.png' width='500'>".$row['TITLE']."</a></DIV>");
+        }
+    }
+}
+?>
+<?php
+echo "ヒット数:".$hit_count."<HR>";
+foreach ($Serach_hit_index as $hit_index) {
+    echo $hit_index;
+}
+?>

@@ -1,0 +1,67 @@
+body{
+    background-color: aquamarine;
+}
+.upload{
+    text-align:center;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+/*Input*/
+.upload>form>input[type="text"] {
+    transition: 0.5s ;
+    border: 1px solid #999;
+    width: 500;
+}
+.upload>form>input[type="text"]:hover {
+    transition: 0.5s ;
+    border: 1px solid rgb(21, 255, 177);
+    outline: 0;
+}
+.upload>form>input[type="text"]:focus {
+    transition: 0.5s ;
+    border: 1px solid rgb(21, 255, 177);
+    background-color: rgb(21, 255, 177);
+    outline: 0;
+}
+/*Textarea*/
+.upload>form>textarea {
+    transition: 0.5s ;
+    border: 1px solid #999;
+    width: 500;
+    height: 200;
+}
+.upload>form>textarea:hover {
+    transition: 0.5s ;
+    border: 1px solid rgb(21, 255, 177);
+    outline: 0;
+}
+.upload>form>textarea:focus {
+    transition: 0.5s ;
+    border: 1px solid rgb(21, 255, 177);
+    background-color: rgb(21, 255, 177);
+    outline: 0;
+}
+/*Submit*/
+.submit{
+    transition: 0.5s ;
+    width: 500;
+    height: 30;
+    background-color: #999;
+    border: 1px solid #999;
+}
+.submit:hover{
+    transition: 0.5s ;
+    background-color: rgb(21, 255, 177);
+    border: 1px solid rgb(21, 255, 177);
+}
+/*File*/
+.upload>form>input[type="file"] {
+    transition: 0.5s ;
+    border: 1px solid #999;
+    width: 500;
+}
+.upload>form>input[type="file"]:hover {
+    transition: 0.5s ;
+    border: 1px solid rgb(21, 255, 177);
+    background-color: rgb(21, 255, 177);
+    outline: 0;
+}

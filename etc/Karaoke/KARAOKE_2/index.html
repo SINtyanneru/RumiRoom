@@ -1,0 +1,153 @@
+<HTML>
+	<HEAD>
+		<TITLE>カラオケみたいなあれ V2</TITLE>
+	</HEAD>
+	<BODY>
+		<a HREF="../KARAOKE/index.html">例のアレ</a>のバージョン2です！<BR>
+		変わったところ<BR>
+		・字幕のあれがるみビデオのと同じになった<BR>
+		・がめんがでかくなった<BR>
+		・なんか、、こう、、すごくなった<BR>
+		<HR>
+		曲選択↓<BR>
+		<SELECT CLASS="MUSIC_SELECT" ID="MUSIC_SELECT">
+			<OPTION VALUE="TIEN_QUAN_CA">Tiến Quân Ca(ベトナム国歌)</OPTION>
+		</SELECT>
+		<DIV CLASS="DISPLAY" ID="DISPLAY"></DIV>
+		<INPUT TYPE="RANGE" CLASS="SEEK_BAR" ID="SEEK_BAR" MIN="0" MAX="100" VALUE="0">
+		<BR>
+		<R ID="VALUE_DISPLAY">0:0.0</R><BUTTON onclick="PLAY();">再生</BUTTON><BUTTON onclick="MUSIC.pause();">停止</BUTTON>
+	</BODY>
+</HTML>
+<STYLE>
+	.DISPLAY{
+		border: solid 1px;
+
+		width: 1080px;
+		height: 720px;
+
+		text-align: center;
+	}
+
+	.DISPLAY > div{
+		
+	}
+
+	.MUSIC_SELECT{
+		border: solid 1px;
+		border-bottom: none;
+
+		width: 1082px;
+	}
+</STYLE>
+<SCRIPT>
+	let MUSIC_SELECT = document.getElementById("MUSIC_SELECT");
+	let DISPLAY = document.getElementById("DISPLAY");
+	let MUSIC = new Audio();
+	let SUBTITLES = [];
+	
+	function PLAY(){
+		let ajax = new XMLHttpRequest();
+		ajax.open("GET", "./DATA/" + MUSIC_SELECT.value + "/TEXT.json");
+		ajax.addEventListener("load", (e)=>{
+			SUBTITLES = JSON.parse(ajax.responseText);
+
+			setInterval(showSubtitle, 100);
+
+			MUSIC.src = "./DATA/" + MUSIC_SELECT.value + "/MUSIC.mp3";
+			MUSIC.play();
+		});
+		ajax.send()
+	}
+
+	function showSubtitle() {
+		const CT = MUSIC.currentTime;
+		const subtitle = SUBTITLES.find(subtitle => CT >= subtitle.START && CT < subtitle.START + subtitle.DUR);
+		if(subtitle){
+			//フォントサイズ
+			let FONT_SIZE;
+			if(subtitle.SIZE == "NONE"){
+				FONT_SIZE = "";
+			}else{
+				FONT_SIZE = "font-size: " + subtitle.SIZE + ";";
+			}
+			//フォントサイズ
+			let FONT_POS;
+			if(subtitle.P_X == "NONE" && subtitle.P_Y == "NONE"){
+				FONT_POS = "";
+			}else{
+				FONT_POS = "position: absolute; top: " + subtitle.P_Y + "; left: " + subtitle.P_X + ";";
+			}
+			//回転
+			let FONT_ROTATE = "transform: rotateX(" + subtitle.R_X + "deg) rotateY(" + subtitle.R_Y + "deg) rotateZ(" + subtitle.R_Z + "deg);";
+			//字幕を表示
+			DISPLAY.innerHTML = "<DIV STYLE=\"" + FONT_SIZE + FONT_POS + FONT_ROTATE + "\">" + subtitle.TEXT.replace(/\n/g, "<BR>"); + "</DIV>";
+		}else{
+			DISPLAY.innerHTML = '';
+		}
+	}
+</SCRIPT>
+
+<!--Controller-->
+<STYLE>
+	.SEEK_BAR {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 1080px;
+		height: 5px;
+		border-radius: 0px;
+		background-color: rgb(222, 222, 222);
+		outline: none;
+	}
+	.SEEK_BAR::-webkit-slider-thumb,.SEEK_BAR::-moz-range-thumb{
+		-webkit-appearance: none;
+		appearance: none;
+		width: 5px;
+		height: 10px;
+		border-radius: 0;
+		border-width: 0px;
+		background-color: #ff0000;
+		cursor: pointer;
+		transform: rotate(0deg)
+	}
+</STYLE>
+	
+<SCRIPT>
+	let SEEK_BAR = document.getElementById("SEEK_BAR");//RANGEをここに
+	let VALUE_DISPLAY = document.getElementById("VALUE_DISPLAY");
+
+	//シークバーの値が変わった時にここが実行される(らしい)
+	SEEK_BAR.addEventListener("input", function() {
+		SEEK_BAR_UPDATE();
+
+		MUSIC.currentTime = (SEEK_BAR.value / 100) * MUSIC.duration;
+	});
+
+	//ページ読み込み完了時にここが実行される
+	window.addEventListener("load", (e)=>{
+		SEEK_BAR_UPDATE();
+	});
+
+	MUSIC.addEventListener('timeupdate', (e)=>{
+		//currentTimeを取得する
+		const CT = MUSIC.currentTime;
+
+		//時間を計算する
+		const VIDEO_H = Math.floor(CT / 3600);
+		//分数を計算する
+		const VIDEO_M = Math.floor(CT / 60);
+		//秒数を計算する
+		const VIDEO_S = Math.floor(CT % 60);
+
+		VALUE_DISPLAY.innerHTML = VIDEO_H + ":" + VIDEO_M + "." + VIDEO_S;
+
+		SEEK_BAR.value = (MUSIC.currentTime / MUSIC.duration) * 100;
+		SEEK_BAR_UPDATE();
+	});
+
+	//シークバーをアップデートする関数
+	function SEEK_BAR_UPDATE(){
+		const VALUE = (SEEK_BAR.value - SEEK_BAR.min) / (SEEK_BAR.max - SEEK_BAR.min) * 100;//シークバーの値(0～100)
+		SEEK_BAR.style.background = `linear-gradient(to right, #ff0000 0%, #ff0000 ${VALUE}%, #ddd ${VALUE}%, #ddd 100%)`;//シークバーの背景色(ここでYoutubeとかでよくあるあれをしている)
+	}
+</SCRIPT>

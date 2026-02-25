@@ -1,0 +1,11 @@
+.RESULT{
+	word-wrap: break-word;
+
+	width: 100%;
+	height: fit-content;
+
+	overflow: scroll;
+
+	background-color: black;
+	color: white;
+}

@@ -1,0 +1,34 @@
+[
+	{
+		"ID": "HIRAGANA",
+		"NAME": "ひらがな"
+	},
+	{
+		"ID": "KATAKANA",
+		"NAME": "カタカナ"
+	},
+	{
+		"ID": "KANZHI",
+		"NAME": "漢字"
+	},
+	{
+		"ID": "LATIN",
+		"NAME": "ラテン文字"
+	},
+	{
+		"ID": "KILIL",
+		"NAME": "キリル文字"
+	},
+	{
+		"ID": "RUMI",
+		"NAME": "るみ文字"
+	},
+	{
+		"ID": "SHOO",
+		"NAME": "ショー文字"
+	},
+	{
+		"ID": "HIELOGLIH",
+		"NAME": "ヒエログリフ"
+	}
+]

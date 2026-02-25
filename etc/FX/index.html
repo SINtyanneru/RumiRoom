@@ -1,0 +1,74 @@
+<HTML>
+	<HEAD>
+		<TITLE>FX的な</TITLE>
+	</HEAD>
+	<BODY>
+		<CANVAS CLASS="GRAPH" ID="GRAPH"></CANVAS>
+	</BODY>
+</HTML>
+
+<STYLE>
+	body{
+		margin: 0px;
+	}
+
+	.GRAPH{
+		background-color: black;
+
+		width: 100vw;
+		height: 100vh;
+	}
+</STYLE>
+
+<SCRIPT>
+	let GRAPH = document.getElementById("GRAPH");
+	let CTX = GRAPH.getContext("2d");
+
+	GRAPH.width = window.innerWidth;
+	GRAPH.height = window.innerHeight
+
+	const DATAS = [
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8,
+		9,
+		10,
+		-15,
+		-50
+	];
+
+	async function DRAW(){
+		CTX.beginPath();
+		let TEMP_INT = GRAPH.height / 2;
+		for (let I = 0; I < DATAS.length; I++) {
+			const DATA = DATAS[I];
+			if(DATA > DATAS[I - 1]){
+				CTX.fillStyle = "GREEN";
+			}else{
+				CTX.fillStyle = "RED";
+			}
+
+			if(DATAS[I - 1] !== undefined){
+				console.log(DATAS[I - 1] > 0, DATAS[I]);
+				if(DATAS[I - 1] > 0){
+					TEMP_INT = TEMP_INT - (+DATAS[I - 1]);
+				}else if(DATAS[I - 1] < 0){
+					TEMP_INT = TEMP_INT + (-DATAS[I - 1]);
+				}
+				
+			}
+
+			CTX.fillRect(I * 10, TEMP_INT, 10, -DATA);
+			
+		}
+	}
+
+	setInterval(() => {
+		DRAW();
+	}, 100);
+</SCRIPT>

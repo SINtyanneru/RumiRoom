@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>zstd wasm streaming demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        margin: 0;
+        padding: 1rem 1.5rem 3rem;
+        background: #f5f5f7;
+        color: #111;
+      }
+      h1 {
+        font-size: 1.3rem;
+        margin-bottom: 0.25rem;
+      }
+      .card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1rem 1.2rem;
+        margin-top: 1rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      }
+      textarea {
+        width: 100%;
+        min-height: 120px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        resize: vertical;
+      }
+      button {
+        appearance: none;
+        border: none;
+        border-radius: 999px;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 500;
+        margin-right: 0.4rem;
+      }
+      button.secondary {
+        background: #e5e7eb;
+        color: #111;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        margin-top: 0.5rem;
+      }
+      .label {
+        font-size: 0.8rem;
+        color: #555;
+        margin-top: 0.3rem;
+      }
+      .mono {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 0.8rem;
+      }
+      .status {
+        font-size: 0.85rem;
+        margin-top: 0.4rem;
+      }
+      .status.ok {
+        color: #15803d;
+      }
+      .status.err {
+        color: #b91c1c;
+      }
+      .small {
+        font-size: 0.8rem;
+        color: #666;
+      }
+      input[type="number"] {
+        width: 4rem;
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 0.85rem;
+      }
+      .output-box {
+        background: #0f172a;
+        color: #e5e7eb;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        overflow-x: auto;
+        max-height: 200px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>zstd wasm streaming demo</h1>
+    <p class="small">
+      `zstd_wasm.c` + Web Streams によるブラウザ用 Zstandard 圧縮/解凍デモ
+    </p>
+
+    <div class="card">
+      <h2 style="font-size: 1.1rem; margin-top: 0">テキスト圧縮/解凍</h2>
+      <label class="label" for="inputText">入力テキスト</label>
+      <textarea id="inputText">Hello Zstandard via WebAssembly!</textarea>
+
+      <div class="row">
+        <div class="small">圧縮レベル:</div>
+        <input type="number" id="level" min="1" max="22" value="3" />
+        <button id="btnCompress">圧縮</button>
+        <button id="btnDecompress" class="secondary" disabled>解凍</button>
+      </div>
+
+      <div class="label" style="margin-top: 0.8rem">
+        圧縮結果 (バイナリ情報)
+      </div>
+      <div class="output-box mono" id="compressedInfo">
+        まだ圧縮していません
+      </div>
+
+      <div class="label" style="margin-top: 0.8rem">解凍結果テキスト</div>
+      <textarea id="outputText" readonly></textarea>
+
+      <div id="status" class="status"></div>
+    </div>
+
+    <script type="module">
+      import zstd_init from "./zstd.js";
+
+      const statusEl = document.getElementById("status");
+      const inputTextEl = document.getElementById("inputText");
+      const outputTextEl = document.getElementById("outputText");
+      const levelEl = document.getElementById("level");
+      const btnCompress = document.getElementById("btnCompress");
+      const btnDecompress = document.getElementById("btnDecompress");
+      const compressedInfoEl = document.getElementById("compressedInfo");
+
+      let zstd;
+      let lastCompressedBlob = null;
+
+      function setStatus(msg, kind = "ok") {
+        statusEl.textContent = msg;
+        statusEl.className = "status " + (kind === "err" ? "err" : "ok");
+      }
+
+      async function init() {
+        try {
+          setStatus("WASM を初期化中...", "ok");
+          zstd = await zstd_init();
+          setStatus(
+            "初期化完了。テキストを入力して圧縮してみてください。",
+            "ok"
+          );
+        } catch (e) {
+          console.error(e);
+          setStatus("初期化に失敗しました: " + e.message, "err");
+          btnCompress.disabled = true;
+          btnDecompress.disabled = true;
+        }
+      }
+
+      async function compressText() {
+        if (!zstd) return;
+        const text = inputTextEl.value ?? "";
+        const level = Number(levelEl.value) || 3;
+
+        const encoder = new TextEncoder();
+        const data = encoder.encode(text);
+
+        const rs = new ReadableStream({
+          start(controller) {
+            controller.enqueue(data);
+            controller.close();
+          },
+        });
+
+        const cs = rs.pipeThrough(new zstd.Compresser(level));
+
+        setStatus("圧縮中...", "ok");
+        try {
+          const compressedBlob = await new Response(cs).blob();
+          lastCompressedBlob = compressedBlob;
+          btnDecompress.disabled = false;
+
+          const arrayBuf = await compressedBlob.arrayBuffer();
+          const bytes = new Uint8Array(arrayBuf);
+
+          compressedInfoEl.textContent = [
+            `バイト数: ${bytes.length}`,
+            `先頭16バイト(hex): ${Array.from(bytes.slice(0, 16))
+              .map((b) => b.toString(16).padStart(2, "0"))
+              .join(" ")}`,
+          ].join("\n");
+
+          setStatus("圧縮完了", "ok");
+        } catch (e) {
+          console.error(e);
+          setStatus("圧縮に失敗しました: " + e.message, "err");
+        }
+      }
+
+      async function decompressLast() {
+        if (!zstd || !lastCompressedBlob) return;
+
+        setStatus("解凍中...", "ok");
+        try {
+          const ds = new zstd.Decompresser();
+          const decompressedStream = lastCompressedBlob
+            .stream()
+            .pipeThrough(ds);
+          const decompressedBlob = await new Response(
+            decompressedStream
+          ).blob();
+          const text = await decompressedBlob.text();
+          outputTextEl.value = text;
+          setStatus("解凍完了", "ok");
+        } catch (e) {
+          console.error(e);
+          setStatus("解凍に失敗しました: " + e.message, "err");
+        }
+      }
+
+      btnCompress.addEventListener("click", () => {
+        compressText();
+      });
+      btnDecompress.addEventListener("click", () => {
+        decompressLast();
+      });
+
+      init();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<HTML>
+	<HEAD>
+		<TITLE>今までありがとうございました。</TITLE>
+
+		<LINK REL="stylesheet" HREF="./style.css">
+
+		<meta name="viewport" content="width=device-width,iniial- scale=1">
+	</HEAD>
+	<BODY>
+		<DIV class="PARENT" id="PARENT">
+			<DIV class="AREA">
+				<DIV class="WELCOME" id="WELCOME">
+					<DIV class="WELCOME_TEXT" id="WELCOME_TEXT">
+						いままで
+						<BR>
+						ありがとうございました！
+					</DIV>
+	
+					<DIV style="position: absolute; bottom: 10px; left: calc(100vw / 2 - 55px); text-align: center;">
+						スクロール
+						<BR>
+						↓↓↓↓↓↓↓↓
+					</DIV>
+				</DIV>
+			</DIV>
+			<DIV class="AREA">
+				<DIV class="CONTENTS" id="CONTENTS">
+					中学3年間でしたが、<BR>
+					小学6年生ぐらい長く感じました。。。。<BR>
+					たぶんそれぐらい充実してたということですね、<BR>
+					まあそれは良いとして、以下に各先生へのありがとうのメッセージを置いときます。。。。。。<BR>
+					<DIV class="MSG_DIV" id="MSG_DIV" style="border: solid; height: 50vh;">
+						<BUTTON onclick="MSG_CH('CLASS');">担任の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('MATH');">数学の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('JPL');">国語の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('SCE');">理科の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('SOCIAL');">社会の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('HOME');">家庭科の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('PC');">技術の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('MUSIC');">音楽の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('ART');">美術の先生</BUTTON>
+						<BUTTON onclick="MSG_CH('SEX');">体育の先生</BUTTON>
+						<DIV style="border-top: solid;" class="MSG" id="MSG">
+							↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+							<BR>
+							上のボタンをして、見たいメッセージを選択してください。
+						</DIV>
+					</DIV>
+				</DIV>
+			</DIV>
+			<DIV class="AREA">
+				(ここから余談)<BR>
+				このサイトは、メッセージをJSONで管理しようとしたけどめんどくなって結局変数にしたサイト<BR>
+				1年生のときに、一回こういうのをやってるんですよね、、、なのでもう一回やりたいなって思ってしました。<BR>
+				前のときはQRコードに直接文字列を書き込んでいました。。。<BR>
+				でもそれだと場所をとるので、今回は特別にサイトを作成しました。<BR>
+				(ちなみに、URLの「/sinch/etc/SCHOOL/」を消せばわたしの他のサイトに行けたり、つまりドメインごと私のもの)<BR>
+				なお、数学の先生ように特別にサイトを作成しました、3年間で結構お世話になりましたからね、、、、<BR>
+				<BR>
+				さて、余談もこの辺にしておきます、それではまた合う日まで、、、、、<BR>
+			</DIV>
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+	window.addEventListener("load", (e)=>{
+		document.getElementById("WELCOME_TEXT").className = "WELCOME_TEXT_OPEN";
+	});
+
+	const MSG_LIST = {
+						"CLASS":{
+							"NAME":"担任の先生",
+							"MSG":"1年間お世話になりました！<BR>先生の面接練習のお陰で高校に受かりました、ありがとうございます！<BR>またどこかでお会いしましょう！"
+						},
+						"MATH":{
+							"NAME":"数学の先生",
+							"MSG":"数学の先生には、特別なサイトをご用意しています。。。。<BR><a href=\"./MATH/\">ここをクリック(タップ)してください</a>"
+						},
+						"JPL":{
+							"NAME":"国語の先生",
+							"MSG":"1年間ありがとうございました!<BR>提出物出せなくてすいません。。。。"
+						},
+						"SCE":{
+							"NAME":"理科の先生",
+							"MSG":"1年間ありがとうございました!<BR><!--공격전이다！-->"
+						},
+						"SOCIAL":{
+							"NAME":"社会科の先生",
+							"MSG":"1年間ありがとうございました!<BR>高校頑張ってきます٩( ‘ω’ )و"
+						},
+						"HOME":{
+							"NAME":"家庭科の先生",
+							"MSG":"1年間ありがとうございました!<BR>"
+						},
+						"PC":{
+							"NAME":"技術の先生",
+							"MSG":"1年間ありがとうございました!<BR>プログラミング教育がんばってください！"
+						},
+						"MUSIC":{
+							"NAME":"音楽の先生",
+							"MSG":"1年間ありがとうございました!<BR>"
+						},
+						"ART":{
+							"NAME":"美術の先生",
+							"MSG":"1年間ありがとうございました!<BR>"
+						},
+						"SEX":{
+							"NAME":"保健体育の先生",
+							"MSG":"実質3年間ありがとうございました!<BR>色々と話を聞いていただきありがとうございます、<BR>会社を成功させてみせます٩( ‘ω’ )و<BR>10年後楽しみにしていてください！<BR>(会社名は「合同会社るみしすてむ」です)"
+						}
+					};
+
+	function MSG_CH(ID){
+		document.getElementById("MSG").innerHTML = "<H1>" + MSG_LIST[ID].NAME + "</H1><HR>" + MSG_LIST[ID].MSG;
+	}
+</SCRIPT>

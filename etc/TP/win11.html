@@ -1,0 +1,61 @@
+<HTML>
+	<HEAD>
+		<TITLE>Time Progress</TITLE>
+	</HEAD>
+
+	<BODY>
+		<DIV class="LOADING">
+			<IMG src="./windows-loandig-cargando.gif" width="50">
+			<H2>あなたはそこに<R id="YP"></R>％です。</H2>
+			<H2>コンピューターの電源を入れたままにしてください。</H2>
+		</DIV>
+	</BODY>
+</HTML>
+<!--tenor.com https://media.tenor.com/V0vzeHv6LbwAAAAi/windows-loandig-cargando.gif-->
+<STYLE>
+body{
+	background-color: rgb(0, 0, 0);
+}
+
+.LOADING{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+
+	margin: auto;
+
+	user-select: none;
+
+	width: 50%;
+	height: 128px;
+
+	text-align: center;
+
+	color: white;
+}
+</STYLE>
+
+<SCRIPT>
+	window.addEventListener("load", (e)=>{
+		setInterval(()=>{
+			var FDAY = FULLDAY();
+			var YER_PRO_MATH = (FDAY / 365)*100;
+
+			document.getElementById("YP").innerHTML = Math.floor(YER_PRO_MATH);
+		},10)
+	});
+
+	function FULLDAY(){
+		date = new Date();
+		year = date.getFullYear();
+		if((year % 4 == 0 && year % 100 != 0 ) || year % 400 == 0) {
+			count = new Array(0,31,60,91,121,152,182,213,244,274,305,335);
+		}else{
+			count = new Array(0,31,59,90,120,151,181,212,243,273,304,334);
+		}
+		var date_count = count[date.getMonth()] + date.getDate();
+		return date_count;
+	}
+</SCRIPT>

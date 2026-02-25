@@ -1,0 +1,22 @@
+<HTML>
+	<HEAD>
+		<TITLE>画面サイズ</TITLE>
+	</HEAD>
+	<BODY>
+		<DIV CLASS="SIZE" ID="SIZE">
+
+		</DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT>
+	window.addEventListener("load", (e)=>{
+		document.getElementById("SIZE").innerHTML = "モニターサイズ：W" + screen.width + "/H" + screen.height+
+													"<BR>"+
+													"ブラウザーの表示領域(スクロールバー含む)：W" + window.innerWidth + "/H" + window.innerHeight+
+													"<BR>"+
+													"ブラウザーの表示領域(ブラウザ外周)：W" + window.outerWidth + "/H" + window.outerHeight+
+													"<BR>"+
+													"ブラウザーの表示領域：W" + document.body.clientWidth + "/H" + document.body.clientHeight;
+	});
+</SCRIPT>

@@ -1,0 +1,30 @@
+<HTML>
+	<HEAD>
+		<TITLE>技術デモ・カラオケ風のあれ</TITLE>
+	</HEAD>
+	<BODY>
+		<H1>技術デモ・カラオケ風のあれ</H1>
+		すべてHTML/JS/JSONで書かれています<BR>
+		<HR>
+		<SELECT class="SONG_SELECT" id="SONG_SELECT">
+			<OPTION value="GOD_DEFEND_NEW_ZEALAND">(ニュージーランドの国歌)God defend New zealand/神よニュージーランドを守り給え！</OPTION>
+			<OPTION value="VICTORY_SONG">勝利之歌(台湾)</OPTION>
+		</SELECT>
+		<BUTTON onclick="Start()">再生</BUTTON><INPUT type="range" id="SEEK_BAR" style="width: 500px;">
+		<BR><BR>
+		<DIV class="DISPLAY" id="DISPLAY" style="width: 800; height: 600; border: solid; text-align: center;"></DIV>
+		<DIV class="CONSOLE" id="CONSOLE" style="width: 500; height: 600; background-color: black; color: greenyellow;"></DIV>
+	</BODY>
+</HTML>
+
+<SCRIPT src="./Main.js"></SCRIPT>
+
+<STYLE>
+	.DISPLAY > H2{
+		font-weight: 100;
+	}
+
+	MASK_EMP{
+		font-weight: 900;
+	}
+</STYLE>
