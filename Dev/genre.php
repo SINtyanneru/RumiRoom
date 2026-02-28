@@ -23,7 +23,7 @@ if ($genre == false) {
 
 <BR>
 
-<DIV>
+<TABLE>
 	<?php
 	$stmt = $sql->prepare("
 	SELECT
@@ -38,8 +38,15 @@ if ($genre == false) {
 
 	foreach ($stmt->fetchAll() as $row) {
 		?>
-		<A HREF="/item/<?=$genre_id?>/<?=$row["ID"]?>"><?=$row["TITLE"]?></A>
+		<TR>
+			<TD>
+				<A HREF="/item/<?=$genre_id?>/<?=$row["ID"]?>"><?=$row["TITLE"]?></A>
+			</TD>
+			<TD>
+				<?=$row["CREATE_AT"]?>
+			</TD>
+		</TR>
 		<?php
 	}
 	?>
-</DIV>
+</TABLE>

@@ -19,13 +19,17 @@ $path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", par
 				margin: 0px;
 			}
 
-			table{
+			.MAIN_TABLE{
 				width: 100%;
 				height: 100%;
 			}
 
 			td{
 				vertical-align: top;
+			}
+
+			table{
+				margin: auto;
 			}
 
 			.MENU{
@@ -39,7 +43,7 @@ $path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", par
 		</STYLE>
 	</HEAD>
 	<BODY BGCOLOR="#003399" BACKGROUND="/Asset/Dev/pe16_bg.gif" TEXT="#99FF99" LINK="#FFFF66" VLINK="#CC99CC" ALINK="#00FF00">
-		<TABLE>
+		<TABLE CLASS="MAIN_TABLE">
 			<TR>
 				<TD CLASS="MENU">
 					<?php
