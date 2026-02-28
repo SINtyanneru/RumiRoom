@@ -58,6 +58,11 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 			<FRAME SRC="/menu.php?P=<?php echo $path ?>" NAME="MENU" noresize>
 			<FRAME SRC="/main.php?P=<?php echo $path ?>&R=<?=htmlspecialchars(json_encode($_GET))?>" NAME="MAIN" noresize>
 		</FRAMESET>
+		<NOFRAMES>
+			<BODY BGCOLOR="#003399" TEXT="#99FF990">
+				フレームに対応しているブラウザが必要です。
+			</BODY>
+		</NOFRAMES>
 	</FRAMESET>
 </HTML>
 <!--FRAMESETは非推奨？知らねえな-->
