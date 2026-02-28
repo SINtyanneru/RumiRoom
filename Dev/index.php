@@ -57,50 +57,16 @@ $path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", par
 					}
 					?>
 				</TD>
-				<TD CLASS="MENU">
-					<?php
-					$genre_id = "";
-
-					if (preg_match("#^/item/([^/]+)/?$#", $path, $mtc)) {
-						$genre_id = $mtc[1];
-					} else if (preg_match("#^/item/([^/]+)/([^/]+)/?$#", $path, $mtc)) {
-						$genre_id = $mtc[1];
-					}
-
-					$stmt = $sql->prepare("
-					SELECT
-						i.*,
-						g.NAME AS `GENRE_NAME`
-					FROM
-						`DEV_ITEM` AS i
-					JOIN
-						`DEV_GENRE` AS g
-						ON g.ID = i.GENRE
-					WHERE
-						i.GENRE = :GENRE;
-					");
-					$stmt->bindValue(":GENRE", $genre_id, PDO::PARAM_INT);
-					$stmt->execute();
-					$item_list = $stmt->fetchAll();
-					echo $item_list[0]["GENRE_NAME"]."<BR>";
-
-					foreach ($item_list as $row) {
-						?>
-						<A HREF="/item/<?=$genre_id?>/<?=$row["ID"]?>"><?=$row["TITLE"]?></A>
-						<?php
-					}
-					?>
-				</TD>
 				<TD CLASS="CONTENTS">
 					<IMG SRC="/Asset/Dev/pe16_l1.gif"><BR>
 
 					<?php
 					if ($path == "/") {
 						require(__DIR__."/top.html");
-					} else if (preg_match("#^/item/[^/]+/?$#", $path, $matches)) {
+					} else if (preg_match("#^/item/([^/]+)/?$#", $path, $mtc)) {
 						$genre_id = $mtc[1];
 						require(__DIR__."/genre.php");
-					} else if (preg_match("#^/item/([^/]+)/([^/]+)/?$#", $path, $matches)) {
+					} else if (preg_match("#^/item/([^/]+)/([^/]+)/?$#", $path, $mtc)) {
 						$genre_id = $mtc[1];
 						$item_id = $mtc[2];
 						require(__DIR__."/item.php");
