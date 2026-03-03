@@ -59,6 +59,10 @@ $love_artist = [
 	[
 		"NAME" => "ケケ",
 		"URL" => "https://eth.rumiserver.com/@keke2023@misskey.io"
+	],
+	[
+		"NAME" => "honyang",
+		"URL" => "https://www.pixiv.net/users/30413979"
 	]
 ];
 ?>
