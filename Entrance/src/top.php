@@ -22,3 +22,31 @@
 	今月は<?=floor($month_progress)?>%終わりましたです。<BR>
 	今年は<?=floor($year_progress)?>%終わりましたです。<BR>
 </DIV>
+
+<DIV>
+	好きなイラスト(R18を排除したらこうなった)↓<BR>
+	<?php
+	$favorite_illust_list = [
+		"141912115", "141348315", "132261916", "135324294", "77685626", "117037467", "130191916", "131768074", "137320265", "129026842", "90895574", "141979915", "140409861", "138643541"
+	];
+
+	foreach ($favorite_illust_list as $il) {
+		?>
+		<IFRAME SRC="https://embed.pixiv.net/oembed_iframe.php?type=illust&id=<?=$il?>&autoplay=1&auto_play=1"></IFRAME>
+		<?php
+	}
+
+	$favorite_tweet = [
+		[
+			"USER" => "c5buf",
+			"ID" => "1997599996569612718"
+		]
+	];
+
+	foreach ($favorite_tweet as $t) {
+		?>
+		<blockquote class="twitter-tweet" data-media-max-width="560"><a href="https://twitter.com/<?=$t["USER"]?>/status/<?=$t["ID"]?>?ref_src=twsrc%5Etfw">December 7, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+		<?php
+	}
+	?>
+</DIV>
