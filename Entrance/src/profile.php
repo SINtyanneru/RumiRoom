@@ -65,6 +65,25 @@ $love_artist = [
 		"URL" => "https://www.pixiv.net/users/30413979"
 	]
 ];
+
+$shitteru_kyara = [];
+$love_kyara = [
+	[
+		"NAME" => "びあ",
+		"ARTIFACT" => "ころんびぁ",
+		"URL" => "https://misskey.io/notes/a3qycvplxt0t001i"
+	],
+	[
+		"NAME" => "しろんびぁ",
+		"ARTIFACT" => "ころんびぁ",
+		"URL" => "https://misskey.io/notes/akitrksxw71b03jr"
+	],
+	[
+		"NAME" => "ロッシ",
+		"ARTIFACT" => "明日方舟:终末地",
+		"URL" => "https://twitter.com/AKEndfieldJP/status/2038088758763905387"
+	]
+];
 ?>
 
 <STYLE>
@@ -159,6 +178,38 @@ $love_artist = [
 	foreach ($love_artist as $artist) {
 		?>
 		<A HREF="<?=$artist["URL"]?>" TARGET="_blank"><?=$artist["NAME"]?></A>
+		<?php
+	}
+	?>
+</DIV>
+
+<DIV STYLE="text-align: center;">
+	<H2>推しキャラ</H2>
+	<?php
+	foreach ($love_kyara as $kyara) {
+		if (isset($kyara["URL"])) {
+			?>
+			<A HREF="<?=$kyara["URL"]?>">
+			<?php
+		}
+		echo "[";
+		echo $kyara["NAME"];
+		echo "|";
+		echo $kyara["ARTIFACT"];
+		echo "] ";
+		if (isset($kyara["URL"])) {
+			echo "</A>";
+		}
+	}
+	?>
+</DIV>
+
+<DIV STYLE="text-align: center;">
+	<H2>認知済みキャラ</H2>
+	<?php
+	foreach ($shitteru_kyara as $kyara) {
+		?>
+		
 		<?php
 	}
 	?>
