@@ -30,7 +30,7 @@ $account_list = $stmt->fetchAll();
 			?>
 			<TR>
 				<TD>
-					<IMG SRC="<?=$service_icon?>">
+					<IMG SRC="<?=$service_icon?>" HEIGHT="45">
 				</TD>
 				<TD>
 					<?php
@@ -70,7 +70,7 @@ $account_list = $stmt->fetchAll();
 			?>
 			<TR>
 				<TD>
-					<IMG SRC="<?=$service_icon?>">
+					<IMG SRC="<?=$service_icon?>" HEIGHT="45">
 				</TD>
 				<TD>
 					<?php
