@@ -16,4 +16,12 @@ if ($page == false) {
 <DIV><?=$page["DATE"]?></DIV>
 <BR>
 
-<?=nl2br(htmlspecialchars($page["TEXT"]))?>
+<?php
+$text = $page["TEXT"];
+$ajax = curl_init("http://192.168.0.128/RML/");
+curl_setopt($ajax, CURLOPT_POST, true);
+curl_setopt($ajax, CURLOPT_POSTFIELDS, $text);
+curl_setopt($ajax, CURLOPT_RETURNTRANSFER, true);
+$html = curl_exec($ajax);
+echo $html;
+?>
