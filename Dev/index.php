@@ -56,7 +56,9 @@ $path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", par
 					$stmt->execute();
 					foreach ($stmt->fetchAll() as $row) {
 						?>
-						<A HREF="/item/<?=$row["ID"]?>"><?=$row["NAME"]?></A>
+						<DIV>
+							<A HREF="/item/<?=$row["ID"]?>"><?=$row["NAME"]?></A>
+						</DIV>
 						<?php
 					}
 					?>
