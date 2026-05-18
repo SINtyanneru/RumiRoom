@@ -86,6 +86,11 @@ $love_kyara = [
 		"NAME" => "ロッシ",
 		"ARTIFACT" => "明日方舟:终末地",
 		"URL" => "https://twitter.com/AKEndfieldJP/status/2038088758763905387"
+	],
+	[
+		"NAME" => "卯月",
+		"ARTIFACT" => "艦隊これくしょん",
+		"URL" => "https://www.pixiv.net/tags/%E5%8D%AF%E6%9C%88(%E8%89%A6%E9%9A%8A%E3%81%93%E3%82%8C%E3%81%8F%E3%81%97%E3%82%87%E3%82%93)/artworks"
 	]
 ];
 ?>
