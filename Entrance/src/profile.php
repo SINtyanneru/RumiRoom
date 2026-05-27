@@ -73,6 +73,11 @@ $love_artist = [
 $shitteru_kyara = [];
 $love_kyara = [
 	[
+		"NAME" => "マヨ",
+		"ARTIFACT" => "トリッカル",
+		"URL" => "https://wikiwiki.jp/thetrickal/%E3%83%9E%E3%83%A8"
+	],
+	[
 		"NAME" => "びあ",
 		"ARTIFACT" => "ころんびぁ",
 		"URL" => "https://misskey.io/notes/a3qycvplxt0t001i"
