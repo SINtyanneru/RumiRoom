@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>給料解析機</TITLE>
+	</HEAD>
+	<BODY>
+		<H1>給料解析機</H1>
+		わたしが決めたルールに従い、給料を分解します。
+		<HR>
+
+		<DIV>
+			<INPUT ID="TEDORI" PLACEHOLDER="手取り" VALUE="0" TYPE="NUMBER">
+		</DIV>
+
+		<TABLE>
+			<TR>
+				<TH>手取り</TH>
+				<TD ID="RESULT_TEDORI"></TD>
+			</TR>
+			<TR>
+				<TH>貴様が使える分</TH>
+				<TD ID="RESULT_KISAMA"></TD>
+			</TR>
+			<TR>
+				<TH>ゆうちょへGO</TH>
+				<TD ID="RESULT_CHOKIN"></TD>
+			</TR>
+		</TABLE>
+	</BODY>
+	<SCRIPT>
+		let tedori_el = document.getElementById("TEDORI");
+
+		window.addEventListener("load", function() {
+			tedori_el.value = "";
+		});
+
+		tedori_el.addEventListener("keyup", function() {
+			tedori_el.value = tedori_el.value.replace(/\D/g, "");
+
+			try {
+				const tedori = Number.parseInt(tedori_el.value);
+				const chokin = tedori / 2;
+				const kisama = tedori - chokin;
+
+				document.getElementById("RESULT_TEDORI").innerText = tedori.toString();
+				document.getElementById("RESULT_KISAMA").innerText = kisama.toString();
+				document.getElementById("RESULT_CHOKIN").innerText = chokin.toString();
+			} catch {
+				return;
+			}
+		});
+	</SCRIPT>
+</HTML>
