@@ -1,5 +1,5 @@
 <?php
-require(__DIR__."/env.php");
+require(__DIR__."/../env.php");
 header("Content-Type: application/rss+xml; charset=UTF-8");
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -12,22 +12,18 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		<language>ja</language>
 		<lastBuildDate><?php echo date(DATE_RSS); ?></lastBuildDate>
 		<?php
-		$stmt = $PDO->prepare(<<<TEXT
+		$stmt = $sql->prepare(<<<TEXT
 			SELECT
 				`ID`,
-				`DATE`,
+				`CREATE_AT`,
 				`TITLE`,
-				`PUBLIC`,
-				`LOCK`,
-				`TAG`,
-				`UPDATE`,
-				LENGTH(TEXT) AS BYTE_LENGTH
+				LENGTH(`TEXT`) AS BYTE_LENGTH
 			FROM
-				`BLOG`
+				`BLOG_ARTICLE`
 			WHERE
-				`PUBLIC` = 1
+				`IS_PUBLIC` = 1
 			ORDER BY
-				`BLOG`.`DATE` DESC LIMIT 20;
+				`BLOG_ARTICLE`.`CREATE_AT` DESC LIMIT 20;
 		TEXT);
 
 		//SQL実行
@@ -36,10 +32,10 @@ echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 		foreach ($blog_list as $row) {
 			echo "		<item>\n";
 			echo "			<title>".htmlspecialchars($row["TITLE"])."</title>\n";
-			echo "			<link>https://".$__DOMAIN."/".$__URL_PREFIX."/view.php?ID=".$row["ID"]."</link>\n";
+			echo "			<link>https://blog.".$__DOMAIN."/view.php?ID=".$row["ID"]."</link>\n";
 			echo "			<description>".htmlspecialchars("記事")."</description>\n";
-			echo "			<pubDate>".date(DATE_RSS, strtotime($row["DATE"]))."</pubDate>\n";
-			echo "			<guid>https://".$__DOMAIN."/".$__URL_PREFIX."//view.php?ID=".$row["ID"]."</guid>\n";
+			echo "			<pubDate>".date(DATE_RSS, strtotime($row["CREATE_AT"]))."</pubDate>\n";
+			echo "			<guid>https://blog.".$__DOMAIN."/view.php?ID=".$row["ID"]."</guid>\n";
 			echo "		</item>\n";
 		}
 		?>

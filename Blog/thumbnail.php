@@ -1,70 +1,88 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('error_reporting', E_ALL);
+require(__DIR__."/../env.php");
+$article_id = $_GET["ID"];
+$cache_file = "/tmp/RUMI_BLOG_THUMBNAIL_".str_replace("/", "", $article_id);;
+$image_width = 500;
+$font = __DIR__."/uzura.ttf";
+$font_size = 30;
 
-//画像を作る
-$IMG = imagecreatetruecolor(500, 300);
-imagefilledrectangle($IMG, 0, 0, 599, 399, 0xeeeedd);
+if (file_exists($cache_file)) {
+	$tango_list = explode("\n", file_get_contents($cache_file));
+} else {
+	$stmt = $sql->prepare("SELECT `TITLE` FROM `BLOG_ARTICLE` WHERE `ID` = :id;");
+	$stmt->bindValue(":id", $article_id, PDO::PARAM_STR);
+	$stmt->execute();
+	$article = $stmt->fetch();
+	if ($article == false) exit;
 
-//--------------------------------------文字列を配列化する
-$TEXT = array();
+	$element_list = [];
+	$escaped = escapeshellarg($article["TITLE"]);
+	$output = shell_exec("echo ".$escaped." | mecab");
+	$line_list = explode("\n", trim($output));
+	foreach ($line_list as $line) {
+		if ($line == "EOS" || $line == "") break;
 
-//パラメーターがあるか
-if (!empty($_REQUEST['TEXT'])) {
-	$REQUEST_TITLE = mb_str_split($_REQUEST['TEXT'], 1);
+		$parts = explode("\t", $line);
+		if (count($parts) < 2) continue;
 
-	$C = 1;					//これは15文字ずつリセットするので、forとか独立した値である必要がある、CはČINKOのC
-	$TEMP_TITLE = "";		//ここに書いていく
-	for ($I=0; $I < count($REQUEST_TITLE); $I++) {
-		$STR = $REQUEST_TITLE[$I];
+		$tango = $parts[0];
+		$args = explode(",", $parts[1]);
 
-		//特定の文字で、+1したら15以上なら、次の処理に回す
-		if ($STR === "「") {
-			if($C+1 > 10){
-				$C = 1;
-				//配列に追記
-				array_push($TEXT, $TEMP_TITLE);
+		$position = $args[0] ?? "";			//品詞
+		$subcategory1 = $args[1] ?? "";		//品詞細分類1
 
-				//一時配列に入れることで、次の処理で使える
-				$TEMP_TITLE = $STR;
+		//前の単語と結合するべきか
+		$is_must_merge = ($subcategory1 == "非自立" || $position == "助動詞" || $position == "助詞" || $subcategory1 == "接尾");
+
+		$element_list[] = [
+			"tango" => $tango,
+			"is_must_merge" => $is_must_merge
+		];
+	}
+
+	$tango_list = [];
+	$max_width = 400;
+	foreach ($element_list as $element) {
+		if ($element["is_must_merge"] && count($tango_list) > 0) {
+			//前の単語に強制結合
+			$tango_list[count($tango_list) - 1] .= $element["tango"];
+		} else if (count($tango_list) > 0) {
+			//幅チェック：前の単語にくっつけた場合の幅を計算
+			$bbox = imagettfbbox($font_size, 0, $font, $tango_list[count($tango_list) - 1] . $element["tango"]);
+			$text_width = $bbox[2] - $bbox[0];
+			if ($text_width > $max_width) {
+				//はみ出るなら新しい行へ
+				$tango_list[] = $element["tango"];
+			} else {
+				//収まるなら前の単語にくっつける
+				$tango_list[count($tango_list) - 1] .= $element["tango"];
 			}
 		} else {
-			$TEMP_TITLE .= $STR;
-			$C++;
-		}
-		if ($C > 10 || empty($REQUEST_TITLE[$I +1])) {
-			//配列に追記
-			array_push($TEXT, $TEMP_TITLE);
-
-			//初期化
-			$C = 1;
-			$TEMP_TITLE = "";
+			//配列が空なら無条件で追加
+			$tango_list[] = $element["tango"];
 		}
 	}
-} else {
-	//無い
-	array_push($TEXT, "パラメーターを", "よこしやがれ", "愚か者");
+
+	file_put_contents($cache_file, join("\n", $tango_list));
 }
 
+$img = imagecreatetruecolor(500, 300);
 
-$FONT_FILE = "./uzura.ttf";
-$FONT_SIZE = 30;
+//背景色
+imagefilledrectangle($img, 0, 0, 599, 399, 0xEEEEDD);
 
-//--------------------------------------実際に描画
-//タイトルを描画
-for($I = 0; $I < count($TEXT); $I++){
-	$STR = $TEXT[$I];										//文字列
-	$BBOX = imagettfbbox($FONT_SIZE, 0, $FONT_FILE, $STR);	//テキストの横幅(中央に表示するために必須)
-	$TEXT_WIDTH = $BBOX[2] - $BBOX[0];						//テキストの横幅(中央に表示するために必須)
-	$Y = ($FONT_SIZE + 10) * $I;							//縦軸
-	imagettftext($IMG, $FONT_SIZE, 0, intval((500 - $TEXT_WIDTH ) / 2), intval(300 / 2 + $Y), 0x000000, $FONT_FILE, $STR);
+//アレ
+imagettftext($img, 20, 0, 0, 25, 0x000000, $font, "るみさんのブログ");
+
+//タイトルを書き込む
+$i = 0;
+foreach ($tango_list as $tango) {
+	$bbox = imagettfbbox($font_size, 0, $font, $tango);
+	$text_width = $bbox[2] - $bbox[0];
+	$y = ($font_size + 10) * $i;
+	imagettftext($img, $font_size, 0, intval((500 - $text_width ) / 2), intval(150 / 2 + $y), 0x000000, $font, $tango);
+	$i += 1;
 }
 
-//その他の描画
-imagettftext($IMG, 20, 0, 0, 25, 0x000000, $FONT_FILE, "るみさんのブログ");
-
-//画像として出力
 header('Content-Type: image/png;');
-imagepng($IMG);
-imagedestroy($IMG);
-?>
+imagepng($img);
