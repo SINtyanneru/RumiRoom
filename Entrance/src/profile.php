@@ -101,6 +101,11 @@ $love_kyara = [
 		"NAME" => "蓮希るい",
 		"ARTIFACT" => "VTuber",
 		"URL" => "https://www.pixiv.net/tags/%E8%93%AE%E5%B8%8C%E3%82%8B%E3%81%84/artworks"
+	],
+	[
+		"NAME" => "姬野星奏",
+		"ARTIFACT" => "姫野星奏（ひめの せな）はUs:track傘下のゲーム『君へ贈る、愛の歌』およびその派生作品の登場人物。 [1]",
+		"URL" => "https://zh.moegirl.org.cn/ja/%E5%A7%AC%E9%87%8E%E6%98%9F%E5%A5%8F"
 	]
 ];
 ?>
