@@ -1,14 +1,20 @@
 [
 	{
 		"URL": "/",
-		"TITLE": "るみさんのお部屋",
+		"TITLE": "トップ",
 		"PATH": "top.php",
 		"SHOW_MENU": false
 	},
 	{
 		"URL": "/profile.html",
-		"TITLE": "プロフィール",
+		"TITLE": "わたしについて",
 		"PATH": "profile.php",
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "/ÉG ER ALLTAF AÐ FYLGJAST MEÐ ÞÉR",
+		"TITLE": "貴様について",
+		"PATH": "you_info.php",
 		"SHOW_MENU": true
 	},
 	{

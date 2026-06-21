@@ -56,9 +56,13 @@
 				width: 100%;
 				height: auto;
 			}
-			
+
 			.MAIN > .CONTENTS{
 				padding: 10px;
+			}
+
+			img[class="RML"] {
+				width: 100%;
 			}
 		</STYLE>
 	</HEAD>

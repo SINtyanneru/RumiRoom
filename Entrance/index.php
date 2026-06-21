@@ -1,5 +1,5 @@
 <?php
-$path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH));
+$path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", urldecode(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)));
 $title = "";
 
 $site_list = json_decode(file_get_contents(__DIR__."/site.json"), true);
