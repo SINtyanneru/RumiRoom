@@ -35,7 +35,7 @@ require(__DIR__."/session_login.php");
 					<TD><?=htmlspecialchars($article["CREATE_AT"])?></TD>
 					<TD><?=htmlspecialchars($article["UPDATE_AT"])?></TD>
 					<TD>
-						<A HREF="edit/"><BUTTON>編集</BUTTON></A>
+						<A HREF="edit/?ID=<?=htmlspecialchars($article["ID"])?>"><BUTTON>編集</BUTTON></A>
 					</TD>
 				</TR>
 				<?php

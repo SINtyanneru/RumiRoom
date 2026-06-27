@@ -75,7 +75,7 @@ if ($article["IS_PUBLIC"] == 1) $is_public = true;
 		</DIV>
 
 		<DIV CLASS="TEXT_EDITOR">
-			<TEXTAREA ID="TEXT" VALUE="<?=htmlspecialchars($article["TEXT"])?>"></TEXTAREA>
+			<TEXTAREA ID="TEXT"><?=htmlspecialchars($article["TEXT"])?></TEXTAREA>
 			<DIV ID="VIEWER"></DIV>
 		</DIV>
 	</BODY>
@@ -104,12 +104,12 @@ if ($article["IS_PUBLIC"] == 1) $is_public = true;
 				if (viewer_reflesh_last_update_text == now_text) return;
 				viewer_reflesh_last_update_text = now_text;
 
-				let fd = new FormData();
-				fd.set("TEXT", now_text);
-
 				let ajax = await fetch("rml_decode.php", {
 					method: "POST",
-					body: fd
+					headers: {
+						"Content-Type": "text/plain"
+					},
+					body: now_text.replaceAll("\r", "")
 				});
 				const result = await ajax.text();
 				mel.viewer.innerHTML = result;
@@ -124,19 +124,14 @@ if ($article["IS_PUBLIC"] == 1) $is_public = true;
 				e.preventDefault();
 				mel.save_date.innerText = "保存: " + new Date().toISOString();
 
-				let fd = new FormData();
-				fd.set("ID", id);
-				fd.set("TITLE", mel.title.value);
-				fd.set("TEXT", mel.text_input.value);
-				if (mel.is_public.checked) {
-					fd.set("IS_PUBLIC", "T");
-				} else {
-					fd.set("IS_PUBLIC", "F");
-				}
-
 				let ajax = await fetch("save.php", {
 					method: "POST",
-					body: fd
+					body: JSON.stringify({
+						"ID": id,
+						"TITLE": mel.title.value,
+						"TEXT": mel.text_input.value,
+						"IS_PUBLIC": mel.is_public.checked
+					})
 				});
 				const result = await ajax.text();
 			}
@@ -164,10 +159,10 @@ if ($article["IS_PUBLIC"] == 1) $is_public = true;
 				mel.text_input.value = text.substring(0, cur_start) + result.URL + text.substring(cur_end);
 
 				const pos = cur_start + result.URL.length;
-				textarea.selectionStart = pos;
-				textarea.selectionEnd = pos;
+				mel.text_input.selectionStart = pos;
+				mel.text_input.selectionEnd = pos;
 
-				textarea.focus();
+				mel.text_input.focus();
 			}
 		});
 	</SCRIPT>
