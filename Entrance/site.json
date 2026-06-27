@@ -54,6 +54,12 @@
 		"SHOW_MENU": true
 	},
 	{
+		"URL": "/ohuse.html",
+		"TITLE": "支援",
+		"PATH": "ohuse.html",
+		"SHOW_MENU": true
+	},
+	{
 		"URL": "https://rozhin.rumi-room.net/",
 		"TITLE": "インターネット老人会 愛媛支部",
 		"PATH": null,
