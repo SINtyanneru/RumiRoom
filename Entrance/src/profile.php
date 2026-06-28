@@ -1,4 +1,6 @@
 <?php
+require_once(__DIR__."/../../ruby.php");
+
 $use_language = [
 	"日本語"
 ];
@@ -134,20 +136,20 @@ $love_kyara = [
 			</A>
 		</TD>
 		<TD COLSPAN="2" STYLE="font-size: 45px;">
-			Σχετικά με μένα
+			<?=ruby("Σχετικά με", "Shetikáme")?><?=ruby("μένα", "ména")?>
 		</TD>
 	</TR>
 	<TR>
 		<TD COLSPAN="2">
-			<I>Сара исызку ашәҟәы, наӡаӡа схала</I>
+			<I><?=ruby("Сара", "Sara")?> <?=ruby("исызку", "isyzku")?> <?=ruby("ашәҟәы,", "ašwq́wy")?> <?=ruby("наӡаӡа", "nażaża")?> <?=ruby("схала", "shala")?></I>
 		</TD>
 	</TR>
 	<TR>
-		<TD>名前</TD>
+		<TD><?=ruby("名前", "なまえ")?></TD>
 		<TD>: るみ</TD>
 	</TR>
 	<TR>
-		<TD>年齢</TD>
+		<TD><?=ruby("年齢", "ねんれい")?></TD>
 		<TD>
 			<?php
 			$birthday = new DateTime("2007-10-29");
@@ -162,15 +164,11 @@ $love_kyara = [
 		<TD>: 1037 0077 4698</TD>
 	</TR>
 	<TR>
-		<TD>支持政党</TD>
-		<TD>: 日本保守党</TD>
-	</TR>
-	<TR>
-		<TD>喋れる言語</TD>
+		<TD><?=ruby("喋", "しゃ")?>れる<?=ruby("言語", "げんご")?></TD>
 		<TD>: <?=implode("/", $use_language)?></TD>
 	</TR>
 	<TR>
-		<TD>使えるﾌﾟﾖｸﾞﾗﾐﾝｸﾞ言語</TD>
+		<TD><?=ruby("使", "つか")?>えるﾌﾟﾖｸﾞﾗﾐﾝｸﾞ<?=ruby("言語", "げんご")?></TD>
 		<TD>: <?=implode("/", $use_proguraming_language)?></TD>
 	</TR>
 </TABLE>
@@ -180,7 +178,7 @@ $love_kyara = [
 <!--代理-->
 <TABLE>
 	<TR>
-		<TH>わたしの代理</TH>
+		<TH>わたしの<?=ruby("代理", "だいり")?></TH>
 	</TR>
 	<TR>
 		<TD>
@@ -189,7 +187,7 @@ $love_kyara = [
 	</TR>
 	<TR>
 		<TH>
-			<A HREF="/art/shiryou.html" TARGET="_parent">資料はこちら</A>
+			<A HREF="/art/shiryou.html" TARGET="_parent"><?=ruby("資料", "しりょう")?>はこちら</A>
 		</TH>
 	</TR>
 </TABLE>
@@ -197,7 +195,7 @@ $love_kyara = [
 <HR>
 
 <DIV STYLE="text-align: center;">
-	<H2>推しの絵師</H2>
+	<H2><?=ruby("推", "お")?>しの<?=ruby("絵師", "えし")?></H2>
 	<?php
 	foreach ($love_artist as $artist) {
 		?>
@@ -208,7 +206,7 @@ $love_kyara = [
 </DIV>
 
 <DIV STYLE="text-align: center;">
-	<H2>推しキャラ</H2>
+	<H2><?=ruby("推", "お")?>しキャラ</H2>
 	<?php
 	foreach ($love_kyara as $kyara) {
 		if (isset($kyara["URL"])) {
@@ -229,7 +227,7 @@ $love_kyara = [
 </DIV>
 
 <DIV STYLE="text-align: center;">
-	<H2>認知済みキャラ</H2>
+	<H2><?=ruby("認知", "にんち")?><?=ruby("済", "ず")?>みキャラ</H2>
 	<?php
 	foreach ($shitteru_kyara as $kyara) {
 		?>
