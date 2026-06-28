@@ -1,4 +1,5 @@
 <?php
+require(__DIR__."/../../env.php");
 require_once(__DIR__."/../../ruby.php");
 ?>
 <DIV>
@@ -58,45 +59,31 @@ require_once(__DIR__."/../../ruby.php");
 <DIV>
 	<H2 TITLE="ただのIFRAMEなので無断転載ではないっす"><?=ruby("好", "す")?>きなイラスト</H2>
 	<?php
-	$favorite_illust_list = [
-		"141912115", "141348315", "132261916", "135324294", "77685626", "117037467", "130191916",
-		"131768074", "137320265", "129026842", "90895574", "141979915", "140409861", "138643541",
-		"141415017", "142000488", "141596869", "142811711", "142861894", "131018306", "135496483",
-		"142810716", "142775366", "142686126", "131006006", "141219192", "142847676", "142960117",
-		"141850981", "142834034", "120881604", "114365748", "133066820", "144460373", "143550336",
-		"144731813", "143860543", "143867771", "143084491", "142818689", "101838842", "107374976",
-		"125337139", "108143910", "101948685", "108949252"
-	];
+	$stmt = $sql->prepare("SELECT * FROM `FAVORITE_ILLUST_PIXIV` ORDER BY `ID` ASC LIMIT 10;");
+	$stmt->execute();
+	$favorite_illust_list = $stmt->fetchAll();
 
 	foreach ($favorite_illust_list as $il) {
 		?>
-		<IFRAME SRC="https://embed.pixiv.net/oembed_iframe.php?type=illust&id=<?=$il?>&autoplay=1&auto_play=1"></IFRAME>
-		<?php
-	}
-
-	$favorite_tweet = [
-		[
-			"USER" => "c5buf",
-			"ID" => "1997599996569612718"
-		],
-		[
-			"USER" => "Colon_BR",
-			"ID" => "2055491626332725613"
-		],
-		[
-			"USER" => "520maodou",
-			"ID" => "2056599288319443386"
-		],
-		[
-			"USER" => "GNOME_0000",
-			"ID" => "2059407547472523378"
-		]
-	];
-
-	foreach ($favorite_tweet as $t) {
-		?>
-		<blockquote class="twitter-tweet" data-media-max-width="560"><a href="https://twitter.com/<?=$t["USER"]?>/status/<?=$t["ID"]?>?ref_src=twsrc%5Etfw">December 7, 2025</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+		<IFRAME SRC="https://embed.pixiv.net/oembed_iframe.php?type=illust&id=<?=$il["PIXIV_ID"]?>&autoplay=1&auto_play=1"></IFRAME>
 		<?php
 	}
 	?>
+	<BR>
+	<A HREF="/favorite_illust.php" TARGET="_parent">続きを見る</A>
+
+	<?php
+	$stmt = $sql->prepare("SELECT * FROM `FAVORITE_ILLUST_TWITTER` ORDER BY `ID` ASC LIMIT 1;");
+	$stmt->execute();
+	$favorite_tweet = $stmt->fetchAll();
+
+	foreach ($favorite_tweet as $t) {
+		?>
+		<blockquote class="twitter-tweet" data-media-max-width="560"><a href="https://twitter.com/<?=$t["AUTHOR"]?>/status/<?=$t["TWEET_ID"]?>?ref_src=twsrc%5Etfw"></a></blockquote>
+		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+		<?php
+	}
+	?>
+	<BR>
+	<A HREF="/favorite_illust.php" TARGET="_parent">続きを見る</A>
 </DIV>

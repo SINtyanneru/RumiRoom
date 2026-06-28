@@ -60,6 +60,12 @@
 		"SHOW_MENU": true
 	},
 	{
+		"URL": "/favorite_illust.php",
+		"TITLE": "好きなイラスト",
+		"PATH": "favorite_illust.php",
+		"SHOT_MENU": true	
+	},
+	{
 		"URL": "https://rozhin.rumi-room.net/",
 		"TITLE": "インターネット老人会 愛媛支部",
 		"PATH": null,
