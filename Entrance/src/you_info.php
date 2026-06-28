@@ -2,6 +2,10 @@
 	input{
 		width: 100%;
 	}
+
+	b{
+		font-size: 20px;
+	}
 </STYLE>
 
 <?php
@@ -48,10 +52,10 @@ $accept_encodeing = $_SERVER["HTTP_ACCEPT_ENCODING"];
 	}
 ?>
 <DIV>
-	貴様のIPアドレスは<?=htmlspecialchars($ip_address)?>です。
+	貴様のIPアドレスは<B><?=htmlspecialchars($ip_address)?></B>です。
 </DIV>
 <DIV>
-	貴様は<?=htmlspecialchars($protocol)?>通信を使用して接続しています。
+	貴様は<B><?=htmlspecialchars($protocol)?></B>通信を使用して接続しています。
 </DIV>
 
 <?php
@@ -75,7 +79,7 @@ $accept_encodeing = $_SERVER["HTTP_ACCEPT_ENCODING"];
 	}
 ?>
 <DIV>
-	貴様の言語は第一言語が<?=htmlspecialchars($level_1_language)?>、第二言語が<?=htmlspecialchars($level_2_language)?>です。
+	貴様の言語は第一言語が<B><?=htmlspecialchars($level_1_language)?></B>、第二言語が<B><?=htmlspecialchars($level_2_language)?></B>です。
 </DIV>
 
 <?php
@@ -85,7 +89,7 @@ foreach (explode(",", $accept_encodeing) as $parts) {
 }
 ?>
 <DIV>
-	貴様が対応している圧縮形式は<?=htmlspecialchars(join("と", $encode_list))?>です
+	貴様が対応している圧縮形式は<B><?=htmlspecialchars(join("と", $encode_list))?></B>です
 </DIV>
 
 <DIV>
@@ -166,6 +170,6 @@ foreach (explode(",", $accept_encodeing) as $parts) {
 	}
 ?>
 <DIV>
-	貴様は<?=htmlspecialchars($os_name)?>が搭載された<?=htmlspecialchars($hardware_name)?>を使用しているようです
+	貴様は<B><?=htmlspecialchars($os_name)?></B>が搭載された<B><?=htmlspecialchars($hardware_name)?></B>を使用しているようです
 </DIV>
 
