@@ -89,5 +89,18 @@
 		"TITLE": "閲覧",
 		"PATH": "/art/view.php",
 		"SHOW_MENU": false
+	},
+
+	{
+		"URL": "/license",
+		"TITLE": "ライセンス",
+		"PATH": "/license/index.html",
+		"SHOW_MENU": true
+	},
+	{
+		"URL": "/license/OSS/",
+		"TITLE": "るみのオープンソースソフトウェアライセンス",
+		"PATH": "/license/OSS/index.php",
+		"SHOW_MENU": false
 	}
 ]
