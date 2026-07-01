@@ -1,4 +1,5 @@
 <?php
+require(__DIR__."/../../env.php");
 require_once(__DIR__."/../../ruby.php");
 
 $use_language = [
@@ -9,107 +10,17 @@ $use_proguraming_language = [
 	"Java", "C#", "JavaScript", "TypeScript", "PHP", "Lua"
 ];
 
-$love_artist = [
-	[
-		"NAME" => "ころんびぁ",
-		"URL" => "https://eth.rumiserver.com/@Colon_BR@misskey.io"
-	],
-	[
-		"NAME" => "さわやか鮫肌",
-		"URL" => "https://eth.rumiserver.com/@adahemas@misskey.io"
-	],
-	[
-		"NAME" => "倉本たかと",
-		"URL" => "https://www.pixiv.net/users/40172"
-	],
-	[
-		"NAME" => "Thalia",
-		"URL" => "https://www.pixiv.net/users/68118979"
-	],
-	[
-		"NAME" => "たんたんめん",
-		"URL" => "https://www.pixiv.net/users/188106"
-	],
-	[
-		"NAME" => "ココシラ",
-		"URL" => "https://www.pixiv.net/users/43408135"
-	],
-	[
-		"NAME" => "めいび",
-		"URL" => "https://www.pixiv.net/users/89796887"
-	],
-	[
-		"NAME" => "柔毛",
-		"URL" => "https://twitter.com/c5buf/media"
-	],
-	[
-		"NAME" => "スウ",
-		"URL" => "https://eth.rumiserver.com/@suu1003@misskey.io"
-	],
-	[
-		"NAME" => "みあま",
-		"URL" => "https://eth.rumiserver.com/@Miama_rein@misskey.io"
-	],
-	[
-		"NAME" => "のや‏",
-		"URL" => "https://eth.rumiserver.com/@noya@mk.noyaskey.net"
-	],
-	[
-		"NAME" => "みなほし",
-		"URL" => "https://eth.rumiserver.com/@Minata_@mk.yopo.work"
-	],
-	[
-		"NAME" => "ケケ",
-		"URL" => "https://eth.rumiserver.com/@keke2023@misskey.io"
-	],
-	[
-		"NAME" => "honyang",
-		"URL" => "https://www.pixiv.net/users/30413979"
-	],
-	[
-		"NAME" => "森山メト",
-		"URL" => "https://www.pixiv.net/users/82910318"
-	]
-];
+$stmt = $sql->prepare("SELECT * FROM `FAVORITE_ARTIST` ORDER BY `ID` ASC;");
+$stmt->execute();
+$love_artist = $stmt->fetchAll();
 
-$shitteru_kyara = [];
-$love_kyara = [
-	[
-		"NAME" => "マヨ",
-		"ARTIFACT" => "トリッカル",
-		"URL" => "https://wikiwiki.jp/thetrickal/%E3%83%9E%E3%83%A8"
-	],
-	[
-		"NAME" => "びあ",
-		"ARTIFACT" => "ころんびぁ",
-		"URL" => "https://misskey.io/notes/a3qycvplxt0t001i"
-	],
-	[
-		"NAME" => "しろんびぁ",
-		"ARTIFACT" => "ころんびぁ",
-		"URL" => "https://misskey.io/notes/akitrksxw71b03jr"
-	],
-	[
-		"NAME" => "ロッシ",
-		"ARTIFACT" => "明日方舟:终末地",
-		"URL" => "https://twitter.com/AKEndfieldJP/status/2038088758763905387"
-	],
-	[
-		"NAME" => "卯月",
-		"ARTIFACT" => "艦隊これくしょん",
-		"URL" => "https://www.pixiv.net/tags/%E5%8D%AF%E6%9C%88(%E8%89%A6%E9%9A%8A%E3%81%93%E3%82%8C%E3%81%8F%E3%81%97%E3%82%87%E3%82%93)/artworks"
-	],
-	[
-		"NAME" => "蓮希るい",
-		"ARTIFACT" => "VTuber",
-		"URL" => "https://www.pixiv.net/tags/%E8%93%AE%E5%B8%8C%E3%82%8B%E3%81%84/artworks"
-	],
-	[
-		"NAME" => "姬野星奏",
-		"ARTIFACT" => "姫野星奏（ひめの せな）はUs:track傘下のゲーム『君へ贈る、愛の歌』およびその派生作品の登場人物。 [1]",
-		"URL" => "https://zh.moegirl.org.cn/ja/%E5%A7%AC%E9%87%8E%E6%98%9F%E5%A5%8F"
-	]
-];
+$stmt = $sql->prepare("SELECT * FROM `KYARA_KNOWN` WHERE `LOVE` = 0 ORDER BY `ID` ASC;");
+$stmt->execute();
+$shitteru_kyara = $stmt->fetchAll();
+
+$stmt = $sql->prepare("SELECT * FROM `KYARA_KNOWN` WHERE `LOVE` = 1 ORDER BY `ID` ASC;");
+$stmt->execute();
+$love_kyara = $stmt->fetchAll();
 ?>
 
 <STYLE>
@@ -195,7 +106,7 @@ $love_kyara = [
 <HR>
 
 <DIV STYLE="text-align: center;">
-	<H2><?=ruby("推", "お")?>しの<?=ruby("絵師", "えし")?></H2>
+	<H2><?=ruby("好", "す")?>きな<?=ruby("絵師", "えし")?></H2>
 	<?php
 	foreach ($love_artist as $artist) {
 		?>
@@ -206,7 +117,7 @@ $love_kyara = [
 </DIV>
 
 <DIV STYLE="text-align: center;">
-	<H2><?=ruby("推", "お")?>しキャラ</H2>
+	<H2><?=ruby("好", "す")?>きなキャラ</H2>
 	<?php
 	foreach ($love_kyara as $kyara) {
 		if (isset($kyara["URL"])) {
@@ -227,12 +138,22 @@ $love_kyara = [
 </DIV>
 
 <DIV STYLE="text-align: center;">
-	<H2><?=ruby("認知", "にんち")?><?=ruby("済", "ず")?>みキャラ</H2>
+	<H2><?=ruby("知", "し")?>ってるキャラ</H2>
 	<?php
 	foreach ($shitteru_kyara as $kyara) {
-		?>
-		
-		<?php
+		if (isset($kyara["URL"])) {
+			?>
+			<A HREF="<?=$kyara["URL"]?>">
+			<?php
+		}
+		echo "[";
+		echo $kyara["NAME"];
+		echo "|";
+		echo $kyara["ARTIFACT"];
+		echo "] ";
+		if (isset($kyara["URL"])) {
+			echo "</A>";
+		}
 	}
 	?>
 </DIV>
