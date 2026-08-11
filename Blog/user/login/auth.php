@@ -24,7 +24,7 @@ if ($auth_data["MODE"] == "RSV") {
 				"TYPE" => "RSV",
 				"TOKEN" => $auth_data["TOKEN"]
 			]
-		)), time() + 60 * 60 * 24 * 365 * 10, "/", "", true, true);
+		)), time() + 60 * 60 * 24 * 365 * 10, "/", "blog.rumi-room.net", true, true);
 
 		header("Location: /user/");
 		exit;
@@ -42,6 +42,13 @@ if ($auth_data["MODE"] == "RSV") {
 		echo "<A HREF=\"/\">キャンセル</A>";
 	} else {
 		//アカウントがある
+		setcookie("BLOG_SESSION", base64_encode(json_encode(
+			[
+				"TYPE" => "RSV",
+				"TOKEN" => $auth_data["TOKEN"]
+			]
+		)), time() + 60 * 60 * 24 * 365 * 10, "/", "blog.rumi-room.net", true, true);
+
 		header("Location: /user/");
 	}
 } else {

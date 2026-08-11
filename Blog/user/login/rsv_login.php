@@ -19,7 +19,7 @@ if (isset($_GET["SESSION"])) {
 			"MODE" => "RSV",
 			"TOKEN" => $token
 		]
-	)), time() + 600, "/", "", true, true);
+	)), time() + 600, "/", "blog.rumi-room.net", true, true);
 	header("Location: /user/login/auth.php");
 } else {
 	header("Location: https://account.rumiserver.com/auth?ID=".$__RSV_APP_ID."&SESSION=".urlencode(uniqid())."&PERMISSION=account:read&CALLBACK=".urlencode("https://blog.rumi-room.net/user/login/rsv_login.php"));
