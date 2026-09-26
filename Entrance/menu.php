@@ -28,7 +28,12 @@
 		<HR>
 
 		<DIV>
-			<IMG SRC="/icons/apache_pb.png" STYLE="background-color: white; width: 100%">
+			<A HREF="https://httpd.apache.org/" TARGET="_parent" TITLE="Apache HTTP Server Project">
+				<IMG SRC="/icons/apache_pb.png" STYLE="background-color: white; width: 100%">
+			</A>
+			<A HREF="http://www.videolan.org/vlc" TARGET="_parent" TITLE="VLCメディアプレイヤーをゲット！ - 再生もストリーミングもこなし、WMPを圧倒する！">
+				<IMG SRC="/Asset/menu_bannar/getvlcnow.png" HEIGHT="32" ALT="VLCをゲット" />
+			</A>
 		</DIV>
 	</BODY>
 </HTML>
