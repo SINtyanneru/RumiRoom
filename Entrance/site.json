@@ -79,14 +79,8 @@
 		"SHOW_MENU": true
 	},
 	{
-		"URL": "/art/shiryou.html",
-		"TITLE": "代理",
-		"PATH": "/art/shiryou.html",
-		"SHOW_MENU": false
-	},
-	{
 		"URL": "/art/view.php",
-		"TITLE": "閲覧",
+		"TITLE": "#るみあーと",
 		"PATH": "/art/view.php",
 		"SHOW_MENU": false
 	},

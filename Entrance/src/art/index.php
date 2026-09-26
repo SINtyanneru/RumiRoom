@@ -1,52 +1,33 @@
-<A HREF="/art/shiryou.html" TARGET="_parent">代理の資料はこちら</A><BR>
-私怨絵は#るみあーとでFediverseに投稿してね★<BR>
-連絡してくれたらここに掲載するよ(画質を絶望的に落とします)<BR>
-※掲載削除依頼も連絡フォームからお願いします<BR>
+<H1>八木瑠海伸梧の代理</H1>
 
-<HR>
+私怨絵は#るみあーとでFediverseに投稿してね★<BR>
+代理はv2.x.x-Nを主に使っています<BR>
+<BR>
+
 <?php
 require(__DIR__."/../../../env.php");
 
-$stmt = $sql->prepare("
-SELECT
-	i.*,
-	u.NAME AS `AUTHOR`
-FROM
-	`RUMIART_ILLUST` AS i
-JOIN
-	`RUMIART_AUTHOR` AS u ON i.AUTHOR = u.ID
-ORDER BY
-	i.DATE DESC;
-");
+$stmt = $sql->prepare("SELECT `ID`, `NAME`, `CREATE_AT` FROM `RUMIART_VERSION` ORDER BY `ID` DESC;");
 $stmt->execute();
-$art_list = $stmt->fetchAll();
+$version_list = $stmt->fetchAll();
 ?>
 
-<TABLE BORDER="1">
+<TABLE>
+	<TR>
+		<TH>バージョン</TH>
+	</TR>
 	<?php
-	foreach ($art_list as $art) {
+	foreach ($version_list as $version) {
 		?>
-		<TR>
-			<TD>
-				<IMG SRC="/Asset/RumiArt/Thumbnail/<?=$art["ID"]?>.jpg">
-			</TD>
-			<TD>
-				<A HREF="/art/view.php?ID=<?=$art["ID"]?>" TARGET="_parent">
-					<?=htmlspecialchars($art["AUTHOR"])?>の作品
-				</A>
-			</TD>
-			<TD>
-				<?=$art["DATE"]?>
-			</TD>
-		</TR>
+			<TR>
+				<TD>
+					<A HREF="/art/view.php?ID=<?=$version["ID"]?>" TARGET="_parent"><?=$version["NAME"]?></A>
+				</TD>
+				<TD>
+					<?=$version["CREATE_AT"]?>
+				</TD>
+			</TR>
 		<?php
 	}
 	?>
 </TABLE>
-
-<STYLE>
-	tr > td > img{
-		width: 128px;
-		height: auto;
-	}
-</STYLE>
