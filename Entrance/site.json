@@ -2,18 +2,21 @@
 	{
 		"URL": "/",
 		"TITLE": "トップ",
+		"ICON": "Action_GoHome_2",
 		"PATH": "top.php",
-		"SHOW_MENU": false
+		"SHOW_MENU": true
 	},
 	{
 		"URL": "/profile.html",
 		"TITLE": "わたしについて",
+		"ICON": "File_Person",
 		"PATH": "profile.php",
 		"SHOW_MENU": true
 	},
 	{
 		"URL": "/ÉG ER ALLTAF AÐ FYLGJAST MEÐ ÞÉR",
 		"TITLE": "貴様について",
+		"ICON": "App_People",
 		"PATH": "you_info.php",
 		"SHOW_MENU": true
 	},
@@ -38,6 +41,7 @@
 	{
 		"URL": "https://etc.rumi-room.net/",
 		"TITLE": "物置部屋",
+		"ICON": "App_HaikuDepot",
 		"PATH": null,
 		"SHOW_MENU": true
 	},
@@ -56,6 +60,7 @@
 	{
 		"URL": "/ohuse.html",
 		"TITLE": "支援",
+		"ICON": "App_Finance",
 		"PATH": "ohuse.html",
 		"SHOW_MENU": true
 	},
@@ -63,11 +68,12 @@
 		"URL": "/favorite_illust.php",
 		"TITLE": "好きなイラスト",
 		"PATH": "favorite_illust.php",
-		"SHOT_MENU": true	
+		"SHOT_MENU": true
 	},
 	{
 		"URL": "https://rozhin.rumi-room.net/",
 		"TITLE": "インターネット老人会 愛媛支部",
+		"ICON": "Misc_R.I.P",
 		"PATH": null,
 		"SHOW_MENU": true
 	},

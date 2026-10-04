@@ -92,11 +92,6 @@ $love_kyara = $stmt->fetchAll();
 		<TH>わたしの<?=ruby("代理", "だいり")?></TH>
 	</TR>
 	<TR>
-		<TD>
-			<IMG CLASS="ICON" SRC="/Asset/るみどっと.png">
-		</TD>
-	</TR>
-	<TR>
 		<TH>
 			<A HREF="/art/shiryou.html" TARGET="_parent"><?=ruby("資料", "しりょう")?>はこちら</A>
 		</TH>

@@ -11,7 +11,7 @@ require_once(__DIR__."/../../ruby.php");
 	<IMG SRC="/Asset/Mochi/<?=$file_list[$rnd]?>" ALIGN="right"><BR>
 
 	<DIV ALIGN="left">
-		<H1>るみさんのお<?=ruby("部屋", "へや")?>へようこそ</H1>
+		<H1><IMG SRC="/Asset/Haiku/png/32x32/App_Tracker.png">るみさんのお<?=ruby("部屋", "へや")?>へようこそ</H1>
 		<A HREF="/profile.html" TARGET="_parent"><?=ruby("瑠海", "るみ")?></A>(<A HREF="https://八木伸梧.com/" TARGET="_parent"><?=ruby("八木瑠海伸梧", "やぎるみしんご")?></A>)の<?=ruby("個人", "こじん")?>サイトです。<BR>
 		<BR>
 		<?=ruby("何", "なに")?>をやってる<?=ruby("人", "ひと")?>なのかは、<A HREF="https://portfolio.rumi-room.net/" TARGET="_parent">ポートフォリオ</A>を<?=ruby("見", "み")?>ればわかると<?=ruby("思", "お")?>うけど、<BR>
@@ -39,7 +39,7 @@ require_once(__DIR__."/../../ruby.php");
 </DIV>
 
 <DIV>
-	<H2>このサイトについて</H2>
+	<H2><IMG SRC="/Asset/Haiku/png/32x32/File_Archive_Java.png">このサイトについて</H2>
 	<A HREF="/profile.html" TARGET="_parent"><?=ruby("瑠海", "るみ")?></A>(<A HREF="https://八木伸梧.com/" TARGET="_parent"><?=ruby("八木瑠海伸梧", "やぎるみしんご")?></A>)っていう<?=ruby("愛媛県在住", "えひめけんざいじゅう")?>の<?=ruby("一般人", "いっぱんじん")?>が<?=ruby("運用", "うんよう")?>する<?=ruby("個人", "こじん")?>サイト！<BR>
 	この<?=ruby("瑠海", "るみ")?>っていう人は、IE2.0/ﾈｽｹ2.0<?=ruby("向", "む")?>けのHTML<?=ruby("本", "ぼん")?>を<?=ruby("見", "み")?>てHTMLを<?=ruby("学", "まな")?>び、そこからプヨグラミングの<?=ruby("世界", "せかい")?>に<?=ruby("突入", "とつにゅう")?>したため、<BR>
 	このサイトのソースコードも<?=ruby("大文字", "おおもじ")?>HTMLになっています。<BR>
@@ -49,7 +49,7 @@ require_once(__DIR__."/../../ruby.php");
 	<BR>
 	たまにマウスカーソルを<?=ruby("翳", "かざ")?>すとなにか<?=ruby("出", "で")?>ることがありますが、<?=ruby("明", "あき")?>らかに<A HREF="https://www7a.biglobe.ne.jp/~naopy/">Naopy</A>さんのパクリです(すまんかった)<BR>
 	<BR>
-	<H2>なにこのルビ</H2>
+	<H2><IMG SRC="/Asset/Haiku/png/32x32/Prefs_Fonts.png">なにこのルビ</H2>
 	<A HREF="https://rubizaidan.jp/">ルビ<?=ruby("財団", "ざいだん")?></A>に<?=ruby("習", "なら")?>い、ルビを<?=ruby("振", "ふ")?>っています。<BR>
 	もし、<?=ruby("騼", "バカ")?>にしていると<?=ruby("思", "おも")?>ったのであれば、あなたは<?=ruby("疲", "つか")?>れています、ゆっくり<?=ruby("休", "やす")?>んでください...
 </DIV>
@@ -57,7 +57,7 @@ require_once(__DIR__."/../../ruby.php");
 <HR>
 
 <DIV>
-	<H2 TITLE="ただのIFRAMEなので無断転載ではないっす"><?=ruby("好", "す")?>きなイラスト</H2>
+	<H2 TITLE="ただのIFRAMEなので無断転載ではないっす"><IMG SRC="/Asset/Haiku/png/32x32/App_ImageEditor.png"><?=ruby("好", "す")?>きなイラスト</H2>
 	<?php
 	$stmt = $sql->prepare("SELECT * FROM `FAVORITE_ILLUST_PIXIV` ORDER BY `ID` ASC LIMIT 10;");
 	$stmt->execute();
