@@ -18,6 +18,13 @@
 				height: auto;
 			}
 
+			.MPD_STATUS{
+				width: 275px;
+				height: 116px;
+
+				border: none;
+			}
+
 			.FOOTER{
 				margin-top: 100px;
 
@@ -66,6 +73,22 @@
 				<IMG SRC="/Asset/menu_bannar/getvlcnow.png" HEIGHT="32" ALT="VLCをゲット" />
 			</A>
 		</DIV>
+
+		<HR>
+
+		<DIV>
+			<?php
+				$forwarded = $_SERVER["HTTP_FORWARDED"];
+				$url = "http://mpd.rumi-room.net/winamp.png";
+				if (str_contains($forwarded, "https")) {
+					$url = "https://mpd.rumi-room.net/winamp.png";
+				}
+			?>
+			るみが今聞いてる曲↓<BR>
+			<IFRAME SRC="<?=$url?>" CLASS="MPD_STATUS"></IFRAME>
+		</DIV>
+
+		<HR>
 
 		<DIV CLASS="FOOTER">
 			ｱｲｺﾝ素材の多くは<A HREF="https://github.com/haiku/haiku/tree/master/data/artwork">HaikuOSﾌﾟﾛｼﾞｪｸﾄ</A>から拝借しています。<BR>

@@ -54,7 +54,7 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 
 	<FRAMESET ROWS="100,*">
 		<FRAME SRC="/header.html" NAME="HEADER" noresize>
-		<FRAMESET COLS="200,*">
+		<FRAMESET COLS="290,*">
 			<FRAME SRC="/menu.php?P=<?php echo $path ?>" NAME="MENU" noresize>
 			<FRAME SRC="/main.php?P=<?php echo $path ?>&R=<?=htmlspecialchars(json_encode($_GET))?>" NAME="MAIN" noresize>
 		</FRAMESET>

@@ -93,7 +93,7 @@ $love_kyara = $stmt->fetchAll();
 	</TR>
 	<TR>
 		<TH>
-			<A HREF="/art/shiryou.html" TARGET="_parent"><?=ruby("資料", "しりょう")?>はこちら</A>
+			<A HREF="/art/view.php?ID=2" TARGET="_parent"><?=ruby("資料", "しりょう")?>はこちら</A>
 		</TH>
 	</TR>
 </TABLE>
