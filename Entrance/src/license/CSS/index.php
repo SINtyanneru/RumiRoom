@@ -9,7 +9,7 @@ if (empty($get["V"])) {
 	foreach ($file_list as $file) {
 		if ($file == __FILE__) continue;
 		?>
-		<A HREF="/license/OSS/?V=<?=htmlspecialchars(basename($file))?>" TARGET="_parent"><?=basename($file)?></A><BR>
+		<A HREF="/license/CSS/?V=<?=htmlspecialchars(basename($file))?>" TARGET="_parent"><?=basename($file)?></A><BR>
 		<?php
 	}
 } else {

@@ -98,9 +98,15 @@
 		"SHOW_MENU": true
 	},
 	{
-		"URL": "/license/OSS/",
-		"TITLE": "るみのオープンソースソフトウェアライセンス",
-		"PATH": "/license/OSS/index.php",
+		"URL": "/license/PSS/",
+		"TITLE": "るみのパブリックソースソフトウェアライセンス",
+		"PATH": "/license/PSS/index.php",
+		"SHOW_MENU": false
+	},
+	{
+		"URL": "/license/CSS/",
+		"TITLE": "るみのクローズドソースライセンス",
+		"PATH": "/license/CSS/index.php",
 		"SHOW_MENU": false
 	}
 ]
