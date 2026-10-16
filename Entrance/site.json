@@ -29,12 +29,14 @@
 	{
 		"URL": "/sns.html",
 		"TITLE": "SNS",
+		"ICON": "Misc_Antenna",
 		"PATH": "sns.php",
 		"SHOW_MENU": true
 	},
 	{
 		"URL": "https://form.rumia.me/contact/?to=RUMI",
 		"TITLE": "連絡",
+		"ICON": "File_Mail_label",
 		"PATH": null,
 		"SHOW_MENU": true
 	},
@@ -48,12 +50,14 @@
 	{
 		"URL": "https://blog.rumi-room.net/",
 		"TITLE": "ブログ",
+		"ICON": "App_StyledEdit",
 		"PATH": null,
 		"SHOW_MENU": true
 	},
 	{
 		"URL": "https://dev.rumi-room.net/",
 		"TITLE": "ラボ",
+		"ICON": "Folder_prefs",
 		"PATH": null,
 		"SHOW_MENU": true
 	},
@@ -94,6 +98,7 @@
 	{
 		"URL": "/license",
 		"TITLE": "ライセンス",
+		"ICON": "File_SourceCode",
 		"PATH": "/license/index.html",
 		"SHOW_MENU": true
 	},
