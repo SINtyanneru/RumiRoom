@@ -77,7 +77,9 @@
 
 			<!--ボタン類-->
 			<DIV>
-				<A HREF="RSS.php">RSS</A>
+				<A HREF="https://rumi-room.net/"><IMG SRC="/Asset/Haiku/png/32x32/Action_GoHome_2.png"></A>
+
+				<A HREF="RSS.php"><IMG SRC="/Asset/Haiku/png/32x32/File_RSS_Feed.png"></A>
 
 				<?php
 				if ($__is_over_tls) {
@@ -85,17 +87,18 @@
 					$login = login();
 					if ($login == false) {
 						?>
-						<A HREF="/user/login/">ログイン</A>
+						<A HREF="/user/login/"><IMG SRC="/Asset/Haiku/png/32x32/Action_Login.png"></A>
 						<?php
 					} else {
+						if ($login["IS_ADMIN"] == 1) {
+							?>
+							<A HREF="/admin/"><IMG SRC="/Asset/Haiku/png/32x32/App_Workspaces.png"></A>
+							<?php
+						}
+
 						?>
 						<A HREF="/user/"><?=htmlspecialchars($login["NAME"])?></A>
 						<?php
-						if ($login["IS_ADMIN"] == 1) {
-							?>
-							<A HREF="/admin/">管理ページ</A>
-							<?php
-						}
 					}
 				}
 				?>

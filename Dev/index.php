@@ -66,6 +66,8 @@ $path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", par
 				<TD CLASS="CONTENTS">
 					<IMG SRC="/Asset/Dev/pe16_l1.gif"><BR>
 
+					<A HREF="https://rumi-room.net/"><IMG SRC="/Asset/Haiku/png/64x64/Action_GoHome_2.png"></A><BR>
+
 					<?php
 					if ($path == "/") {
 						require(__DIR__."/top.html");
