@@ -64,6 +64,10 @@
 			img[class="RML"] {
 				width: 100%;
 			}
+
+			video[class="RML"] {
+				width: 100%;
+			}
 		</STYLE>
 	</HEAD>
 	<BODY>
