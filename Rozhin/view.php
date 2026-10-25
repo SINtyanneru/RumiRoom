@@ -17,11 +17,6 @@ if ($page == false) {
 <BR>
 
 <?php
-$text = $page["TEXT"];
-$ajax = curl_init("http://192.168.0.128/RML/");
-curl_setopt($ajax, CURLOPT_POST, true);
-curl_setopt($ajax, CURLOPT_POSTFIELDS, $text);
-curl_setopt($ajax, CURLOPT_RETURNTRANSFER, true);
-$html = curl_exec($ajax);
-echo $html;
+require(__DIR__."/../lib/RML/RML.php");
+echo rml_to_html(htmlspecialchars($page["TEXT"]));
 ?>
