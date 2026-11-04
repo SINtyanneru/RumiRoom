@@ -27,22 +27,34 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 		<!--BGM-->
 		<?php
 			$bgm = "/Asset/bgm.mp3";
-			if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Trident") !== false) {
-				//IE
-				echo "<BGSOUND LOOP=\"infinite\" SRC=\"".$bgm."\">";
-			} else {
-				//それ以外
-				?>
-				<SCRIPT>
-					window.addEventListener("load", (E)=>{
-						let BGSOUND = document.createElement("AUDIO");
-						BGSOUND.src = "<?=$bgm?>";
-						BGSOUND.autoplay = true;
-						BGSOUND.loop = true;
-						document.body.appendChild(BGSOUND);
-					});
-				</SCRIPT>
-				<?php
+			$bgm_enable = true;
+			$bgm_volume = 0.5;
+		
+			if (empty($_COOKIE["BGM_SETTING"]) == false) {
+				$setting = json_decode($_COOKIE["BGM_SETTING"], true);
+				$bgm_enable = $setting["ENABLE"];
+				$bgm_volume = $setting["VOLUME"];
+			}
+
+			if ($bgm_enable) {
+				if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Trident") !== false) {
+					//IE
+					echo "<BGSOUND LOOP=\"infinite\" SRC=\"".$bgm."\">";
+				} else {
+					//それ以外
+					?>
+					<SCRIPT>
+						window.addEventListener("load", (E)=>{
+							let BGSOUND = document.createElement("AUDIO");
+							BGSOUND.src = "<?=$bgm?>";
+							BGSOUND.autoplay = true;
+							BGSOUND.loop = true;
+							BGSOUND.volume = <?=$bgm_volume?>;
+							document.body.appendChild(BGSOUND);
+						});
+					</SCRIPT>
+					<?php
+				}
 			}
 		?>
 
@@ -52,8 +64,8 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 		?>
 	</HEAD>
 
-	<FRAMESET ROWS="100,*">
-		<FRAME SRC="/header.html" NAME="HEADER" noresize>
+	<FRAMESET ROWS="110,*">
+		<FRAME SRC="/header.php?P=<?php echo $path ?>&R=<?=htmlspecialchars(json_encode($_GET))?>" NAME="HEADER" noresize>
 		<FRAMESET COLS="290,*">
 			<FRAME SRC="/menu.php?P=<?php echo $path ?>" NAME="MENU" noresize>
 			<FRAME SRC="/main.php?P=<?php echo $path ?>&R=<?=htmlspecialchars(json_encode($_GET))?>" NAME="MAIN" noresize>
