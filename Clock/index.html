@@ -1,0 +1,551 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<HTML>
+	<HEAD>
+		<TITLE>時計</TITLE>
+
+		<STYLE>
+			body{
+				margin: 0px;
+				padding: 0px;
+			}
+
+			canvas{
+				width: 100vw;
+				height: auto;
+				aspect-ratio: 1;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<CANVAS ID="CANVAS"></CANVAS>
+
+		<INPUT TYPE="checkbox" ID="BEEP"><LABEL FOR="BEEP">1秒毎に音を鳴らす</LABEL><BR>
+		<INPUT TYPE="checkbox" ID="MUTE_RRZS"><LABEL FOR="MUTE_RRZS">RRZSの音が鳴っている間は1秒毎の音を鳴らさない</LABEL><BR>
+		<BR>
+
+		<A HREF="https://github.com/SINtyanneru/RumiRoomZhihouSystem">使用ソフトウェア: RRZS - るみさんのお部屋時報システム</A><BR>
+		BGM A: <A HREF="https://opentracks.com/bgm/detail/16676">crisp morning by のる</A><BR>
+		BGM B: <A HREF="https://opentracks.com/bgm/detail/19091">明日はきっと晴れ by のる</A><BR>
+		音声: VOICEVOX 四国めたん<BR>
+		<DETAILS>
+			<SUMMARY>作った人</SUMMARY>
+			ベースはわたしが作ったけど、なぜか微妙にズレたりするので、リファクタリングと最適化をClaudeにやらせました。<BR>
+			なので合作と言えよう
+		</DETAILS>
+	</BODY>
+	<SCRIPT>
+		const canvas = document.getElementById("CANVAS");
+		const g = canvas.getContext("2d");
+		const margin = 10;
+		const JST_OFFSET = 9 * 60 * 60 * 1000;
+		const num_list = [
+			[12, 0],
+			[1, 30],
+			[2, 60],
+			[3, 90],
+			[4, 120],
+			[5, 150],
+			[6, 180],
+			[7, 210],
+			[8, 240],
+			[9, 270],
+			[10, 300],
+			[11, 330]
+		];
+
+		//サーバー時刻との差(ms)
+		let offset = 0;
+
+		//Web Audio
+		const actx = new AudioContext();
+		const buffers = [];
+		let scheduled_sec = -1;
+
+		//待機中の処理一覧(sleepが登録し、心拍が起こす)
+		const waiters = [];
+		let last_sec = -1;
+
+		//サーバーと時刻同期中か
+		let syncing = false;
+
+		//時報の音声(rrzs.php)が鳴っている期間(エポックms)
+		let rrzs_start_ms = 0;
+		let rrzs_end_ms = 0;
+
+		//設定
+		const beep_box = document.getElementById("BEEP");
+		const mute_box = document.getElementById("MUTE_RRZS");
+
+		function load_setting(key, def) {
+			try {
+				const v = localStorage.getItem(key);
+				if (v !== null) return v === "1";
+			} catch (ex) {}
+			return def;
+		}
+
+		function save_setting(key, val) {
+			try {
+				localStorage.setItem(key, val ? "1" : "0");
+			} catch (ex) {}
+		}
+
+		beep_box.checked = load_setting("rrzs_beep", true);
+		mute_box.checked = load_setting("rrzs_mute_beep_on_voice", true);
+		beep_box.addEventListener("change", () => save_setting("rrzs_beep", beep_box.checked));
+		mute_box.addEventListener("change", () => save_setting("rrzs_mute_beep_on_voice", mute_box.checked));
+
+		/**
+		 * 現在時刻のエポックms(サーバー時刻に補正済み)
+		*/
+		function now_ms() {
+			return Date.now() + offset;
+		}
+
+		/**
+		 * 現在時刻(サーバー時刻に補正済み)
+		*/
+		function now() {
+			return new Date(now_ms());
+		}
+
+		/**
+		 * 日本時間の各要素を返す(閲覧者のタイムゾーンに依存しない)
+		*/
+		function jst(date) {
+			const d = new Date(date.getTime() + JST_OFFSET);
+			return {
+				year: d.getUTCFullYear(),
+				month: d.getUTCMonth() + 1,
+				day: d.getUTCDate(),
+				hour: d.getUTCHours(),
+				min: d.getUTCMinutes(),
+				sec: d.getUTCSeconds()
+			};
+		}
+
+		/**
+		 * 1回測る(往復時間と、そのときのoffsetを返す)
+		*/
+		async function measure() {
+			const p0 = performance.now();
+			const c0 = Date.now();
+			const text = await (await fetch("time.php?_=" + c0, {cache: "no-store"})).text();
+			const p1 = performance.now();
+
+			const rtt = p1 - p0;
+			const server = Number(text);
+			if (!Number.isFinite(server)) throw new Error("invalid time");
+
+			//サーバー時刻は往復の真ん中あたりで取得されたとみなす
+			return {rtt: rtt, offset: server - (c0 + rtt / 2)};
+		}
+
+		/**
+		 * サーバーとの時刻差を求める
+		 * 数回測って往復時間が最小のものだけ採用し、小さなズレは少しずつ寄せる
+		*/
+		async function sync_time(first) {
+			syncing = true;
+			draw(now());
+
+			try {
+				await sync_body(first);
+			} finally {
+				syncing = false;
+				draw(now());
+			}
+		}
+
+		async function sync_body(first) {
+			let best = null;
+
+			for (let i = 0; i < 5; i++) {
+				try {
+					const m = await measure();
+					if (best === null || m.rtt < best.rtt) best = m;
+				} catch (ex) {}
+				await new Promise((resolve) => setTimeout(resolve, 100));
+			}
+
+			//全滅、または回線が明らかに悪い回は捨てる
+			if (best === null) return;
+			if (!first && best.rtt > 500) return;
+
+			const diff = best.offset - offset;
+			if (first || Math.abs(diff) > 500) {
+				//初回と大きなズレは一気に合わせる
+				offset = best.offset;
+			} else {
+				//小さなズレは少しずつ寄せる(秒が飛ぶ・重複するのを防ぐ)
+				offset += diff * 0.2;
+			}
+		}
+
+		/**
+		 * 音声ファイルを読み込んでデコードする
+		*/
+		async function load_buffer(url) {
+			const res = await fetch(url);
+			return await actx.decodeAudioData(await res.arrayBuffer());
+		}
+
+		/**
+		 * エポックms(サーバー補正後の時刻)に鳴るよう予約する
+		 * 過ぎていたら鳴らさない
+		*/
+		function play_at_epoch(buf, epoch_ms) {
+			const lead = (epoch_ms - now_ms()) / 1000;
+			if (lead < 0) return;
+
+			const when = Math.max(actx.currentTime, actx.currentTime + lead - (actx.outputLatency || 0));
+			const src = actx.createBufferSource();
+			src.buffer = buf;
+			src.connect(actx.destination);
+			src.start(when);
+		}
+
+		/**
+		 * Workerで20msごとに心拍を送る(iframeでも間引かれにくい)
+		*/
+		function start_ticker() {
+			const src = "setInterval(() => postMessage(0), 20);";
+			const worker = new Worker(URL.createObjectURL(new Blob([src], {type: "text/javascript"})));
+			worker.onmessage = on_tick;
+		}
+
+		/**
+		 * 心拍ごとの処理
+		*/
+		function on_tick() {
+			//待機中の処理を起こす
+			const p = performance.now();
+			for (let i = waiters.length - 1; i >= 0; i--) {
+				if (p >= waiters[i].end) {
+					waiters[i].resolve();
+					waiters.splice(i, 1);
+				}
+			}
+
+			//次の秒境界が迫ったら音を予約する(1秒につき1回だけ)
+			const t_ms = now_ms();
+			const next = Math.floor(t_ms / 1000) + 1;
+			if (next !== scheduled_sec && next * 1000 - t_ms < 500) {
+				scheduled_sec = next;
+
+				//時報の音声の再生中は、設定に応じてピ音を止める
+				const next_ms = next * 1000;
+				const in_rrzs = mute_box.checked && next_ms >= rrzs_start_ms && next_ms < rrzs_end_ms;
+
+				if (beep_box.checked && !in_rrzs) {
+					play_at_epoch(buffers[next % 60 === 0 ? 1 : 0], next_ms);
+				}
+			}
+		}
+
+		/**
+		 * 描画ループ(秒が変わったフレームだけ描く)
+		*/
+		function render_loop() {
+			const t = now();
+			const sec = Math.floor(t.getTime() / 1000);
+
+			if (sec !== last_sec) {
+				last_sec = sec;
+				draw(t);
+			}
+			requestAnimationFrame(render_loop);
+		}
+
+		/**
+		 * 音声再生の許可待ち表示
+		*/
+		function draw_permission_banner() {
+			const rect_h = 80;
+			const rect_y = (canvas.height - rect_h) / 2;
+
+			g.fillStyle = "red";
+			g.fillRect(0, rect_y, canvas.width, rect_h);
+
+			g.fillStyle = "black";
+			g.font = "bold 28px sans-serif";
+			g.textAlign = "center";
+			g.textBaseline = "middle";
+			g.fillText("クリックして音声再生を許可してください", canvas.width / 2, canvas.height / 2);
+		}
+
+		/**
+		 * 動作開始
+		*/
+		function start() {
+			start_ticker();
+			render_loop();
+			hourly_loop();
+
+			//たまにサーバーと再同期してオフセットを補正
+			setInterval(() => {
+				sync_time(false).catch(() => {});
+			}, 60 * 1000);
+		}
+
+		window.addEventListener("load", async function() {
+			canvas.width = canvas.clientWidth;
+			canvas.height = canvas.clientHeight;
+
+			await sync_time(true);
+
+			buffers.push(await load_buffer("sound/117.wav"));
+			buffers.push(await load_buffer("sound/117_2.wav"));
+
+			actx.resume().catch(() => {});
+			await new Promise((resolve) => setTimeout(resolve, 100));
+
+			if (actx.state === "running") {
+				start();
+				return;
+			}
+
+			//自動再生がブロックされた場合は、操作されるまで待つ
+			draw_permission_banner();
+
+			const events = ["pointerdown", "keydown", "touchend"];
+			const unlock = async function() {
+				try {
+					await actx.resume();
+				} catch (ex) {}
+
+				if (actx.state !== "running") return;
+
+				for (const e of events) {
+					window.removeEventListener(e, unlock);
+				}
+				start();
+			};
+			for (const e of events) {
+				window.addEventListener(e, unlock);
+			}
+		});
+
+		/**
+		 * 正時の時報
+		*/
+		async function hourly_loop() {
+			while (true) {
+				const hour = next_hour();
+				const time_get = new Date(hour.getTime() - 60 * 1000);
+				const time_play = new Date(hour.getTime() - 10 * 1000);
+
+				if (now().getTime() >= time_get.getTime()) {
+					await wait_until(hour);
+					continue;
+				}
+
+				await wait_until(time_get);
+
+				let rrzs_buf = null;
+				try {
+					rrzs_buf = await load_buffer("rrzs.php");
+				} catch (ex) {}
+
+				//再生期間を記録(ピ音の抑制に使う。取得に失敗したら期間なし)
+				if (rrzs_buf !== null) {
+					rrzs_start_ms = time_play.getTime();
+					rrzs_end_ms = rrzs_start_ms + rrzs_buf.duration * 1000;
+				} else {
+					rrzs_start_ms = 0;
+					rrzs_end_ms = 0;
+				}
+
+				//再生の1秒前に起きて、正確な時刻で予約する
+				await wait_until(new Date(time_play.getTime() - 1000));
+				if (rrzs_buf !== null) {
+					play_at_epoch(rrzs_buf, time_play.getTime());
+				}
+
+				await wait_until(hour);
+			}
+		}
+
+		/**
+		 * 指定ミリ秒待つ(Workerの心拍で起こす)
+		*/
+		async function sleep(ms) {
+			return new Promise((resolve) => {
+				waiters.push({end: performance.now() + ms, resolve: resolve});
+			});
+		}
+
+		/**
+		 * 次の正時(1時間は3600000ms、日本は+9時間なので正時がそろう)
+		*/
+		function next_hour() {
+			const ms = now_ms();
+			return new Date((Math.floor(ms / 3600000) + 1) * 3600000);
+		}
+
+		async function wait_until(target) {
+			while (true) {
+				const diff = target.getTime() - now().getTime();
+				if (diff <= 0) return;
+				await sleep(Math.min(diff, 100));
+			}
+		}
+
+		function draw(time) {
+			const cx = canvas.width / 2;
+			const cy = canvas.height / 2;
+			const r = Math.min(canvas.width, canvas.height) / 2 - margin;
+			const j = jst(time);
+
+			//時計の円盤
+			draw_base(cx, cy, r);
+
+			//目盛り
+			draw_memori(cx, cy, r);
+
+			//文字盤
+			draw_mozhiban(cx, cy, r);
+
+			draw_digital_date(cx, cy, j);
+			draw_digital_time(cx, cy, j);
+
+			//針
+			draw_all_hali(cx, cy, r, j.hour, j.min, j.sec);
+		}
+
+		/**
+		 * 時計の円盤を描画
+		*/
+		function draw_base(cx, cy, r) {
+			g.beginPath();
+			g.arc(cx, cy, r, 0, Math.PI * 2);
+			g.fillStyle = "white";
+			g.fill();
+			g.lineWidth = 4;
+			g.strokeStyle = "silver";
+			g.stroke();
+		}
+
+		/**
+		 * 目盛り
+		*/
+		function draw_memori(cx, cy, r) {
+			g.strokeStyle = "black";
+			g.lineCap = "round";
+			for (let i = 0; i < 60; i++) {
+				const big = (i % 5 === 0);
+				const rad = (i * 6 - 90) * Math.PI / 180;
+
+				//外側は枠線の内側から少し空け、内側は長さ分だけ引く
+				const outer = r - (margin * 4);
+				const inner = outer - (big ? 16 : 8);
+
+				g.beginPath();
+				g.moveTo(cx + Math.cos(rad) * inner, cy + Math.sin(rad) * inner);
+				g.lineTo(cx + Math.cos(rad) * outer, cy + Math.sin(rad) * outer);
+				g.lineWidth = 2;
+				if (big) g.lineWidth = 4;
+				g.stroke();
+			}
+		}
+
+		/**
+		 * 文字盤
+		*/
+		function draw_mozhiban(cx, cy, r) {
+			g.font = "bold 28px sans-serif";
+			g.fillStyle = "black";
+			g.textAlign = "center";
+			g.textBaseline = "middle";
+			for (const [n, deg] of num_list) {
+				const rad = (deg - 90) * Math.PI / 180;
+				const num_r = r - (margin * 2);
+				const x = cx + Math.cos(rad) * num_r;
+				const y = cy + Math.sin(rad) * num_r;
+				const m = g.measureText(String(n));
+				const h = m.actualBoundingBoxAscent - m.actualBoundingBoxDescent;
+				g.fillText(String(n), x, y + h / 2);
+			}
+		}
+
+		function draw_digital_date(cx, cy, j) {
+			const offset_y = canvas.height * -0.1;
+			const center_x = (cx !== undefined) ? cx : canvas.width / 2;
+			const center_y = ((cy !== undefined) ? cy : canvas.height / 2) - offset_y;
+
+			const rect_w = canvas.width - (margin * 20);
+			const rect_h = 80;
+			const rect_x = center_x - (rect_w / 2);
+			const rect_y = center_y - (rect_h / 2);
+
+			g.fillStyle = "gray";
+			g.fillRect(rect_x, rect_y, rect_w, rect_h);
+
+			const pad = (n) => String(n).padStart(2, "0");
+			const text = syncing ? "時刻同期中" : `${pad(j.year)}年${pad(j.month)}月${pad(j.day)}日`;
+
+			const font_h = 25;
+			g.fillStyle = "rgb(0, 255, 0)";
+			g.font = `bold ${font_h}px monospace`;
+			g.textAlign = "center";
+			g.textBaseline = "middle";
+			g.fillText(text, center_x, center_y);
+		}
+
+		function draw_digital_time(cx, cy, j) {
+			const offset_y = canvas.height * 0.1;
+			const center_x = (cx !== undefined) ? cx : canvas.width / 2;
+			const center_y = ((cy !== undefined) ? cy : canvas.height / 2) - offset_y;
+
+			const rect_w = canvas.width - (margin * 20);
+			const rect_h = 80;
+			const rect_x = center_x - (rect_w / 2);
+			const rect_y = center_y - (rect_h / 2);
+
+			g.fillStyle = "gray";
+			g.fillRect(rect_x, rect_y, rect_w, rect_h);
+
+			const pad = (n) => String(n).padStart(2, "0");
+			const text = `${pad(j.hour)}:${pad(j.min)}.${pad(j.sec)}`;
+
+			const font_h = 25;
+			g.fillStyle = "rgb(0, 255, 0)";
+			g.font = `bold ${font_h}px monospace`;
+			g.textAlign = "center";
+			g.textBaseline = "middle";
+			g.fillText(text, center_x, center_y);
+		}
+
+		/**
+		 * 針1本
+		*/
+		function draw_hali(cx, cy, deg, length, tail, width, color) {
+			const rad = (deg - 90) * Math.PI / 180;
+			g.beginPath();
+			g.moveTo(cx - Math.cos(rad) * tail, cy - Math.sin(rad) * tail);
+			g.lineTo(cx + Math.cos(rad) * length, cy + Math.sin(rad) * length);
+			g.lineWidth = width;
+			g.strokeStyle = color;
+			g.lineCap = "round";
+			g.stroke();
+		}
+
+		/**
+		 * 針
+		*/
+		function draw_all_hali(cx, cy, r, hour, min, sec) {
+			const sec_deg = sec * 6;
+			const min_deg = (min + sec / 60) * 6;
+			const hour_deg = ((hour % 12) + min / 60 + sec / 3600) * 30;
+
+			draw_hali(cx, cy, hour_deg, r * 0.5, r * 0.05, 8, "black");
+			draw_hali(cx, cy, min_deg, r * 0.75, r * 0.05, 5, "black");
+			draw_hali(cx, cy, sec_deg, r * 0.85, r * 0.15, 2, "red");
+
+			g.beginPath();
+			g.arc(cx, cy, 8, 0, Math.PI * 2);
+			g.fillStyle = "red";
+			g.fill();
+		}
+	</SCRIPT>
+</HTML>

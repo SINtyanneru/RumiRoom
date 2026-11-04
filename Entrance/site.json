@@ -81,6 +81,13 @@
 		"PATH": null,
 		"SHOW_MENU": true
 	},
+	{
+		"URL": "/clock",
+		"TITLE": "時計",
+		"ICON": "App_Clock",
+		"PATH": "/clock.php",
+		"SHOW_MENU": true
+	},
 
 	{
 		"URL": "/art",
