@@ -1,5 +1,5 @@
 <?php
-require(__DIR__."/const.php");
+require_once(__DIR__."/const.php");
 
 //セッション開始
 function bgm_session_start() {
@@ -10,7 +10,7 @@ function bgm_session_start() {
 
 //TOCを読み込む
 function bgm_load_toc() {
-	return json_decode(file_get_contents(__DIR__."/bgm/toc.json"), true);
+	return json_decode(file_get_contents(__DIR__."/../bgm/toc.json"), true);
 }
 
 //抽選
@@ -56,7 +56,7 @@ function bgm_get_path() {
 	$id = (string)$_SESSION["BGM_ID"];
 	session_write_close();
 
-	return __DIR__."/bgm/".$id.".mp3";
+	return __DIR__."/../bgm/".$id.".mp3";
 }
 
 //現在のBGMのIDを返す

@@ -1,8 +1,8 @@
 <?php
-require(__DIR__."/const.php");
+require_once(__DIR__."/src/const.php");
 
 $url = $_GET["p"];
-$url_param = http_build_query(json_decode($_GET["r"], true));
+$url_param = $_GET["r"];
 
 if ($url_param != "") $url_param = "?".$url_param;
 
@@ -48,7 +48,7 @@ switch ($_GET["m"]) {
 	}
 
 	case "change": {
-		require(__DIR__."/bgm.php");
+		require(__DIR__."/src/bgm.php");
 		bgm_rechoise();
 		break;
 	}

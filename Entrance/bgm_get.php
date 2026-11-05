@@ -1,5 +1,5 @@
 <?php
-require(__DIR__."/bgm.php");
+require_once(__DIR__."/src/bgm.php");
 
 $bgm_path = bgm_get_path();
 

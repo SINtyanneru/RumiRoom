@@ -24,44 +24,44 @@ $love_kyara = $stmt->fetchAll();
 ?>
 
 <STYLE>
-	table{
+	.PROFILE_TABLE{
 		margin: auto;
 	}
 
-	table td {
+	.PROFILE_TABLE .PROFILE_TD {
 		padding:10px;
 	}
 
-	.ICON{
+	.PROFILE_ICON{
 		width: 128px;
 		height: auto;
 	}
 </STYLE>
 
 <!--プロフ-->
-<TABLE>
+<TABLE CLASS="PROFILE_TABLE">
 	<TR>
-		<TD ROWSPAN="10">
+		<TD CLASS="PROFILE_TD" ROWSPAN="10">
 			<A HREF="https://www.pixiv.net/tags/%E6%A3%97%E9%88%B4/artworks" TARGET="_blank">
-				<IMG CLASS="ICON" SRC="/Asset/icon_proxy.php">
+				<IMG CLASS="PROFILE_ICON" SRC="/Asset/icon_proxy.php">
 			</A>
 		</TD>
-		<TD COLSPAN="2" STYLE="font-size: 45px;">
+		<TD CLASS="PROFILE_TD" COLSPAN="2" STYLE="font-size: 45px;">
 			<?=ruby("Σχετικά με", "Shetikáme")?><?=ruby("μένα", "ména")?>
 		</TD>
 	</TR>
 	<TR>
-		<TD COLSPAN="2">
+		<TD CLASS="PROFILE_TD" COLSPAN="2">
 			<I><?=ruby("Сара", "Sara")?> <?=ruby("исызку", "isyzku")?> <?=ruby("ашәҟәы,", "ašwq́wy")?> <?=ruby("наӡаӡа", "nażaża")?> <?=ruby("схала", "shala")?></I>
 		</TD>
 	</TR>
 	<TR>
-		<TD><?=ruby("名前", "なまえ")?></TD>
-		<TD>: るみ</TD>
+		<TD CLASS="PROFILE_TD"><?=ruby("名前", "なまえ")?></TD>
+		<TD CLASS="PROFILE_TD">: るみ</TD>
 	</TR>
 	<TR>
-		<TD><?=ruby("年齢", "ねんれい")?></TD>
-		<TD>
+		<TD CLASS="PROFILE_TD"><?=ruby("年齢", "ねんれい")?></TD>
+		<TD CLASS="PROFILE_TD">
 			<?php
 			$birthday = new DateTime("2007-10-29");
 			$now = new DateTime();
@@ -71,32 +71,26 @@ $love_kyara = $stmt->fetchAll();
 		</TD>
 	</TR>
 	<TR>
-		<TD>マイナンバー</TD>
-		<TD>: 1037 0077 4698</TD>
+		<TD CLASS="PROFILE_TD">マイナンバー</TD>
+		<TD CLASS="PROFILE_TD">: 1037 0077 4698</TD>
 	</TR>
 	<TR>
-		<TD><?=ruby("喋", "しゃ")?>れる<?=ruby("言語", "げんご")?></TD>
-		<TD>: <?=implode("/", $use_language)?></TD>
+		<TD CLASS="PROFILE_TD"><?=ruby("喋", "しゃ")?>れる<?=ruby("言語", "げんご")?></TD>
+		<TD CLASS="PROFILE_TD">: <?=implode("/", $use_language)?></TD>
 	</TR>
 	<TR>
-		<TD><?=ruby("使", "つか")?>えるﾌﾟﾖｸﾞﾗﾐﾝｸﾞ<?=ruby("言語", "げんご")?></TD>
-		<TD>: <?=implode("/", $use_proguraming_language)?></TD>
+		<TD CLASS="PROFILE_TD"><?=ruby("使", "つか")?>えるﾌﾟﾖｸﾞﾗﾐﾝｸﾞ<?=ruby("言語", "げんご")?></TD>
+		<TD CLASS="PROFILE_TD">: <?=implode("/", $use_proguraming_language)?></TD>
 	</TR>
 </TABLE>
 
 <HR>
 
 <!--代理-->
-<TABLE>
-	<TR>
-		<TH>わたしの<?=ruby("代理", "だいり")?></TH>
-	</TR>
-	<TR>
-		<TH>
-			<A HREF="/art/view.php?ID=2" TARGET="_parent"><?=ruby("資料", "しりょう")?>はこちら</A>
-		</TH>
-	</TR>
-</TABLE>
+<DIV STYLE="text-align: center;">
+	<H2>わたしの<?=ruby("代理", "だいり")?></H2>
+	<A HREF="/art/view.php?ID=2"><?=ruby("資料", "しりょう")?>はこちら</A>
+</DIV>
 
 <HR>
 
