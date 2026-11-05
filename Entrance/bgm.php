@@ -1,62 +1,71 @@
 <?php
-$url = $_GET["p"];
-$url_param = http_build_query(json_decode($_GET["r"], true));
+require(__DIR__."/const.php");
 
-if ($url_param != "") $url_param = "?".$url_param;
-
-if (empty($_GET["m"])) {
-	header("Location: ".$url.$url_param, false, 302);
-	exit;
-}
-
-$setting = [
-	"ENABLE" => true,
-	"VOLUME" => 0.5,
-	"SEEK" => 0
-];
-
-if (empty($_COOKIE["BGM_SETTING"]) == false) {
-	$setting = json_decode($_COOKIE["BGM_SETTING"], true);
-}
-
-switch ($_GET["m"]) {
-	case "onoff": {
-		if ($setting["ENABLE"]) {
-			$setting["ENABLE"] = false;
-		} else {
-			$setting["ENABLE"] = true;
-		}
-		break;
-	}
-
-	case "up": {
-		$setting["VOLUME"] += 0.1;
-		if ($setting["VOLUME"] > 1) {
-			$setting["VOLUME"] = 1;
-		}
-		break;
-	}
-
-	case "down": {
-		$setting["VOLUME"] -= 0.1;
-		if ($setting["VOLUME"] < 0) {
-			$setting["VOLUME"] = 0;
-		}
-		break;
+//セッション開始
+function bgm_session_start() {
+	if (session_status() !== PHP_SESSION_ACTIVE) {
+		session_start();
 	}
 }
 
-setcookie(
-	"BGM_SETTING",
-	json_encode($setting, JSON_UNESCAPED_UNICODE),
-	[
-		"expires" => time() + 60 * 60 * 24 * 365 * 10,
-		"path" => "/",
-		"secure" => true,
-		"httponly" => true,
-		"samesite" => "Lax"
-	]
-);
+//TOCを読み込む
+function bgm_load_toc() {
+	return json_decode(file_get_contents(__DIR__."/bgm/toc.json"), true);
+}
 
+//抽選
+function bgm_choise() {
+	bgm_session_start();
 
-header("Location: ".$url.$url_param, false, 302);
+	$toc = bgm_load_toc();
+	$id = array_map("strval", array_column($toc, "ID"));
+
+	//選択済みで、かつTOCに存在するなら何もしない
+	if (isset($_SESSION["BGM_ID"]) && in_array((string)$_SESSION["BGM_ID"], $id, true)) {
+		return;
+	}
+
+	$_SESSION["BGM_ID"] = $id[array_rand($id)];
+	session_write_close();
+}
+
+//再抽選
+function bgm_rechoise() {
+	bgm_session_start();
+
+	$toc = bgm_load_toc();
+	$id = array_map("strval", array_column($toc, "ID"));
+
+	$now = isset($_SESSION["BGM_ID"]) ? (string)$_SESSION["BGM_ID"] : "";
+	$candidate = array_values(array_filter($id, function ($v) use ($now) {
+		return $v !== $now;
+	}));
+	if (count($candidate) == 0) {
+		$candidate = $id;
+	}
+
+	$_SESSION["BGM_ID"] = $candidate[array_rand($candidate)];
+	session_write_close();
+}
+
+//選ばれたBGMのパスを返す
+function bgm_get_path() {
+	bgm_choise();
+
+	bgm_session_start();
+	$id = (string)$_SESSION["BGM_ID"];
+	session_write_close();
+
+	return __DIR__."/bgm/".$id.".mp3";
+}
+
+//現在のBGMのIDを返す
+function bgm_get_id() {
+	bgm_choise();
+
+	bgm_session_start();
+	$id = (string)$_SESSION["BGM_ID"];
+	session_write_close();
+
+	return $id;
+}
