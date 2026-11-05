@@ -25,7 +25,7 @@ $account_list = $stmt->fetchAll();
 			$name = $account["NAME"];
 			$url = $account["SERVICE_URL"];
 
-			$url = str_replace("\$UID", $account["UID"], $url);
+			if ($url != null) $url = str_replace("\$UID", $account["UID"], $url);
 
 			?>
 			<TR>
@@ -65,7 +65,7 @@ $account_list = $stmt->fetchAll();
 			$name = $account["NAME"];
 			$url = $account["SERVICE_URL"];
 
-			$url = str_replace("\$UID", $account["UID"], $url);
+			if ($url != null) $url = str_replace("\$UID", $account["UID"], $url);
 
 			?>
 			<TR>

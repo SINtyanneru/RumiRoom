@@ -1,9 +1,8 @@
 <?php
 require(__DIR__."/../../../env.php");
-$query = json_decode($_GET["R"], true);
 
 $stmt = $sql->prepare("SELECT * FROM `RUMIART_VERSION` WHERE `ID` = :id;");
-$stmt->bindValue(":id", $query["ID"]);
+$stmt->bindValue(":id", $_GET["ID"]);
 $stmt->execute();
 $version = $stmt->fetch();
 if ($version == false) {

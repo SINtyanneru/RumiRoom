@@ -1,7 +1,5 @@
 <?php
-$get = json_decode($_GET["R"], true);
-
-if (empty($get["V"])) {
+if (empty($_GET["V"])) {
 	?>
 	<H1>るみのオープンソースソフトウェアライセンス</H1>
 	<?php
@@ -13,7 +11,7 @@ if (empty($get["V"])) {
 		<?php
 	}
 } else {
-	$path = __DIR__."/".str_replace("/", "", $get["V"]);
+	$path = __DIR__."/".str_replace("/", "", $_GET["V"]);
 	if (file_exists($path) == false) {
 		echo "ない";
 		exit;
