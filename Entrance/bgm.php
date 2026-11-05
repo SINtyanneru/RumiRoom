@@ -3,7 +3,7 @@ require(__DIR__."/const.php");
 
 $toc = json_decode(file_get_contents(__DIR__."/bgm/toc.json"), true);
 
-if (empty($_COOKIE[BGM_CHOISE_COOKIE])) {
+if (isset($_COOKIE[BGM_CHOISE_COOKIE])) {
 	$bgm = $toc[array_rand($toc)];
 
 	setcookie(BGM_CHOISE_COOKIE, $bgm["ID"], [
