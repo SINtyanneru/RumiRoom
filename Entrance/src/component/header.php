@@ -2,6 +2,7 @@
 require_once(__DIR__."/../const.php");
 require_once(__DIR__."/../bgm.php");
 require_once(__DIR__."/../path.php");
+date_default_timezone_set("Asia/Tokyo");
 
 $r = $_SERVER["QUERY_STRING"];
 ?>
@@ -9,7 +10,15 @@ $r = $_SERVER["QUERY_STRING"];
 	<A HREF="/"><IMG SRC="/Asset/logo.gif" ALT="るみさんのお部屋"></A>
 </MARQUEE>
 <BR>
-SINCE 2020
+SINCE 2020 <?php
+if (date("n-j") == "1-1") {
+	echo " - あけおめことよろ";
+} else if (date("n-j") == "12-25") {
+	echo " - メリクリ";
+} else if (date("n-j") == "10-29") {
+	echo " - 今日は誕生日です";
+}
+?>
 <HR>
 
 <A HREF="/bgm_seting.php?m=onoff&p=<?=$cur_path?>&r=<?=$r?>"><BUTTON>BGM ON/OFF</BUTTON></A>
