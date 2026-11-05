@@ -46,6 +46,12 @@ switch ($_GET["m"]) {
 		}
 		break;
 	}
+
+	case "change": {
+		require(__DIR__."/bgm.php");
+		bgm_rechoise();
+		break;
+	}
 }
 
 setcookie(

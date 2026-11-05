@@ -38,7 +38,7 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 			}
 
 			if ($bgm_enable) {
-				$bgm = "/bgm.php";
+				$bgm = "/bgm_get.php?a=".uniqid();
 
 				if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Trident") !== false) {
 					//IE
