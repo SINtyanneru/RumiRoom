@@ -1,0 +1,7 @@
+<?php
+//BGM設定
+define("BGM_SETTING_COOKIE", "BGM_SETTING");
+
+//BGM
+define("BGM_CHOISE_COOKIE", "BGM_CHOISE");
+define("BGM_SEEK_COOKIE", "BGM_SEEK");

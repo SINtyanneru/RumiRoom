@@ -1,4 +1,6 @@
 <?php
+require(__DIR__."/const.php");
+
 $path = str_replace(str_replace($_SERVER["DOCUMENT_ROOT"], "", __DIR__), "", urldecode(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH)));
 $title = "";
 
@@ -26,17 +28,18 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 
 		<!--BGM-->
 		<?php
-			$bgm = "/Asset/bgm.mp3";
 			$bgm_enable = true;
 			$bgm_volume = 0.5;
-		
-			if (empty($_COOKIE["BGM_SETTING"]) == false) {
-				$setting = json_decode($_COOKIE["BGM_SETTING"], true);
+
+			if (empty($_COOKIE[BGM_SETTING_COOKIE]) == false) {
+				$setting = json_decode($_COOKIE[BGM_SETTING_COOKIE], true);
 				$bgm_enable = $setting["ENABLE"];
 				$bgm_volume = $setting["VOLUME"];
 			}
 
 			if ($bgm_enable) {
+				$bgm = "/bgm.php";
+
 				if (strpos($_SERVER["HTTP_USER_AGENT"], "MSIE") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Trident") !== false) {
 					//IE
 					echo "<BGSOUND LOOP=\"infinite\" SRC=\"".$bgm."\">";
@@ -45,12 +48,28 @@ header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3
 					?>
 					<SCRIPT>
 						window.addEventListener("load", (E)=>{
+							let seek = 0;
+							const cookie = document.cookie.split(";");
+							for (const c of cookie) {
+								const parts = c.split("=");
+								const key = parts[0];
+								const value = parts[1];
+								if (key === "<?=BGM_SEEK_COOKIE?>") {
+									seek = Number.parseFloat(value);
+								}
+							}
+
 							let BGSOUND = document.createElement("AUDIO");
 							BGSOUND.src = "<?=$bgm?>";
 							BGSOUND.autoplay = true;
 							BGSOUND.loop = true;
 							BGSOUND.volume = <?=$bgm_volume?>;
+							BGSOUND.currentTime = seek;
 							document.body.appendChild(BGSOUND);
+
+							BGSOUND.addEventListener("timeupdate", function() {
+								document.cookie = `<?=BGM_SEEK_COOKIE?>=${BGSOUND.currentTime}`;
+							});
 						});
 					</SCRIPT>
 					<?php
