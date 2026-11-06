@@ -29,7 +29,8 @@ require_once(__DIR__."/../lib/SizeiB/convert_byte.php");
 				$article_list = $stmt->fetchAll();
 
 				foreach ($article_list as $article) {
-					$stmt = $sql->prepare("SELECT `ID`, `VERSION`, `CREATE_AT`, LENGTH(`TEXT`) AS `SIZE` FROM `RCK_VERSION` ORDER BY `CREATE_AT` DESC LIMIT 1;");
+					$stmt = $sql->prepare("SELECT `ID`, `VERSION`, `CREATE_AT`, LENGTH(`TEXT`) AS `SIZE` FROM `RCK_VERSION` WHERE `ARTICLE` = :article ORDER BY `CREATE_AT` DESC LIMIT 1;");
+					$stmt->bindValue(":article", $article["ID"], PDO::PARAM_STR);
 					$stmt->execute();
 					$latest_version = $stmt->fetch();
 					?>
