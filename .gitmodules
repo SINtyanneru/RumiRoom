@@ -1,3 +1,9 @@
 [submodule "lib/RML"]
 	path = lib/RML
 	url = https://github.com/SINtyanneru/RML.git
+[submodule "lib/rst-parser"]
+	path = lib/rst-parser
+	url = https://github.com/doctrine/rst-parser.git
+[submodule "lib/rst"]
+	path = lib/rst
+	url = https://github.com/Gregwar/RST.git
