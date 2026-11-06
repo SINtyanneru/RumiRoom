@@ -36,7 +36,7 @@ require_once(__DIR__."/../lib/SizeiB/convert_byte.php");
 					<TR>
 						<?php
 						if ($article["IS_DISCONTINUED"] == 1) {
-							echo "<TD>[廃止済み]</TD>";
+							echo "<TD>[廃止]</TD>";
 						} else {
 							echo "<TD></TD>";
 						}
