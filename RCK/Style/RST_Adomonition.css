@@ -1,0 +1,42 @@
+.admonition{
+	margin: 10px;
+	padding: 10px;
+
+	border-radius: 10px;
+}
+
+.first.admonition-title{
+	display: none;
+}
+
+.admonition::before{
+	display: inline-block;
+	content: "";
+
+	width: 32px;
+	height: 32px;
+}
+
+.admonition.note{
+	background-color: rgb(159, 255, 146);
+}
+
+.admonition.note::before{
+	background-image: url("/Asset/Haiku/png/32x32/Alert_Idea.png");
+}
+
+.admonition.warning{
+	background-color: rgb(255, 94, 94);
+}
+
+.admonition.warning::before{
+	background-image: url("/Asset/Haiku/png/32x32/Alert_Warning.png");
+}
+
+.admonition.tip{
+	background-color: rgb(94, 209, 255);
+}
+
+.admonition.tip::before{
+	background-image: url("/Asset/Haiku/png/32x32/Alert_Info.png");
+}
