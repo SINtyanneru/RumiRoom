@@ -14,6 +14,7 @@ require_once(__DIR__."/../lib/SizeiB/convert_byte.php");
 
 		<TABLE>
 			<TR>
+				<TH></TH>
 				<TH>番号</TH>
 				<TH>名称</TH>
 				<TH>最新バージョン</TH>
@@ -33,6 +34,13 @@ require_once(__DIR__."/../lib/SizeiB/convert_byte.php");
 					$latest_version = $stmt->fetch();
 					?>
 					<TR>
+						<?php
+						if ($article["IS_DISCONTINUED"] == 1) {
+							echo "<TD>[廃止済み]</TD>";
+						} else {
+							echo "<TD></TD>";
+						}
+						?>
 						<TD><A HREF="view.php?RCK=<?=htmlspecialchars($article["ID"])?>&V=<?=htmlspecialchars($latest_version["ID"])?>">RCK-<?=htmlspecialchars($article["ID"])?></A></TD>
 						<TD><A HREF="view.php?RCK=<?=htmlspecialchars($article["ID"])?>&V=<?=htmlspecialchars($latest_version["ID"])?>"><?=htmlspecialchars($article["TITLE"])?></A></TD>
 						<TD><?=htmlspecialchars($latest_version["CREATE_AT"])?></TD>
