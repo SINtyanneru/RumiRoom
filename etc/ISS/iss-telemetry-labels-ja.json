@@ -1,0 +1,2614 @@
+{
+  "psarj": {
+    "id": "S0000004",
+    "name_ja": "左舷SARJ 角度位置",
+    "description": "Port Solar Alpha Rotary Joint (SARJ) Angle Position",
+    "description_ja": "左舷SARJ 角度位置",
+    "unit": "°",
+    "discipline": "SPARTAN/VVO"
+  },
+  "ssarj": {
+    "id": "S0000003",
+    "name_ja": "右舷SARJ 角度位置",
+    "description": "Starboard Solar Alpha Rotary Joint (SARJ) Angle Position",
+    "description_ja": "右舷SARJ 角度位置",
+    "unit": "°",
+    "discipline": "SPARTAN/VVO"
+  },
+  "ptrrj": {
+    "id": "S0000002",
+    "name_ja": "左舷TRRJ 位置",
+    "description": "Port Thermal Radiator Rotating Joint (TRRJ) Position",
+    "description_ja": "左舷TRRJ 位置",
+    "unit": "°",
+    "discipline": "SPARTAN/VVO"
+  },
+  "strrj": {
+    "id": "S0000001",
+    "name_ja": "右舷TRRJ 位置",
+    "description": "Starboard Thermal Radiator Rotating Joint (TRRJ) Position",
+    "description_ja": "右舷TRRJ 位置",
+    "unit": "°",
+    "discipline": "SPARTAN/VVO"
+  },
+  "beta1b": {
+    "id": "S6000008",
+    "name_ja": "アレイ1B ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1B - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ1B ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta1a": {
+    "id": "S4000007",
+    "name_ja": "アレイ1A ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1A - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ1A ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta2b": {
+    "id": "P6000008",
+    "name_ja": "アレイ2B ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2B - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ2B ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta2a": {
+    "id": "P4000007",
+    "name_ja": "アレイ2A ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2A - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ2A ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta3b": {
+    "id": "S6000007",
+    "name_ja": "アレイ3B ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3B - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ3B ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta3a": {
+    "id": "S4000008",
+    "name_ja": "アレイ3A ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3A - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ3A ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta4b": {
+    "id": "P6000007",
+    "name_ja": "アレイ4B ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4B - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ4B ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "beta4a": {
+    "id": "P4000008",
+    "name_ja": "アレイ4A ベータ角",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4A - Beta Gimbal Assembly (BGA) Position",
+    "description_ja": "PVCU 太陽電池アレイ4A ベータジンバル（BGA）位置",
+    "unit": "°",
+    "discipline": "SPARTAN"
+  },
+  "aos": {
+    "id": "AOS",
+    "name_ja": "AOS状態",
+    "description": "ISS信号の受信状態。1=受信中（AOS）、0=信号ロスト（LOS）、2=信号エラー。iss_telemetry.py の TimeListener が書き込む",
+    "description_ja": "ISS信号の受信状態。1=受信中（AOS）、0=信号ロスト（LOS）、2=信号エラー。iss_telemetry.py の TimeListener が書き込む",
+    "unit": "",
+    "discipline": "Mimic独自"
+  },
+  "los": {
+    "id": "LOS",
+    "name_ja": "LOS状態",
+    "description": "信号ロスト表示用のラベル（aos と対）",
+    "description_ja": "信号ロスト表示用のラベル（aos と対）",
+    "unit": "",
+    "discipline": "Mimic独自"
+  },
+  "sasa1_elevation": {
+    "id": "S1000005",
+    "name_ja": "S RFG 1 仰角ジンバル",
+    "description": "S-Band Radio Frequency Group (RFG 1) Elevation Gimbal Position",
+    "description_ja": "Sバンド RFG 1 仰角ジンバル位置",
+    "unit": "°",
+    "discipline": "CATO/VVO"
+  },
+  "sgant_elevation": {
+    "id": "Z1000014",
+    "name_ja": "Ku SGANT EL位置",
+    "description": "Ku-Band SGANT Elevation Position",
+    "description_ja": "Kuバンド SGANT エレベーション位置",
+    "unit": "°",
+    "discipline": "CATO"
+  },
+  "crewlock_pres": {
+    "id": "AIRLOCK000049",
+    "name_ja": "クルーロック圧力",
+    "description": "Crewlock Pressure",
+    "description_ja": "クルーロック圧力",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "sgant_xel": {
+    "id": "Z1000015",
+    "name_ja": "Ku SGANT クロスEL位置",
+    "description": "Ku-Band SGANT Cross-Elevation Position",
+    "description_ja": "Kuバンド SGANT クロスエレベーション位置",
+    "unit": "°",
+    "discipline": "CATO"
+  },
+  "sasa1_azimuth": {
+    "id": "S1000004",
+    "name_ja": "S RFG 1 方位ジンバル",
+    "description": "S-Band Radio Frequency Group (RFG 1) Azimuth Gimbal Position",
+    "description_ja": "Sバンド RFG 1 方位ジンバル位置",
+    "unit": "°",
+    "discipline": "CATO"
+  },
+  "loopb_flowrate": {
+    "id": "P1000001",
+    "name_ja": "ループB（左舷）ポンプ流量",
+    "description": "Loop B (Port) Pump Flowrate",
+    "description_ja": "ループB（左舷）ポンプ流量",
+    "unit": "kg/hr",
+    "discipline": "SPARTAN"
+  },
+  "loopb_pressure": {
+    "id": "P1000002",
+    "name_ja": "ループB（左舷）PM出口圧力",
+    "description": "Loop B (Port) PM Out Press",
+    "description_ja": "ループB（左舷）ポンプモジュール出口圧力",
+    "unit": "kPa",
+    "discipline": "SPARTAN"
+  },
+  "loopb_temp": {
+    "id": "P1000003",
+    "name_ja": "ループB（左舷）PM出口温度",
+    "description": "Loop B (Port) PM Out Temp",
+    "description_ja": "ループB（左舷）ポンプモジュール出口温度",
+    "unit": "°C",
+    "discipline": "SPARTAN"
+  },
+  "loopa_flowrate": {
+    "id": "S1000001",
+    "name_ja": "ループA（右舷）ポンプ流量",
+    "description": "Loop A (Stbd) Pump Flowrate",
+    "description_ja": "ループA（右舷）ポンプ流量",
+    "unit": "kg/hr",
+    "discipline": "SPARTAN"
+  },
+  "loopa_pressure": {
+    "id": "S1000002",
+    "name_ja": "ループA（右舷）PM出口圧力",
+    "description": "Loop A (Stbd) PM Out Press",
+    "description_ja": "ループA（右舷）ポンプモジュール出口圧力",
+    "unit": "kPa",
+    "discipline": "SPARTAN"
+  },
+  "loopa_temp": {
+    "id": "S1000003",
+    "name_ja": "ループA（右舷）PM出口温度",
+    "description": "Loop A (Stbd) PM Out Temp",
+    "description_ja": "ループA（右舷）ポンプモジュール出口温度",
+    "unit": "°C",
+    "discipline": "SPARTAN"
+  },
+  "voltage_1a": {
+    "id": "S4000001",
+    "name_ja": "アレイ1A 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1A - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ1A 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_1b": {
+    "id": "S6000004",
+    "name_ja": "アレイ1B 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1B - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ1B 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_2a": {
+    "id": "P4000001",
+    "name_ja": "アレイ2A 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2A - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ2A 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_2b": {
+    "id": "P6000004",
+    "name_ja": "アレイ2B 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2B - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ2B 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_3a": {
+    "id": "S4000004",
+    "name_ja": "アレイ3A 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3A - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ3A 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_3b": {
+    "id": "S6000001",
+    "name_ja": "アレイ3B 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3B - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ3B 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_4a": {
+    "id": "P4000004",
+    "name_ja": "アレイ4A 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4A - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ4A 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "voltage_4b": {
+    "id": "P6000001",
+    "name_ja": "アレイ4B 駆動電圧",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4B - Drive Voltage",
+    "description_ja": "PVCU 太陽電池アレイ4B 駆動電圧",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_1a": {
+    "id": "S4000002",
+    "name_ja": "アレイ1A 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1A - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ1A 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_1b": {
+    "id": "S6000005",
+    "name_ja": "アレイ1B 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1B - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ1B 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_2a": {
+    "id": "P4000002",
+    "name_ja": "アレイ2A 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2A - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ2A 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_2b": {
+    "id": "P6000005",
+    "name_ja": "アレイ2B 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2B - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ2B 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_3a": {
+    "id": "S4000005",
+    "name_ja": "アレイ3A 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3A - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ3A 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_3b": {
+    "id": "S6000002",
+    "name_ja": "アレイ3B 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3B - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ3B 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_4a": {
+    "id": "P4000005",
+    "name_ja": "アレイ4A 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4A - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ4A 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "current_4b": {
+    "id": "P6000002",
+    "name_ja": "アレイ4B 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4B - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ4B 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "kuband_transmit": {
+    "id": "Z1000013",
+    "name_ja": "Kuバンド送信",
+    "description": "Ku-Band Transmit",
+    "description_ja": "Kuバンド送信状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "ptrrj_mode": {
+    "id": "S0000006",
+    "name_ja": "左舷TRRJ（ループB）ソフトウェアモード",
+    "description": "Port Thermal Radiator Rotating Joint (TRRJ) - Loop B - Software mode",
+    "description_ja": "左舷TRRJ（ループB）ソフトウェアモード",
+    "unit": "",
+    "discipline": "VVO"
+  },
+  "strrj_mode": {
+    "id": "S0000007",
+    "name_ja": "右舷TRRJ（ループA）ソフトウェアモード",
+    "description": "Starboard Thermal Radiator Rotating Joint (TRRJ) - Loop A - Software mode",
+    "description_ja": "右舷TRRJ（ループA）ソフトウェアモード",
+    "unit": "",
+    "discipline": "VVO"
+  },
+  "psarj_mode": {
+    "id": "S0000008",
+    "name_ja": "左舷SARJ モード",
+    "description": "Port Solar Alpha Rotary Joint (SARJ) Mode",
+    "description_ja": "左舷SARJ モード",
+    "unit": "",
+    "discipline": "VVO"
+  },
+  "ssarj_mode": {
+    "id": "S0000009",
+    "name_ja": "右舷SARJ モード",
+    "description": "Starboard Solar Alpha Rotary Joint (SARJ) Mode",
+    "description_ja": "右舷SARJ モード",
+    "unit": "",
+    "discipline": "VVO"
+  },
+  "russian_mode": {
+    "id": "RUSSEG000001",
+    "name_ja": "RS ステーションモード（SM）",
+    "description": "Russian Segment Station Mode - Service Module",
+    "description_ja": "ロシアセグメント ステーションモード（サービスモジュール）",
+    "unit": "",
+    "discipline": "ROS"
+  },
+  "iss_mode": {
+    "id": "USLAB000086",
+    "name_ja": "ISSステーションモード",
+    "description": "ISS Station Mode",
+    "description_ja": "ISSステーションモード",
+    "unit": "",
+    "discipline": "ODIN/VVO"
+  },
+  "iss_mass": {
+    "id": "USLAB000039",
+    "name_ja": "ISS総質量",
+    "description": "ISS Total Mass",
+    "description_ja": "ISS総質量",
+    "unit": "kg",
+    "discipline": "ADCO"
+  },
+  "us_gnc_mode": {
+    "id": "USLAB000012",
+    "name_ja": "US GNCモード",
+    "description": "US Guidance, Navigation and Control (GNC) Mode",
+    "description_ja": "米国セグメント GNCモード",
+    "unit": "",
+    "discipline": "ADCO/VVO"
+  },
+  "sasa2_elevation": {
+    "id": "P1000005",
+    "name_ja": "S RFG 2 仰角ジンバル",
+    "description": "S-Band Radio Frequency Group (RFG 2) Elevation Gimbal Position",
+    "description_ja": "Sバンド RFG 2 仰角ジンバル位置",
+    "unit": "°",
+    "discipline": "CATO"
+  },
+  "sasa2_azimuth": {
+    "id": "P1000004",
+    "name_ja": "S RFG 2 方位ジンバル",
+    "description": "S-Band Radio Frequency Group (RFG 2) Azimuth Gimbal Position",
+    "description_ja": "Sバンド RFG 2 方位ジンバル位置",
+    "unit": "°",
+    "discipline": "CATO"
+  },
+  "sasa2_status": {
+    "id": "P1000007",
+    "name_ja": "S RFG 2",
+    "description": "S-Band Radio Frequency Group (RFG 2), on-off status",
+    "description_ja": "Sバンド RFG 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "sasa1_status": {
+    "id": "S1000009",
+    "name_ja": "S RFG 1",
+    "description": "S-Band Radio Frequency Group (RFG 1), on-off status",
+    "description_ja": "Sバンド RFG 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "active_sasa": {
+    "id": "USLAB000092",
+    "name_ja": "稼働中のSバンド・ストリング",
+    "description": "Active String of S-Band",
+    "description_ja": "稼働中のSバンド・ストリング",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "position_x": {
+    "id": "USLAB000032",
+    "name_ja": "US GNC 状態ベクトル X",
+    "description": "US Guidance, Navigation and Control (GNC) J2000 Propagated State Vector - X",
+    "description_ja": "米国セグメント GNC J2000 伝播状態ベクトル X",
+    "unit": "km",
+    "discipline": "ADCO/TOPO"
+  },
+  "position_y": {
+    "id": "USLAB000033",
+    "name_ja": "US GNC 状態ベクトル Y",
+    "description": "US Guidance, Navigation and Control (GNC) J2000 Propagated State Vector - Y",
+    "description_ja": "米国セグメント GNC J2000 伝播状態ベクトル Y",
+    "unit": "km",
+    "discipline": "ADCO/TOPO"
+  },
+  "position_z": {
+    "id": "USLAB000034",
+    "name_ja": "US GNC 状態ベクトル Z",
+    "description": "US Guidance, Navigation and Control (GNC) J2000 Propagated State Vector - Z",
+    "description_ja": "米国セグメント GNC J2000 伝播状態ベクトル Z",
+    "unit": "km",
+    "discipline": "ADCO/TOPO"
+  },
+  "velocity_x": {
+    "id": "USLAB000035",
+    "name_ja": "US GNC 状態ベクトル X",
+    "description": "US Guidance, Navigation and Control (GNC) J2000 Propagated State Vector - X",
+    "description_ja": "米国セグメント GNC J2000 伝播状態ベクトル X",
+    "unit": "m/s",
+    "discipline": "ADCO/TOPO"
+  },
+  "velocity_y": {
+    "id": "USLAB000036",
+    "name_ja": "US GNC 状態ベクトル Y",
+    "description": "US Guidance, Navigation and Control (GNC) J2000 Propagated State Vector - Y",
+    "description_ja": "米国セグメント GNC J2000 伝播状態ベクトル Y",
+    "unit": "m/s",
+    "discipline": "ADCO/TOPO"
+  },
+  "velocity_z": {
+    "id": "USLAB000037",
+    "name_ja": "US GNC 状態ベクトル Z",
+    "description": "US Guidance, Navigation and Control (GNC) J2000 Propagated State Vector - Z",
+    "description_ja": "米国セグメント GNC J2000 伝播状態ベクトル Z",
+    "unit": "m/s",
+    "discipline": "ADCO/TOPO"
+  },
+  "PSA_EMU1_VOLTS": {
+    "id": "AIRLOCK000001",
+    "name_ja": "UIA EMU1 給電電圧",
+    "description": "Supplies power through the Umbilical Interface Assembly (UIA) to the spacesuits (EMU 1), Voltage",
+    "description_ja": "UIA経由の宇宙服（EMU 1）への給電電圧",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "PSA_EMU1_AMPS": {
+    "id": "AIRLOCK000002",
+    "name_ja": "UIA EMU1 給電電流",
+    "description": "Supplies power through the Umbilical Interface Assembly (UIA) to the spacesuits (EMU 1), Current",
+    "description_ja": "UIA経由の宇宙服（EMU 1）への給電電流",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "PSA_EMU2_VOLTS": {
+    "id": "AIRLOCK000003",
+    "name_ja": "UIA EMU2 給電電圧",
+    "description": "Supplies power through the Umbilical Interface Assembly (UIA) to the spacesuits (EMU 2), Voltage",
+    "description_ja": "UIA経由の宇宙服（EMU 2）への給電電圧",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "PSA_EMU2_AMPS": {
+    "id": "AIRLOCK000004",
+    "name_ja": "UIA EMU2 給電電流",
+    "description": "Supplies power through the Umbilical Interface Assembly (UIA) to the spacesuits (EMU 2), Current",
+    "description_ja": "UIA経由の宇宙服（EMU 2）への給電電流",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "PSA_IRU_Utility_VOLTS": {
+    "id": "AIRLOCK000005",
+    "name_ja": "IRU電圧",
+    "description": "In-flight Refill Unit (IRU), Voltage",
+    "description_ja": "飛行中補給ユニット（IRU）電圧",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "PSA_IRU_Utility_AMPS": {
+    "id": "AIRLOCK000006",
+    "name_ja": "IRU電流",
+    "description": "In-flight Refill Unit (IRU), Current",
+    "description_ja": "飛行中補給ユニット（IRU）電流",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "UIA_EV_1_VOLTS": {
+    "id": "AIRLOCK000007",
+    "name_ja": "EMU1 給電電圧",
+    "description": "Supplies power to the spacesuits (EVA Mobility Unit, EMU 1), Voltage",
+    "description_ja": "宇宙服（EMU 1）への給電電圧",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "UIA_EV_1_AMPS": {
+    "id": "AIRLOCK000008",
+    "name_ja": "EMU1 給電電流",
+    "description": "Supplies power to the spacesuits (EVA Mobility Unit, EMU 1), Current",
+    "description_ja": "宇宙服（EMU 1）への給電電流",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "UIA_EV_2_VOLTS": {
+    "id": "AIRLOCK000009",
+    "name_ja": "EMU2 給電電圧",
+    "description": "Supplies power to the spacesuits (EVA Mobility Unit, EMU 2), Voltage",
+    "description_ja": "宇宙服（EMU 2）への給電電圧",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "UIA_EV_2_AMPS": {
+    "id": "AIRLOCK000010",
+    "name_ja": "EMU2 給電電流",
+    "description": "Supplies power to the spacesuits (EVA Mobility Unit, EMU 2), Current",
+    "description_ja": "宇宙服（EMU 2）への給電電流",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "RPCM_AL1A4A_A_RPC_01_Depress_Pump_On_Off_Stat": {
+    "id": "AIRLOCK000047",
+    "name_ja": "エアロック減圧ポンプ（電圧状態）",
+    "description": "Pumps atmosphere from Airlock into Node one during depress, voltage status.",
+    "description_ja": "減圧時にエアロックからノード1へ空気を送るポンプ（電圧状態）",
+    "unit": "",
+    "discipline": "EVA"
+  },
+  "Airlock_Depress_Pump_Power_Switch": {
+    "id": "AIRLOCK000048",
+    "name_ja": "減圧ポンプ スイッチ",
+    "description": "Pumps atmosphere from Airlock into Node one during depress, switch status.",
+    "description_ja": "減圧時にエアロックからノード1へ空気を送るポンプ（スイッチ状態）",
+    "unit": "",
+    "discipline": "EVA",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "Airlock_O2_Hi_P_Supply_Vlv_Actual_Posn": {
+    "id": "AIRLOCK000050",
+    "name_ja": "高圧O2供給バルブ位置",
+    "description": "Hi P O2 Supply valve position",
+    "description_ja": "高圧O2供給バルブ位置",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Airlock_O2_Lo_P_Supply_Vlv_Actual_Posn": {
+    "id": "AIRLOCK000051",
+    "name_ja": "低圧O2供給バルブ位置",
+    "description": "Lo P O2 Supply Valve position",
+    "description_ja": "低圧O2供給バルブ位置",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Airlock_N2_Supply_Vlv_Actual_Posn": {
+    "id": "AIRLOCK000052",
+    "name_ja": "N2供給バルブ位置",
+    "description": "N2 Supply Valve position",
+    "description_ja": "N2供給バルブ位置",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Airlock_CCAA_State": {
+    "id": "AIRLOCK000053",
+    "name_ja": "エアロック空調",
+    "description": "Airlock Air Conditioner State",
+    "description_ja": "エアロック空調の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Airlock_PCA_Cabin_Pressure": {
+    "id": "AIRLOCK000054",
+    "name_ja": "エアロック圧力",
+    "description": "Airlock Pressure",
+    "description_ja": "エアロック圧力",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Airlock_O2_Hi_P_Supply_Pressure": {
+    "id": "AIRLOCK000055",
+    "name_ja": "エアロック高圧O2タンク圧力",
+    "description": "Airlock Hi P O2 Tank Pressure",
+    "description_ja": "エアロック高圧O2タンク圧力",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Airlock_O2_Lo_P_Supply_Pressure": {
+    "id": "AIRLOCK000056",
+    "name_ja": "エアロック低圧O2タンク圧力",
+    "description": "Airlock Lo P O2 Tank Pressure",
+    "description_ja": "エアロック低圧O2タンク圧力",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Airlock_N2_Supply_Pressure": {
+    "id": "AIRLOCK000057",
+    "name_ja": "エアロックN2タンク圧力",
+    "description": "Airlock N2 Tank Pressure",
+    "description_ja": "エアロックN2タンク圧力",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Node2_MTL_PPA_Avg_Accum_Qty": {
+    "id": "NODE2000001",
+    "name_ja": "冷却水温度（ノード2・中温系）",
+    "description": "Coolant Water (Node 2), MediumTemp",
+    "description_ja": "冷却水温度（ノード2・中温系）",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "Node2_LTL_PPA_Avg_Accum_Qty": {
+    "id": "NODE2000002",
+    "name_ja": "冷却水温度（ノード2・低温系）",
+    "description": "Coolant Water (Node 2), LowTemp",
+    "description_ja": "冷却水温度（ノード2・低温系）",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "Node_2_CCAA_State": {
+    "id": "NODE2000003",
+    "name_ja": "ノード2空調",
+    "description": "Node 2 Air Conditioner State",
+    "description_ja": "ノード2空調の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Node2_LTL_TWMV_Out_Temp": {
+    "id": "NODE2000006",
+    "name_ja": "空気冷却液温度（ノード2）",
+    "description": "Air Cooling Fluid Temp (Node 2)",
+    "description_ja": "空気冷却液温度（ノード2）",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "Node2_MTL_TWMV_Out_Temp": {
+    "id": "NODE2000007",
+    "name_ja": "アビオニクス冷却液温度（ノード2）",
+    "description": "Avionics Cooling Fluid Temp (Node 2)",
+    "description_ja": "アビオニクス冷却液温度（ノード2）",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "Node_3_MCA_ppO2": {
+    "id": "NODE3000001",
+    "name_ja": "ノード3 O2分圧（ppO2）",
+    "description": "Node 3 ppO2",
+    "description_ja": "ノード3 O2分圧（ppO2）",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Node_3_MCA_ppN2": {
+    "id": "NODE3000002",
+    "name_ja": "ノード3 N2分圧（ppN2）",
+    "description": "Node 3 ppN2",
+    "description_ja": "ノード3 N2分圧（ppN2）",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Node_3_MCA_ppCO2": {
+    "id": "NODE3000003",
+    "name_ja": "ノード3 CO2分圧（ppCO2）",
+    "description": "Node 3 ppCO2",
+    "description_ja": "ノード3 CO2分圧（ppCO2）",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "Node_3_UPA_Current_State": {
+    "id": "NODE3000004",
+    "name_ja": "尿処理装置",
+    "description": "Urine Processor State",
+    "description_ja": "尿処理装置の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Node_3_UPA_WSTA_Qty_Ctrl_Pct": {
+    "id": "NODE3000005",
+    "name_ja": "尿タンク量",
+    "description": "Urine Tank",
+    "description_ja": "尿タンク量",
+    "unit": "%",
+    "discipline": "ETHOS"
+  },
+  "Node_3_WPA_Process_Cmd_Status": {
+    "id": "NODE3000006",
+    "name_ja": "水処理装置",
+    "description": "Water Processor State",
+    "description_ja": "水処理装置の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Node_3_WPA_Process_Step": {
+    "id": "NODE3000007",
+    "name_ja": "水処理装置の工程ステップ",
+    "description": "Water Processor Step",
+    "description_ja": "水処理装置の工程ステップ",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Node_3_WPA_Waste_Water_Qty_Ctrl": {
+    "id": "NODE3000008",
+    "name_ja": "廃水タンク量",
+    "description": "Waste Water Tank",
+    "description_ja": "廃水タンク量",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "Node_3_WPA_Water_Storage_Qty_Ctrl": {
+    "id": "NODE3000009",
+    "name_ja": "清浄水タンク量",
+    "description": "Clean Water Tank",
+    "description_ja": "清浄水タンク量",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "Node_3_OGA_Process_Cmd_Status": {
+    "id": "NODE3000010",
+    "name_ja": "酸素発生装置",
+    "description": "Oxygen Generator State",
+    "description_ja": "酸素発生装置の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Node_3_OGA_O2_Production_Rate": {
+    "id": "NODE3000011",
+    "name_ja": "O2生成レート",
+    "description": "O2 Production Rate",
+    "description_ja": "O2生成レート",
+    "unit": "lb/day",
+    "discipline": "ETHOS"
+  },
+  "Node3_MTL_TWMV_Out_Temp": {
+    "id": "NODE3000012",
+    "name_ja": "アビオニクス冷却液温度（ノード3）",
+    "description": "Avionics Cooling Fluid Temp (Node 3)",
+    "description_ja": "アビオニクス冷却液温度（ノード3）",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "Node3_LTL_TWMV_Out_Temp": {
+    "id": "NODE3000013",
+    "name_ja": "空気冷却液温度（ノード3）",
+    "description": "Air Cooling Fluid Temp (Node 3)",
+    "description_ja": "空気冷却液温度（ノード3）",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "Node3_MTL_PPA_Avg_Accum_Qty": {
+    "id": "NODE3000017",
+    "name_ja": "冷却水温度（ノード3）",
+    "description": "Coolant Water (Node 3)",
+    "description_ja": "冷却水温度（ノード3）",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "Node_3_CCAA_State": {
+    "id": "NODE3000018",
+    "name_ja": "ノード3空調",
+    "description": "Node 3 Air Conditioner State",
+    "description_ja": "ノード3空調の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "Node3_LTL_PPA_Avg_Accum_Qty": {
+    "id": "NODE3000019",
+    "name_ja": "冷却水温度（ノード3）",
+    "description": "Coolant Water (Node 3)",
+    "description_ja": "冷却水温度（ノード3）",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "DCSU_2A_PVCU_On_Off_V_Stat": {
+    "id": "P4000003",
+    "name_ja": "アレイ2A MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2A Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ2A MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_4A_PVCU_On_Off_V_Stat": {
+    "id": "P4000006",
+    "name_ja": "アレイ4A MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4A Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ4A MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_4B_RBI_6_Integ_I": {
+    "id": "P6000002",
+    "name_ja": "アレイ4B 駆動電流",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4B - Drive Current",
+    "description_ja": "PVCU 太陽電池アレイ4B 駆動電流",
+    "unit": "",
+    "discipline": "SPARTAN"
+  },
+  "DCSU_4B_PVCU_On_Off_V_Stat": {
+    "id": "P6000003",
+    "name_ja": "アレイ4B MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 4B Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ4B MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_2B_PVCU_On_Off_V_Stat": {
+    "id": "P6000006",
+    "name_ja": "アレイ2B MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 2B Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ2B MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_KURS1_On": {
+    "id": "RUSSEG000002",
+    "name_ja": "第1 Kurs 装置キット作動",
+    "description": "First Kurs Equipment Kit Operating",
+    "description_ja": "第1 Kurs 装置キット作動状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_KURS2_On": {
+    "id": "RUSSEG000003",
+    "name_ja": "第2 Kurs 装置キット作動",
+    "description": "Second Kurs Equipment Kit Operating",
+    "description_ja": "第2 Kurs 装置キット作動状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "SM_ECW_KURS_Fail": {
+    "id": "RUSSEG000004",
+    "name_ja": "SM Kurs P1/P2 故障",
+    "description": "Service Module Kurs P1, P2 Failure",
+    "description_ja": "サービスモジュール Kurs P1/P2 故障",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_KURS_Rng": {
+    "id": "RUSSEG000005",
+    "name_ja": "SM Kurs 測距値（距離）",
+    "description": "Distance from Service Module Kurs Range",
+    "description_ja": "サービスモジュール Kurs 測距値（距離）",
+    "unit": "m",
+    "discipline": "ROS"
+  },
+  "RSMCS_SM_KURS_Vel": {
+    "id": "RUSSEG000006",
+    "name_ja": "SM Kurs 距離変化率",
+    "description": "Rate from Service Module Kurs Range Rate",
+    "description_ja": "サービスモジュール Kurs 距離変化率",
+    "unit": "m/s",
+    "discipline": "ROS"
+  },
+  "SM_KURS_P_Test_Mode_RS": {
+    "id": "RUSSEG000007",
+    "name_ja": "SM Kurs-P テストモード",
+    "description": "Service Module Kurs-P Test Mode",
+    "description_ja": "サービスモジュール Kurs-P テストモード",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "SM_KURS_P_Capture_Signal_RS": {
+    "id": "RUSSEG000008",
+    "name_ja": "SM Kurs-P「キャプチャ」信号有無",
+    "description": "Service Module Kurs-P \"Capture\" Signal Availability",
+    "description_ja": "サービスモジュール Kurs-P「キャプチャ」信号有無",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "SM_KURS_P_Target_Acquisition_Signal_RS": {
+    "id": "RUSSEG000009",
+    "name_ja": "SM Kurs-P 目標捕捉信号",
+    "description": "Service Module Kurs-P Target Acquisition Signal",
+    "description_ja": "サービスモジュール Kurs-P 目標捕捉信号",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "SM_KURS_P_Functional_Mode_Signal_RS": {
+    "id": "RUSSEG000010",
+    "name_ja": "SM Kurs-P 機能モード信号",
+    "description": "Service Module Kurs-P Functional Mode Signal",
+    "description_ja": "サービスモジュール Kurs-P 機能モード信号",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "SM_KURS_P_In_Stand_by_Mode_RS": {
+    "id": "RUSSEG000011",
+    "name_ja": "SM Kurs-P スタンバイモード",
+    "description": "Service Module Kurs-P Standby Mode",
+    "description_ja": "サービスモジュール Kurs-P スタンバイモード",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_Dock_Contact": {
+    "id": "RUSSEG000012",
+    "name_ja": "SM ドッキングフラグ",
+    "description": "Service Module Docking Flag",
+    "description_ja": "サービスモジュール ドッキングフラグ",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_Forward_Port_Engaged": {
+    "id": "RUSSEG000013",
+    "name_ja": "SM 前方ドッキング結合",
+    "description": "Service Module Forward Docking Port Engaged",
+    "description_ja": "サービスモジュール 前方ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_Aft_Port_Engaged": {
+    "id": "RUSSEG000014",
+    "name_ja": "SM 後方ドッキング結合",
+    "description": "Service Module Aft Docking Port Engaged",
+    "description_ja": "サービスモジュール 後方ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_Nadir_Port_Engaged": {
+    "id": "RUSSEG000015",
+    "name_ja": "SM 天底ドッキング結合",
+    "description": "Service Module Nadir Docking Port Engaged",
+    "description_ja": "サービスモジュール 天底ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_FGB_Nadir_Port_Engaged": {
+    "id": "RUSSEG000016",
+    "name_ja": "FGB 天底ドッキング結合",
+    "description": "Functional Cargo Block (FGB) Nadir Docking Port Engaged",
+    "description_ja": "FGB 天底ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_UDM_Nadir_Port_Engaged": {
+    "id": "RUSSEG000017",
+    "name_ja": "RS プリチャールドッキング結合",
+    "description": "RS Node (Prichal) Docking Port Engaged",
+    "description_ja": "ロシアセグメント ノード（プリチャール）ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_MRM1_Port_Engaged": {
+    "id": "RUSSEG000018",
+    "name_ja": "MRM1ドッキング結合",
+    "description": "Mini Research Module (MRM) 1 Docking Port Engaged",
+    "description_ja": "小型研究モジュール1（MRM1）ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_MRM2_Port_Engaged": {
+    "id": "RUSSEG000019",
+    "name_ja": "MRM2ドッキング結合",
+    "description": "Mini Research Module (MRM) 2 Docking Port Engaged",
+    "description_ja": "小型研究モジュール2（MRM2）ドッキングポート結合状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_ETOV_Hooks_Closed": {
+    "id": "RUSSEG000020",
+    "name_ja": "SM ドッキング機フック閉",
+    "description": "Service Module - Docked Vehicle Hooks Closed",
+    "description_ja": "サービスモジュール ドッキング機フック閉状態",
+    "unit": "",
+    "discipline": "ROS",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RSMCS_SM_Act_Att_Ref_Frame": {
+    "id": "RUSSEG000021",
+    "name_ja": "SM GNC 現用姿勢モード",
+    "description": "Service Module GNC Active Attitude Mode",
+    "description_ja": "サービスモジュール GNC 現用姿勢モード",
+    "unit": "",
+    "discipline": "ROS"
+  },
+  "RSMCS_SM_RS_Is_Master": {
+    "id": "RUSSEG000022",
+    "name_ja": "SM GNC 運動制御",
+    "description": "Service Module GNC Motion Control",
+    "description_ja": "サービスモジュール GNC 運動制御",
+    "unit": "",
+    "discipline": "ROS"
+  },
+  "RSMCS_SM_Ready_For_Indicator": {
+    "id": "RUSSEG000023",
+    "name_ja": "SM GNC フリードリフトモード遷移準備",
+    "description": "Service Module GNC Prepared to Free Drift Mode Transition",
+    "description_ja": "サービスモジュール GNC フリードリフトモード遷移準備",
+    "unit": "",
+    "discipline": "ROS"
+  },
+  "RSProp_SM_Thrstr_Mode_Terminated": {
+    "id": "RUSSEG000024",
+    "name_ja": "SM GNC スラスタ作動モード終了",
+    "description": "Service Module GNC Thruster Operation Mode Terminated",
+    "description_ja": "サービスモジュール GNC スラスタ作動モード終了",
+    "unit": "",
+    "discipline": "ROS"
+  },
+  "RSMCS_SM_SUDN_Mode": {
+    "id": "RUSSEG000025",
+    "name_ja": "SM GNC 現在のダイナミックモード",
+    "description": "Service Module GNC Current Dynamic Mode",
+    "description_ja": "サービスモジュール GNC 現在のダイナミックモード",
+    "unit": "",
+    "discipline": "ROS"
+  },
+  "SARJ_Port_Commanded_Position": {
+    "id": "S0000005",
+    "name_ja": "左舷SARJ 角度指令位置",
+    "description": "Port Solar Alpha Rotary Joint (SARJ) Angle Commanded Position",
+    "description_ja": "左舷SARJ 角度指令位置",
+    "unit": "°",
+    "discipline": "VVO"
+  },
+  "RPCM_S01A_C_RPC_01_Ext_1_MDM_On_Off_Stat": {
+    "id": "S0000010",
+    "name_ja": "外部MDM 1",
+    "description": "External Control Zone Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "外部制御ゾーンMDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_S01A_C_RPC_16_S0_1_MDM_On_Off_Stat": {
+    "id": "S0000011",
+    "name_ja": "S0トラス MDM 1",
+    "description": "S0 Truss Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "S0トラス MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_S02B_C_RPC_01_Ext_2_MDM_On_Off_Stat": {
+    "id": "S0000012",
+    "name_ja": "外部MDM 2",
+    "description": "External Control Zone Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "外部制御ゾーンMDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_S02B_C_RPC_16_S0_2_MDM_On_Off_Stat": {
+    "id": "S0000013",
+    "name_ja": "S0トラス MDM 2",
+    "description": "S0 Truss Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "S0トラス MDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_S11A_C_RPC_03_STR_MDM_On_Off_Stat": {
+    "id": "S1000006",
+    "name_ja": "右舷ラジエーター（STR）MDM",
+    "description": "Starboard Thermal Radiator (STR) Multiplexer/Demultiplexer (MDM) on-off status",
+    "description_ja": "右舷熱放射ラジエーター（STR）MDM オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_S11A_C_RPC_16_S1_1_MDM_On_Off_Stat": {
+    "id": "S1000007",
+    "name_ja": "S1トラス MDM 1",
+    "description": "S1 Truss Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "S1トラス MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_S12B_B_RPC_05_S1_2_MDM_On_Off_Stat": {
+    "id": "S1000008",
+    "name_ja": "S1トラス MDM 2",
+    "description": "S1 Truss Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "S1トラス MDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_1A_PVCU_On_Off_V_Stat": {
+    "id": "S4000003",
+    "name_ja": "アレイ1A MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1A Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ1A MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_3A_PVCU_On_Off_V_Stat": {
+    "id": "S4000006",
+    "name_ja": "アレイ3A MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3A Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ3A MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_3B_PVCU_On_Off_V_Stat": {
+    "id": "S6000003",
+    "name_ja": "アレイ3B MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 3B Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ3B MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "DCSU_1B_PVCU_On_Off_V_Stat": {
+    "id": "S6000006",
+    "name_ja": "アレイ1B MDM 120V",
+    "description": "Photovolatic Control Unit (PVCU) - Solar Array - 1B Multiplexer/Demultiplexer (MDM) 120 Volt On-Off Status",
+    "description_ja": "PVCU 太陽電池アレイ1B MDM 120V オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "Time of Occurrence": {
+    "id": "TIME_000001",
+    "name_ja": "GMT",
+    "description": "Greenwich Mean Time (GMT)",
+    "description_ja": "グリニッジ標準時（GMT）",
+    "unit": "",
+    "discipline": "N/A"
+  },
+  "Year of Occurrence": {
+    "id": "TIME_000002",
+    "name_ja": "年",
+    "description": "Year",
+    "description_ja": "年",
+    "unit": "",
+    "discipline": "N/A"
+  },
+  "USGNC_SEQ_CMG1_Online": {
+    "id": "USLAB000001",
+    "name_ja": "CMG-1 オンライン",
+    "description": "Control Moment Gyroscope (CMG)-1 On-Line",
+    "description_ja": "CMG-1 オンライン状態",
+    "unit": "",
+    "discipline": "ADCO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_SEQ_CMG2_Online": {
+    "id": "USLAB000002",
+    "name_ja": "CMG-2 オンライン",
+    "description": "Control Moment Gyroscope (CMG)-2 On-Line",
+    "description_ja": "CMG-2 オンライン状態",
+    "unit": "",
+    "discipline": "ADCO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_SEQ_CMG3_Online": {
+    "id": "USLAB000003",
+    "name_ja": "CMG-3 オンライン",
+    "description": "Control Moment Gyroscope (CMG)-3 On-Line",
+    "description_ja": "CMG-3 オンライン状態",
+    "unit": "",
+    "discipline": "ADCO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_SEQ_CMG4_Online": {
+    "id": "USLAB000004",
+    "name_ja": "CMG-4 オンライン",
+    "description": "Control Moment Gyroscope (CMG)-4 On-Line",
+    "description_ja": "CMG-4 オンライン状態",
+    "unit": "",
+    "discipline": "ADCO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_CA_Num_CMGs_Online": {
+    "id": "USLAB000005",
+    "name_ja": "CMGオンライン数",
+    "description": "Number of Control Moment Gyroscope (CMG)s Online",
+    "description_ja": "オンライン中のCMG数",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Unlim_Cntl_Trq_InBody_X": {
+    "id": "USLAB000006",
+    "name_ja": "CMG制御トルク（ロール）",
+    "description": "Control Moment Gyroscope (CMG) Control Torque - Roll",
+    "description_ja": "CMG制御トルク（ロール）",
+    "unit": "N-m",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Unlim_Cntl_Trq_InBody_Y": {
+    "id": "USLAB000007",
+    "name_ja": "CMG制御トルク（ピッチ）",
+    "description": "Control Moment Gyroscope (CMG) Control Torque - Pitch",
+    "description_ja": "CMG制御トルク（ピッチ）",
+    "unit": "N-m",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Unlim_Cntl_Trq_InBody_Z": {
+    "id": "USLAB000008",
+    "name_ja": "CMG制御トルク（ヨー）",
+    "description": "Control Moment Gyroscope (CMG) Control Torque - Yaw",
+    "description_ja": "CMG制御トルク（ヨー）",
+    "unit": "N-m",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_CMG_Mom_Act_Mag": {
+    "id": "USLAB000009",
+    "name_ja": "CMGモーメンタム",
+    "description": "Active Control Moment Gyroscope (CMG) Momentum",
+    "description_ja": "稼働中CMGのモーメンタム",
+    "unit": "Nms",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_CMG_Mom_Act_Cap_Pct": {
+    "id": "USLAB000010",
+    "name_ja": "CMGモーメンタム",
+    "description": "Control Moment Gyroscope (CMG) Momentum",
+    "description_ja": "CMGモーメンタム",
+    "unit": "%",
+    "discipline": "ADCO/VVO"
+  },
+  "USGNC_CA_Desat_Request_Inh": {
+    "id": "USLAB000011",
+    "name_ja": "デサチュレーション要求",
+    "description": "Desaturation Request (Enabled/Inhibited)",
+    "description_ja": "デサチュレーション要求（有効/禁止）",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_AD_Selected_Att_Source": {
+    "id": "USLAB000013",
+    "name_ja": "US 姿勢ソース",
+    "description": "US Attitude Source",
+    "description_ja": "米国セグメント 姿勢ソース",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_AD_Selected_Rate_Source": {
+    "id": "USLAB000014",
+    "name_ja": "US レートソース",
+    "description": "US Rate Source",
+    "description_ja": "米国セグメント レートソース",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_SD_Selected_State_Source": {
+    "id": "USLAB000015",
+    "name_ja": "US 状態ベクトルソース",
+    "description": "US State Vector Source",
+    "description_ja": "米国セグメント 状態ベクトルソース",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Act_CCDB_Att_Cntl_Type": {
+    "id": "USLAB000016",
+    "name_ja": "姿勢コントローラ種別",
+    "description": "Attitude Controller Type",
+    "description_ja": "姿勢コントローラ種別",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Act_CCDB_Att_Cntl_Ref_Frame": {
+    "id": "USLAB000017",
+    "name_ja": "姿勢制御の基準座標系",
+    "description": "Attitude Control Reference Frame",
+    "description_ja": "姿勢制御の基準座標系",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_LVLH_Att_Quatrn_0": {
+    "id": "USLAB000018",
+    "name_ja": "US LVLH姿勢Q 成分0",
+    "description": "US Current Local Vertical Local Horizontal (LVLH) Attitude Quaternion Component 0",
+    "description_ja": "米国セグメント 現在のLVLH姿勢クォータニオン 成分0",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_LVLH_Att_Quatrn_1": {
+    "id": "USLAB000019",
+    "name_ja": "US LVLH姿勢Q 成分1",
+    "description": "US Current Local Vertical Local Horizontal (LVLH) Attitude Quaternion Component 1",
+    "description_ja": "米国セグメント 現在のLVLH姿勢クォータニオン 成分1",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_LVLH_Att_Quatrn_2": {
+    "id": "USLAB000020",
+    "name_ja": "US LVLH姿勢Q 成分2",
+    "description": "US Current Local Vertical Local Horizontal (LVLH) Attitude Quaternion Component 2",
+    "description_ja": "米国セグメント 現在のLVLH姿勢クォータニオン 成分2",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_LVLH_Att_Quatrn_3": {
+    "id": "USLAB000021",
+    "name_ja": "US LVLH姿勢Q 成分3",
+    "description": "US Current Local Vertical Local Horizontal (LVLH) Attitude Quaternion Component 3",
+    "description_ja": "米国セグメント 現在のLVLH姿勢クォータニオン 成分3",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Att_Error_X": {
+    "id": "USLAB000022",
+    "name_ja": "US 姿勢ロール誤差",
+    "description": "US Attitude Roll Error",
+    "description_ja": "米国セグメント 姿勢ロール誤差",
+    "unit": "°",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Att_Error_Y": {
+    "id": "USLAB000023",
+    "name_ja": "US 姿勢ピッチ誤差",
+    "description": "US Attitude Pitch Error",
+    "description_ja": "米国セグメント 姿勢ピッチ誤差",
+    "unit": "°",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Att_Error_Z": {
+    "id": "USLAB000024",
+    "name_ja": "US 姿勢ヨー誤差",
+    "description": "US Attitude Yaw Error",
+    "description_ja": "米国セグメント 姿勢ヨー誤差",
+    "unit": "°",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_Current_Inert_Rate_Vector_X": {
+    "id": "USLAB000025",
+    "name_ja": "US 慣性姿勢レート X",
+    "description": "US Inertial Attitude Rate X",
+    "description_ja": "米国セグメント 慣性姿勢レート X",
+    "unit": "°/s",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_Current_Inert_Rate_Vector_Y": {
+    "id": "USLAB000026",
+    "name_ja": "US 慣性姿勢レート Y",
+    "description": "US Inertial Attitude Rate Y",
+    "description_ja": "米国セグメント 慣性姿勢レート Y",
+    "unit": "°/s",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Pointing_Current_Inert_Rate_Vector_Z": {
+    "id": "USLAB000027",
+    "name_ja": "US 慣性姿勢レート Z",
+    "description": "US Inertial Attitude Rate Z",
+    "description_ja": "米国セグメント 慣性姿勢レート Z",
+    "unit": "°/s",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Act_CCDB_AttQuatrn_0_Cmd": {
+    "id": "USLAB000028",
+    "name_ja": "US 指令姿勢Q 成分0",
+    "description": "US Commanded Attitude Quaternion Component 0",
+    "description_ja": "米国セグメント 指令姿勢クォータニオン 成分0",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Act_CCDB_AttQuatrn_1_Cmd": {
+    "id": "USLAB000029",
+    "name_ja": "US 指令姿勢Q 成分1",
+    "description": "US Commanded Attitude Quaternion Component 1",
+    "description_ja": "米国セグメント 指令姿勢クォータニオン 成分1",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Act_CCDB_AttQuatrn_2_Cmd": {
+    "id": "USLAB000030",
+    "name_ja": "US 指令姿勢Q 成分2",
+    "description": "US Commanded Attitude Quaternion Component 2",
+    "description_ja": "米国セグメント 指令姿勢クォータニオン 成分2",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Act_CCDB_AttQuatrn_3_Cmd": {
+    "id": "USLAB000031",
+    "name_ja": "US 指令姿勢Q 成分3",
+    "description": "US Commanded Attitude Quaternion Component 3",
+    "description_ja": "米国セグメント 指令姿勢クォータニオン 成分3",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_CMG_Mom_Act_Cap": {
+    "id": "USLAB000038",
+    "name_ja": "CMGモーメンタム容量",
+    "description": "Active Control Moment Gyroscope (CMG) Momentum Capacity",
+    "description_ja": "稼働中CMGのモーメンタム容量",
+    "unit": "Nms",
+    "discipline": "ADCO"
+  },
+  "USGNC_PS_Solar_Beta_Angle": {
+    "id": "USLAB000040",
+    "name_ja": "太陽ベータ角",
+    "description": "Solar Beta Angle",
+    "description_ja": "太陽ベータ角",
+    "unit": "°",
+    "discipline": "ADCO"
+  },
+  "USGNC_CA_Loss_Of_CMG_Att_Cntl_Latched_Caution": {
+    "id": "USLAB000041",
+    "name_ja": "CMG姿勢制御喪失（LOAC）警報",
+    "description": "Loss of CMG Attitude Control (LOAC) Caution Message In Alarm",
+    "description_ja": "CMG姿勢制御喪失（LOAC）注意メッセージ警報中",
+    "unit": "",
+    "discipline": "ADCO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_CCS_Loss_of_ISS_Attitude_Control_Warning": {
+    "id": "USLAB000042",
+    "name_ja": "ISS姿勢制御喪失（LOAC）警報",
+    "description": "Loss of ISS Attitude Control (LOAC) Caution Message In Alarm",
+    "description_ja": "ISS姿勢制御喪失（LOAC）注意メッセージ警報中",
+    "unit": "",
+    "discipline": "ADCO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_GPS1_Operational_Status": {
+    "id": "USLAB000043",
+    "name_ja": "GPS-1 運用",
+    "description": "Global Positioning System (GPS-1) Ops Status",
+    "description_ja": "GPS-1 運用ステータス",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_GPS2_Operational_Status": {
+    "id": "USLAB000044",
+    "name_ja": "GPS-2 運用",
+    "description": "Global Positioning System (GPS-2) Ops Status",
+    "description_ja": "GPS-2 運用ステータス",
+    "unit": "",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG1_SpinBrg_Temp1": {
+    "id": "USLAB000045",
+    "name_ja": "CMG 1 ベアリング温度",
+    "description": "Spin Motor Spin Bearing Temperature - Control Moment Gyroscope (CMG) 1",
+    "description_ja": "CMG 1 スピンモーター スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG2_SpinBrg_Temp1": {
+    "id": "USLAB000046",
+    "name_ja": "CMG 2 ベアリング温度",
+    "description": "Spin Motor Spin Bearing Temperature - Control Moment Gyroscope (CMG) 2",
+    "description_ja": "CMG 2 スピンモーター スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG3_SpinBrg_Temp1": {
+    "id": "USLAB000047",
+    "name_ja": "CMG 3 ベアリング温度",
+    "description": "Spin Motor Spin Bearing Temperature - Control Moment Gyroscope (CMG) 3",
+    "description_ja": "CMG 3 スピンモーター スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG4_SpinBrg_Temp1": {
+    "id": "USLAB000048",
+    "name_ja": "CMG 4 ベアリング温度",
+    "description": "Spin Motor Spin Bearing Temperature - Control Moment Gyroscope (CMG) 4",
+    "description_ja": "CMG 4 スピンモーター スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG1_SpinBrg_Temp2": {
+    "id": "USLAB000049",
+    "name_ja": "CMG 1 ベアリング温度",
+    "description": "Hall Resolver Spin Bearing Temperature - Control Moment Gyroscope (CMG) 1",
+    "description_ja": "CMG 1 ホールレゾルバ スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG2_SpinBrg_Temp2": {
+    "id": "USLAB000050",
+    "name_ja": "CMG 2 ベアリング温度",
+    "description": "Hall Resolver Spin Bearing Temperature - Control Moment Gyroscope (CMG) 2",
+    "description_ja": "CMG 2 ホールレゾルバ スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG3_SpinBrg_Temp2": {
+    "id": "USLAB000051",
+    "name_ja": "CMG 3 ベアリング温度",
+    "description": "Hall Resolver Spin Bearing Temperature - Control Moment Gyroscope (CMG) 3",
+    "description_ja": "CMG 3 ホールレゾルバ スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG4_SpinBrg_Temp2": {
+    "id": "USLAB000052",
+    "name_ja": "CMG 4 ベアリング温度",
+    "description": "Hall Resolver Spin Bearing Temperature - Control Moment Gyroscope (CMG) 4",
+    "description_ja": "CMG 4 ホールレゾルバ スピンベアリング温度",
+    "unit": "°C",
+    "discipline": "ADCO"
+  },
+  "LAB_MCA_ppO2": {
+    "id": "USLAB000053",
+    "name_ja": "ラボ O2分圧（ppO2）",
+    "description": "Lab ppO2",
+    "description_ja": "ラボ O2分圧（ppO2）",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "LAB_MCA_ppN2": {
+    "id": "USLAB000054",
+    "name_ja": "ラボ N2分圧（ppN2）",
+    "description": "Lab ppN2",
+    "description_ja": "ラボ N2分圧（ppN2）",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "LAB_MCA_ppCO2": {
+    "id": "USLAB000055",
+    "name_ja": "ラボ CO2分圧（ppCO2）",
+    "description": "Lab ppCO2",
+    "description_ja": "ラボ CO2分圧（ppCO2）",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "LAB_LTL_PPA_Avg_Accum_Qty": {
+    "id": "USLAB000056",
+    "name_ja": "冷却水温度（ラボ・低温系）",
+    "description": "Coolant Water (Lab), LowTemp",
+    "description_ja": "冷却水温度（ラボ・低温系）",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "LAB_MTL_PPA_Avg_Accum_Qty": {
+    "id": "USLAB000057",
+    "name_ja": "冷却水温度（ラボ・中温系）",
+    "description": "Coolant Water (Lab), MediumTemp",
+    "description_ja": "冷却水温度（ラボ・中温系）",
+    "unit": "%?",
+    "discipline": "ETHOS"
+  },
+  "LAB_PCA_Cabin_Pressure": {
+    "id": "USLAB000058",
+    "name_ja": "船内圧力",
+    "description": "Cabin Pressure",
+    "description_ja": "船内圧力",
+    "unit": "torr",
+    "discipline": "ETHOS"
+  },
+  "LAB1P6_CCAA_In_T1": {
+    "id": "USLAB000059",
+    "name_ja": "船内温度",
+    "description": "Cabin Temperature",
+    "description_ja": "船内温度",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "LAB_MTL_Regen_TWMV_Out_Temp": {
+    "id": "USLAB000060",
+    "name_ja": "アビオニクス冷却液温度（ラボ）",
+    "description": "Avionics Cooling Fluid Temp (Lab)",
+    "description_ja": "アビオニクス冷却液温度（ラボ）",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "LAB_LTL_TWMV_Out_Temp": {
+    "id": "USLAB000061",
+    "name_ja": "空気冷却液温度（ラボ）",
+    "description": "Air Cooling Fluid Temp (Lab)",
+    "description_ja": "空気冷却液温度（ラボ）",
+    "unit": "°C",
+    "discipline": "ETHOS"
+  },
+  "LAB_VRS_Vent_Vlv_Posn_Raw": {
+    "id": "USLAB000062",
+    "name_ja": "真空リソース バルブ位置",
+    "description": "Vacuum Resource System Valve Position",
+    "description_ja": "真空リソースシステム バルブ位置",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "LAB_VES_Vent_Vlv_Posn_Raw": {
+    "id": "USLAB000063",
+    "name_ja": "真空排気 バルブ位置",
+    "description": "Vacuum Exhaust System Valve Position",
+    "description_ja": "真空排気システム バルブ位置",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "LAB1P6_CCAA_State": {
+    "id": "USLAB000064",
+    "name_ja": "ラボ左舷空調",
+    "description": "Lab Port Air Conditioner State",
+    "description_ja": "ラボ左舷空調の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "LAB1S6_CCAA_State": {
+    "id": "USLAB000065",
+    "name_ja": "ラボ右舷空調",
+    "description": "Lab Starboard Air Conditioner State",
+    "description_ja": "ラボ右舷空調の状態",
+    "unit": "",
+    "discipline": "ETHOS"
+  },
+  "RPCM_LAD11B_A_RPC_07_CC_1_MDM_On_Off_Stat": {
+    "id": "USLAB000066",
+    "name_ja": "C&CMDM 1",
+    "description": "Command and Control (C&amp;C) Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "指揮管制（C&C）MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD52B_A_RPC_03_CC_2_MDM_On_Off_Stat": {
+    "id": "USLAB000067",
+    "name_ja": "C&CMDM 2",
+    "description": "Command and Control (C&amp;C) Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "指揮管制（C&C）MDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA1A4A_E_RPC_01_CC_3_MDM_On_Off_Stat": {
+    "id": "USLAB000068",
+    "name_ja": "C&CMDM 3",
+    "description": "Command and Control (C&amp;C) Multiplexer/Demultiplexer (MDM) 3 on-off status",
+    "description_ja": "指揮管制（C&C）MDM 3 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD11B_A_RPC_09_Int_1_MDM_On_Off_Stat": {
+    "id": "USLAB000069",
+    "name_ja": "内部MDM 1",
+    "description": "Internal Control Zone Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "内部制御ゾーンMDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD52B_A_RPC_04_Int_2_MDM_On_Off_Stat": {
+    "id": "USLAB000070",
+    "name_ja": "内部MDM 2",
+    "description": "Internal Control Zone Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "内部制御ゾーンMDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD11B_A_RPC_11_PL_1_MDM_On_Off_Stat": {
+    "id": "USLAB000071",
+    "name_ja": "PLMDM 1",
+    "description": "Payload (PL) Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "ペイロード（PL）MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD22B_A_RPC_01_PL_2_MDM_On_Off_Stat": {
+    "id": "USLAB000072",
+    "name_ja": "PLMDM 2",
+    "description": "Payload (PL) Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "ペイロード（PL）MDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA1B_B_RPC_14_GNC_1_MDM_On_Off_Stat": {
+    "id": "USLAB000073",
+    "name_ja": "GNCMDM 1",
+    "description": "Guidance, Navigation and Control (GNC) Multiplexer/Demultiplexer 1 on-off status",
+    "description_ja": "誘導航法制御（GNC）MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA2B_E_RPC_03_GNC_2_MDM_On_Off_Stat": {
+    "id": "USLAB000074",
+    "name_ja": "GNCMDM 2",
+    "description": "Guidance, Navigation and Control (GNC) Multiplexer/Demultiplexer 2 on-off status",
+    "description_ja": "誘導航法制御（GNC）MDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD11B_A_RPC_08_PMCU_1_MDM_On_Off_Stat": {
+    "id": "USLAB000075",
+    "name_ja": "PMCU1 MDM 1",
+    "description": "Power Mangement Controller Unit (PMCU) 1 Multiplexer/Demultiplexer 1 on-off status",
+    "description_ja": "電力管理コントローラ（PMCU）1 MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LAD52B_A_RPC_01_PMCU_2_MDM_On_Off_Stat": {
+    "id": "USLAB000076",
+    "name_ja": "PMCU2 MDM 1",
+    "description": "Power Mangement Controller Unit (PMCU) 2 Multiplexer/Demultiplexer 1 on-off status",
+    "description_ja": "電力管理コントローラ（PMCU）2 MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA1B_B_RPC_09_LAB_1_MDM_On_Off_Stat": {
+    "id": "USLAB000077",
+    "name_ja": "米国ラボ MDM 1",
+    "description": "US Lab Multiplexer/Demultiplexer (MDM) 1 on-off status",
+    "description_ja": "米国ラボ MDM 1 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA2B_E_RPC_04_LAB_2_MDM_On_Off_Stat": {
+    "id": "USLAB000078",
+    "name_ja": "米国ラボ MDM 2",
+    "description": "US Lab Multiplexer/Demultiplexer (MDM) 2 on-off status",
+    "description_ja": "米国ラボ MDM 2 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA2B_E_RPC_13_LAB_3_MDM_On_Off_Stat": {
+    "id": "USLAB000079",
+    "name_ja": "米国ラボ MDM 3",
+    "description": "US Lab Multiplexer/Demultiplexer (MDM) 3 on-off status",
+    "description_ja": "米国ラボ MDM 3 オン/オフ状態",
+    "unit": "",
+    "discipline": "CDH",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "RPCM_LA1B_D_RPC_01_LAB_FSEGF_Sys_Pwr_1_On_Off_Stat": {
+    "id": "USLAB000080",
+    "name_ja": "PMMシステム電源電圧",
+    "description": "Permanent Multipurpose Module - System Power voltage status",
+    "description_ja": "恒久多目的モジュール（PMM）システム電源電圧ステータス",
+    "unit": "",
+    "discipline": "CDH"
+  },
+  "USGNC_CA_AttMnvr_In_Progress": {
+    "id": "USLAB000081",
+    "name_ja": "姿勢マヌーバ中",
+    "description": "Attitude Maneuver In Progress status",
+    "description_ja": "姿勢マヌーバ実施中ステータス",
+    "unit": "",
+    "discipline": "VVO"
+  },
+  "Prim_CCS_MDM_Std_Cmd_Accept_Cnt": {
+    "id": "USLAB000082",
+    "name_ja": "標準Cmdカウンタ",
+    "description": "Standard Command Counter - Count of standard commands received by the ISS Command and Control Computer",
+    "description_ja": "標準コマンドカウンタ（ISS指揮管制コンピュータが受信した標準コマンド数）",
+    "unit": "",
+    "discipline": "ODIN"
+  },
+  "Prim_CCS_MDM_Data_Load_Cmd_Accept_Cnt": {
+    "id": "USLAB000083",
+    "name_ja": "データロードCmdカウンタ",
+    "description": "Data Load Command Counter - Count of data load commands received by the ISS Command and Control Computer",
+    "description_ja": "データロードコマンドカウンタ（ISS指揮管制コンピュータが受信したデータロードコマンド数）",
+    "unit": "",
+    "discipline": "ODIN"
+  },
+  "Coarse_Time": {
+    "id": "USLAB000084",
+    "name_ja": "C&C時刻（粗）",
+    "description": "ISS Command and Control Multiplexer/Demultiplexer Onboard Time (coarse)",
+    "description_ja": "ISS指揮管制MDM オンボード時刻（粗）",
+    "unit": "",
+    "discipline": "ODIN"
+  },
+  "Fine_Time": {
+    "id": "USLAB000085",
+    "name_ja": "C&C時刻（精）",
+    "description": "ISS Command and Control Multiplexer/Demultiplexer Onboard Time (fine)",
+    "description_ja": "ISS指揮管制MDM オンボード時刻（精）",
+    "unit": "",
+    "discipline": "ODIN"
+  },
+  "Prim_CCS_MDM_PCS_Cnct_Cnt": {
+    "id": "USLAB000087",
+    "name_ja": "C&C接続PC数",
+    "description": "# Laptops active and connected to the Primary Command and Control (C&amp;C) Multiplexer/Demultiplexer (MDM)",
+    "description_ja": "プライマリ指揮管制（C&C）MDMに接続・稼働中のラップトップ数",
+    "unit": "",
+    "discipline": "ODIN"
+  },
+  "Ku_HRFM_VBSP_1_Activity_Indicator": {
+    "id": "USLAB000088",
+    "name_ja": "Kuバンド映像DL チャンネル1 活動",
+    "description": "Ku-Band Video Downlink Channel 1 Activity",
+    "description_ja": "Kuバンド映像ダウンリンク チャンネル1 活動状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "Ku_HRFM_VBSP_2_Activity_Indicator": {
+    "id": "USLAB000089",
+    "name_ja": "Kuバンド映像DL チャンネル2 活動",
+    "description": "Ku-Band Video Downlink Channel 2 Activity",
+    "description_ja": "Kuバンド映像ダウンリンク チャンネル2 活動状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "Ku_HRFM_VBSP_3_Activity_Indicator": {
+    "id": "USLAB000090",
+    "name_ja": "Kuバンド映像DL チャンネル3 活動",
+    "description": "Ku-Band Video Downlink Channel 3 Activity",
+    "description_ja": "Kuバンド映像ダウンリンク チャンネル3 活動状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "Ku_HRFM_VBSP_4_Activity_Indicator": {
+    "id": "USLAB000091",
+    "name_ja": "Kuバンド映像DL チャンネル4 活動",
+    "description": "Ku-Band Video Downlink Channel 4 Activity",
+    "description_ja": "Kuバンド映像ダウンリンク チャンネル4 活動状態",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "Audio_IAC1_Mode_Indication": {
+    "id": "USLAB000093",
+    "name_ja": "IAC-1 現用/予備表示",
+    "description": "Internal Audio Controller (IAC) - IAC-1 Active/Backup Indication",
+    "description_ja": "内部音声コントローラ（IAC）- IAC-1 現用/予備表示",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "Audio_IAC2_Mode_Indication": {
+    "id": "USLAB000094",
+    "name_ja": "IAC-2 現用/予備表示",
+    "description": "Internal Audio Controller (IAC) - IAC-2 Active/Backup Indication",
+    "description_ja": "内部音声コントローラ（IAC）- IAC-2 現用/予備表示",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "VDS_Destination_9_Source_ID": {
+    "id": "USLAB000095",
+    "name_ja": "DL1映像ソース",
+    "description": "Video Source Routed to Downlink 1",
+    "description_ja": "ダウンリンク1へ送る映像ソース",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "VDS_Destination_13_Source_ID": {
+    "id": "USLAB000096",
+    "name_ja": "DL2映像ソース",
+    "description": "Video Source Routed to Downlink 2",
+    "description_ja": "ダウンリンク2へ送る映像ソース",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "VDS_Destination_14_Source_ID": {
+    "id": "USLAB000097",
+    "name_ja": "DL3映像ソース",
+    "description": "Video Source Routed to Downlink 3",
+    "description_ja": "ダウンリンク3へ送る映像ソース",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "VDS_Destination_29_Source_ID": {
+    "id": "USLAB000098",
+    "name_ja": "DL4映像ソース",
+    "description": "Video Source Routed to Downlink 4",
+    "description_ja": "ダウンリンク4へ送る映像ソース",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "RPCM_LAD52B_A_RPC_08_UHF_SSSR_1_On_Off_Stat": {
+    "id": "USLAB000099",
+    "name_ja": "宇宙間無線（UHF）1 電力",
+    "description": "Space-To-Space Radio (UHF) 1 Power",
+    "description_ja": "宇宙間無線（UHF）1 電力",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "RPCM_LA1B_H_RPC_04_UHF_SSSR_2_On_Off_Stat": {
+    "id": "USLAB000100",
+    "name_ja": "宇宙間無線（UHF）2 電力",
+    "description": "Space-To-Space Radio (UHF) 2 Power",
+    "description_ja": "宇宙間無線（UHF）2 電力",
+    "unit": "",
+    "discipline": "CATO"
+  },
+  "UHF_Frame_Sync": {
+    "id": "USLAB000101",
+    "name_ja": "宇宙間無線 フレーム同期ロック",
+    "description": "Space-To-Space Radio Frame Sync Lock",
+    "description_ja": "宇宙間無線 フレーム同期ロック",
+    "unit": "",
+    "discipline": "CATO",
+    "value_map": {
+      "1": "OK",
+      "0": "OFF"
+    }
+  },
+  "USGNC_SD_Selected_State_Time_Tag": {
+    "id": "USLAB000102",
+    "name_ja": "状態ベクトルの時刻タグ",
+    "description": "State vector time tag",
+    "description_ja": "状態ベクトルの時刻タグ",
+    "unit": "",
+    "discipline": "TOPO"
+  },
+  "USGNC_CMG1_IG_Vibration": {
+    "id": "Z1000001",
+    "name_ja": "CMG-1 振動",
+    "description": "Control Moment Gyroscope (CMG)-1 Vibration",
+    "description_ja": "CMG-1 振動",
+    "unit": "g",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG2_IG_Vibration": {
+    "id": "Z1000002",
+    "name_ja": "CMG-2 振動",
+    "description": "Control Moment Gyroscope (CMG)-2 Vibration",
+    "description_ja": "CMG-2 振動",
+    "unit": "g",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG3_IG_Vibration": {
+    "id": "Z1000003",
+    "name_ja": "CMG-3 振動",
+    "description": "Control Moment Gyroscope (CMG)-3 Vibration",
+    "description_ja": "CMG-3 振動",
+    "unit": "g",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG4_IG_Vibration": {
+    "id": "Z1000004",
+    "name_ja": "CMG-4 振動",
+    "description": "Control Moment Gyroscope (CMG)-4 Vibration",
+    "description_ja": "CMG-4 振動",
+    "unit": "g",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG1_SpinMtr_Current": {
+    "id": "Z1000005",
+    "name_ja": "CMG-1 スピンモーター電流",
+    "description": "Control Moment Gyroscope (CMG)-1 Spin Motor Current",
+    "description_ja": "CMG-1 スピンモーター電流",
+    "unit": "A",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG2_SpinMtr_Current": {
+    "id": "Z1000006",
+    "name_ja": "CMG-2 スピンモーター電流",
+    "description": "Control Moment Gyroscope (CMG)-2 Spin Motor Current",
+    "description_ja": "CMG-2 スピンモーター電流",
+    "unit": "A",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG3_SpinMtr_Current": {
+    "id": "Z1000007",
+    "name_ja": "CMG-3 スピンモーター電流",
+    "description": "Control Moment Gyroscope (CMG)-3 Spin Motor Current",
+    "description_ja": "CMG-3 スピンモーター電流",
+    "unit": "A",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG4_SpinMtr_Current": {
+    "id": "Z1000008",
+    "name_ja": "CMG-4 スピンモーター電流",
+    "description": "Control Moment Gyroscope (CMG)-4 Spin Motor Current",
+    "description_ja": "CMG-4 スピンモーター電流",
+    "unit": "A",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG1_Current_Wheel_Speed": {
+    "id": "Z1000009",
+    "name_ja": "CMG 1 ホイール回転速度",
+    "description": "Control Moment Gyroscope (CMG) 1 Wheel Speed",
+    "description_ja": "CMG 1 ホイール回転速度",
+    "unit": "rpm",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG2_Current_Wheel_Speed": {
+    "id": "Z1000010",
+    "name_ja": "CMG 2 ホイール回転速度",
+    "description": "Control Moment Gyroscope (CMG) 2 Wheel Speed",
+    "description_ja": "CMG 2 ホイール回転速度",
+    "unit": "rpm",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG3_Current_Wheel_Speed": {
+    "id": "Z1000011",
+    "name_ja": "CMG 3 ホイール回転速度",
+    "description": "Control Moment Gyroscope (CMG) 3 Wheel Speed",
+    "description_ja": "CMG 3 ホイール回転速度",
+    "unit": "rpm",
+    "discipline": "ADCO"
+  },
+  "USGNC_CMG4_Current_Wheel_Speed": {
+    "id": "Z1000012",
+    "name_ja": "CMG 4 ホイール回転速度",
+    "description": "Control Moment Gyroscope (CMG) 4 Wheel Speed",
+    "description_ja": "CMG 4 ホイール回転速度",
+    "unit": "rpm",
+    "discipline": "ADCO"
+  },
+  "eva_crew_1": {
+    "id": "0",
+    "name_ja": "EVAクルー1",
+    "description": "EVA（船外活動）担当クルー1の名前を表示するための内部行",
+    "description_ja": "EVA（船外活動）担当クルー1の名前を表示するための内部行",
+    "unit": "",
+    "discipline": "Mimic内部"
+  },
+  "eva_crew_2": {
+    "id": "0",
+    "name_ja": "EVAクルー2",
+    "description": "EVA（船外活動）担当クルー2の名前を表示するための内部行",
+    "description_ja": "EVA（船外活動）担当クルー2の名前を表示するための内部行",
+    "unit": "",
+    "discipline": "Mimic内部"
+  },
+  "us_eva_#": {
+    "id": "0",
+    "name_ja": "US EVA回数",
+    "description": "米国側EVAの通算回数を表示するための内部行",
+    "description_ja": "米国側EVAの通算回数を表示するための内部行",
+    "unit": "",
+    "discipline": "Mimic内部"
+  },
+  "rs_eva_#": {
+    "id": "0",
+    "name_ja": "RS EVA回数",
+    "description": "ロシア側EVAの通算回数を表示するための内部行",
+    "description_ja": "ロシア側EVAの通算回数を表示するための内部行",
+    "unit": "",
+    "discipline": "Mimic内部"
+  },
+  "last_us_eva_duration": {
+    "id": "0",
+    "name_ja": "前回US EVA時間",
+    "description": "前回の米国側EVA所要時間を表示するための内部行",
+    "description_ja": "前回の米国側EVA所要時間を表示するための内部行",
+    "unit": "",
+    "discipline": "Mimic内部"
+  },
+  "last_rs_eva_duration": {
+    "id": "0",
+    "name_ja": "前回RS EVA時間",
+    "description": "前回のロシア側EVA所要時間を表示するための内部行",
+    "description_ja": "前回のロシア側EVA所要時間を表示するための内部行",
+    "unit": "",
+    "discipline": "Mimic内部"
+  },
+  "Lightstreamer": {
+    "id": "0",
+    "name_ja": "購読状態",
+    "description": "Lightstreamer への購読状態（Subscribed / Unsubscribed）",
+    "description_ja": "Lightstreamer への購読状態（Subscribed / Unsubscribed）",
+    "unit": "",
+    "discipline": "Mimic独自"
+  },
+  "ClientStatus": {
+    "id": "0",
+    "name_ja": "接続ステータス",
+    "description": "Lightstreamer クライアントの接続ステータス文字列（CONNECTING / CONNECTED:WS-STREAMING など）",
+    "description_ja": "Lightstreamer クライアントの接続ステータス文字列（CONNECTING / CONNECTED:WS-STREAMING など）",
+    "unit": "",
+    "discipline": "Mimic独自"
+  },
+  "MSS MT Position Float": {
+    "id": "CSAMT000001",
+    "name_ja": "MT位置",
+    "description": "MT Position Float",
+    "description_ja": "モバイルトランスポータ（MT）位置",
+    "unit": "cm from center of truss, + = stbd",
+    "discipline": "CSA"
+  },
+  "MSS MT Utility Port ID": {
+    "id": "CSAMT000002",
+    "name_ja": "MT ユーティリティポートID",
+    "description": "MT Utility Port ID",
+    "description_ja": "MT ユーティリティポートID",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS EDCD SSRMS Base Location": {
+    "id": "CSASSRMS001",
+    "name_ja": "SSRMSベース（MSS EDCD）",
+    "description": "MSS EDCD SSRMS Base Location — カナダ宇宙庁（CSA）の MSS（モービル・サービシング・システム）関連。ラベル自体が説明文",
+    "description_ja": "SSRMS ベース位置（MSS EDCD）",
+    "unit": "",
+    "discipline": "CSA/MSS"
+  },
+  "MSS EDCD SSRMS Base Location2": {
+    "id": "CSASSRMS002",
+    "name_ja": "SSRMSベース位置",
+    "description": "SSRMS Base Location",
+    "description_ja": "SSRMS（カナダアーム2）ベース位置",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS EDCD SSRMS Operating Base": {
+    "id": "CSASSRMS003",
+    "name_ja": "SSRMS運用ベース",
+    "description": "SSRMS Operating Base",
+    "description_ja": "SSRMS 運用ベース",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "SSRMS SR Measured Joint Position": {
+    "id": "CSASSRMS004",
+    "name_ja": "SSRMS SR関節 実測位置",
+    "description": "SSRMS SR Measured Joint Position",
+    "description_ja": "SSRMS SR関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "SSRMS SY Measured Joint Position": {
+    "id": "CSASSRMS005",
+    "name_ja": "SSRMS SY関節 実測位置",
+    "description": "SSRMS SY Measured Joint Position",
+    "description_ja": "SSRMS SY関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "SSRMS SP Measured Joint Position": {
+    "id": "CSASSRMS006",
+    "name_ja": "SSRMS SP関節 実測位置",
+    "description": "SSRMS SP Measured Joint Position",
+    "description_ja": "SSRMS SP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "SSRMS EP Measured Joint Position": {
+    "id": "CSASSRMS007",
+    "name_ja": "SSRMS EP関節 実測位置",
+    "description": "SSRMS EP Measured Joint Position",
+    "description_ja": "SSRMS EP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "SSRMS WP Measured Joint Position": {
+    "id": "CSASSRMS008",
+    "name_ja": "SSRMS WP関節 実測位置",
+    "description": "SSRMS WP Measured Joint Position",
+    "description_ja": "SSRMS WP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "SSRMS WY Measured Joint Position": {
+    "id": "CSASSRMS009",
+    "name_ja": "SSRMS WY関節 実測位置",
+    "description": "SSRMS WY Measured Joint Position",
+    "description_ja": "SSRMS WY関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "SSRMS WR Measured Joint Position": {
+    "id": "CSASSRMS010",
+    "name_ja": "SSRMS WR関節 実測位置",
+    "description": "SSRMS WR Measured Joint Position",
+    "description_ja": "SSRMS WR関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS Payload Status SSRMS Tip LEE": {
+    "id": "CSASSRMS011",
+    "name_ja": "SSRMS 先端LEE",
+    "description": "SSRMS Tip LEE Payload Status",
+    "description_ja": "SSRMS 先端LEE ペイロード状態",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS OCS Base Location SPDM": {
+    "id": "CSASPDM0001",
+    "name_ja": "SPDMベース（MSS OCS）",
+    "description": "MSS OCS Base Location SPDM — カナダ宇宙庁（CSA）の MSS（モービル・サービシング・システム）関連。ラベル自体が説明文",
+    "description_ja": "SPDM ベース位置（MSS OCS）",
+    "unit": "",
+    "discipline": "CSA/MSS"
+  },
+  "MSS OCS Base Location SPDM2": {
+    "id": "CSASPDM0002",
+    "name_ja": "SPDMベース",
+    "description": "SPDM Base Location",
+    "description_ja": "SPDM ベース位置",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 SR Measured Joint Position": {
+    "id": "CSASPDM0003",
+    "name_ja": "SPDM 1 SR関節 実測位置",
+    "description": "SPDM 1 SR Measured Joint Position",
+    "description_ja": "SPDM 1 SR関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 SY Measured Joint Position": {
+    "id": "CSASPDM0004",
+    "name_ja": "SPDM 1 SY関節 実測位置",
+    "description": "SPDM 1 SY Measured Joint Position",
+    "description_ja": "SPDM 1 SY関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 SP Measured Joint Position": {
+    "id": "CSASPDM0005",
+    "name_ja": "SPDM 1 SP関節 実測位置",
+    "description": "SPDM 1 SP Measured Joint Position",
+    "description_ja": "SPDM 1 SP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 EP Measured Joint Position": {
+    "id": "CSASPDM0006",
+    "name_ja": "SPDM 1 EP関節 実測位置",
+    "description": "SPDM 1 EP Measured Joint Position",
+    "description_ja": "SPDM 1 EP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 WP Measured Joint Position": {
+    "id": "CSASPDM0007",
+    "name_ja": "SPDM 1 WP関節 実測位置",
+    "description": "SPDM 1 WP Measured Joint Position",
+    "description_ja": "SPDM 1 WP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 WY Measured Joint Position": {
+    "id": "CSASPDM0008",
+    "name_ja": "SPDM 1 WY関節 実測位置",
+    "description": "SPDM 1 WY Measured Joint Position",
+    "description_ja": "SPDM 1 WY関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 1 WR Measured Joint Position": {
+    "id": "CSASPDM0009",
+    "name_ja": "SPDM 1 WR関節 実測位置",
+    "description": "SPDM 1 WR Measured Joint Position",
+    "description_ja": "SPDM 1 WR関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS Payload Status OCS SPDM Arm 1 OTCM": {
+    "id": "CSASPDM0010",
+    "name_ja": "SPDM アーム1 OTCM",
+    "description": "SPDM Arm 1 OTCM Payload Status",
+    "description_ja": "SPDM アーム1 OTCM ペイロード状態",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 SR Measured Joint Position": {
+    "id": "CSASPDM0011",
+    "name_ja": "SPDM 2 SR関節 実測位置",
+    "description": "SPDM 2 SR Measured Joint Position",
+    "description_ja": "SPDM 2 SR関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 SY Measured Joint Position": {
+    "id": "CSASPDM0012",
+    "name_ja": "SPDM 2 SY関節 実測位置",
+    "description": "SPDM 2 SY Measured Joint Position",
+    "description_ja": "SPDM 2 SY関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 SP Measured Joint Position": {
+    "id": "CSASPDM0013",
+    "name_ja": "SPDM 2 SP関節 実測位置",
+    "description": "SPDM 2 SP Measured Joint Position",
+    "description_ja": "SPDM 2 SP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 EP Measured Joint Position": {
+    "id": "CSASPDM0014",
+    "name_ja": "SPDM 2 EP関節 実測位置",
+    "description": "SPDM 2 EP Measured Joint Position",
+    "description_ja": "SPDM 2 EP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 WP Measured Joint Position": {
+    "id": "CSASPDM0015",
+    "name_ja": "SPDM 2 WP関節 実測位置",
+    "description": "SPDM 2 WP Measured Joint Position",
+    "description_ja": "SPDM 2 WP関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 WY Measured Joint Position": {
+    "id": "CSASPDM0016",
+    "name_ja": "SPDM 2 WY関節 実測位置",
+    "description": "SPDM 2 WY Measured Joint Position",
+    "description_ja": "SPDM 2 WY関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM 2 WR Measured Joint Position": {
+    "id": "CSASPDM0017",
+    "name_ja": "SPDM 2 WR関節 実測位置",
+    "description": "SPDM 2 WR Measured Joint Position",
+    "description_ja": "SPDM 2 WR関節 実測位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS Payload Status OCS SPDM Arm 2 OTCM": {
+    "id": "CSASPDM0018",
+    "name_ja": "SPDM アーム2 OTCM",
+    "description": "MSS Payload Status OCS SPDM Arm 2 OTCM — カナダ宇宙庁（CSA）の MSS（モービル・サービシング・システム）関連。ラベル自体が説明文",
+    "description_ja": "SPDM アーム2 OTCM ペイロード状態",
+    "unit": "",
+    "discipline": "CSA/MSS"
+  },
+  "MSS Payload Status OCS SPDM Arm 2 OTCM2": {
+    "id": "CSASPDM0019",
+    "name_ja": "SPDM アーム2 OTCM",
+    "description": "SPDM Arm 2 OTCM Payload Status",
+    "description_ja": "SPDM アーム2 OTCM ペイロード状態",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS OCS SPDM Body Roll Joint Position": {
+    "id": "CSASPDM0020",
+    "name_ja": "SPDM 本体ロール関節位置",
+    "description": "SPDM Body Roll Joint Position",
+    "description_ja": "SPDM 本体ロール関節位置",
+    "unit": "°",
+    "discipline": "CSA"
+  },
+  "MSS Payload Status OCS SPDM Body": {
+    "id": "CSASPDM0021",
+    "name_ja": "SPDM 本体ペイロード",
+    "description": "MSS Payload Status OCS SPDM Body — カナダ宇宙庁（CSA）の MSS（モービル・サービシング・システム）関連。ラベル自体が説明文",
+    "description_ja": "SPDM 本体ペイロード状態",
+    "unit": "",
+    "discipline": "CSA/MSS"
+  },
+  "MSS Payload Status OCS SPDM Body2": {
+    "id": "CSASPDM0022",
+    "name_ja": "SPDM 本体ペイロード",
+    "description": "SPDM Body Payload Status",
+    "description_ja": "SPDM 本体ペイロード状態",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS OCS Payload Status MBS MCAS": {
+    "id": "CSAMBS00001",
+    "name_ja": "MBS MCAS状態（MSS OCS）",
+    "description": "MSS OCS Payload Status MBS MCAS — カナダ宇宙庁（CSA）の MSS（モービル・サービシング・システム）関連。ラベル自体が説明文",
+    "description_ja": "MBS MCAS ペイロード状態（MSS OCS）",
+    "unit": "",
+    "discipline": "CSA/MSS"
+  },
+  "MSS OCS Payload Status MBS MCAS2": {
+    "id": "CSAMBS00002",
+    "name_ja": "MBS MCAS",
+    "description": "MBS MCAS Payload Status",
+    "description_ja": "MBS MCAS ペイロード状態",
+    "unit": "",
+    "discipline": "CSA"
+  },
+  "MSS OCS Payload Status MBS POA": {
+    "id": "CSAMBA00003",
+    "name_ja": "MBS POA状態（MSS OCS）",
+    "description": "MSS OCS Payload Status MBS POA — カナダ宇宙庁（CSA）の MSS（モービル・サービシング・システム）関連。ラベル自体が説明文",
+    "description_ja": "MBS POA ペイロード状態（MSS OCS）",
+    "unit": "",
+    "discipline": "CSA/MSS"
+  },
+  "MSS OCS Payload Status MBS POA2": {
+    "id": "CSAMBA00004",
+    "name_ja": "MBS POA",
+    "description": "MBS POA Payload Status",
+    "description_ja": "MBS POA ペイロード状態",
+    "unit": "",
+    "discipline": "CSA"
+  }
+}

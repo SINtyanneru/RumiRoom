@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<HTML LANG="ja">
+<HEAD>
+	<META CHARSET="utf-8">
+	<META NAME="viewport" CONTENT="width=device-width, initial-scale=1">
+	<TITLE>ISS Mimic ダッシュボード（SSE版）</TITLE>
+	<LINK REL="stylesheet" HREF="https://cdn.jsdelivr.net/npm/dseg@0.46.0/css/dseg.css">
+	<STYLE>
+		@font-face {
+			font-family: 'Abel-FixedKern';
+			font-style: normal;
+			font-weight: 400;
+			font-display: swap;
+			src: url(https://iss-mimic.github.io/Mimic/Abel-FixedKern.woff) format('woff');
+			unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+		}
+		@keyframes HIFADE {
+			from { filter: brightness(2.2); }
+			to { filter: brightness(1); }
+		}
+		BODY { background: #232428; font-family: 'Abel-FixedKern', 'arial narrow', sans-serif; margin: 6px; }
+		HEADER { color: #f2f2f2; margin: 2px 2px 8px; }
+		HEADER .TITLE { font-size: 20px; letter-spacing: 1px; }
+		#AOS { display: inline-block; margin-left: 10px; padding: 1px 10px; font-size: 14px; background: gray; color: white; }
+		#AOS.ON { background: green; }
+		#AOS.ERR { background: firebrick; }
+		#INTRO { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); display: flex; align-items: center; justify-content: center; z-index: 10; }
+		#INTRO.HIDDEN { display: none; }
+		DIV.DIALOG { background: #2b2d31; color: #f2f2f2; width: calc(100% - 40px); max-width: 560px; padding: 20px 22px; border: 2px solid #55585f; font-size: 15px; line-height: 1.7; }
+		DIV.DIALOG-TITLE { font-size: 19px; letter-spacing: 1px; margin-bottom: 10px; }
+		DIV.DIALOG A { color: #6db3ff; }
+		DIV.DIALOG P { margin: 8px 0; }
+		DIV.DIALOG .NOTE { font-size: 12px; color: #b9bcc2; }
+		#INTRO-CLOSE { display: block; margin: 14px 0 0 auto; padding: 6px 22px; font-family: inherit; font-size: 15px; background: #3d5afe; color: white; border: none; cursor: pointer; }
+		#INTRO-CLOSE:hover { filter: brightness(1.2); }
+		#WALL { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); grid-auto-rows: 88px; gap: 4px; }
+		DIV.TILE { display: flex; flex-direction: column; text-align: center; color: white; cursor: default; overflow: hidden; }
+		DIV.TILE:hover { filter: brightness(1.2); }
+		DIV.HIGHLIGHT { animation: HIFADE 0.5s; }
+		DIV.DESC { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; line-height: 1.15; padding: 2px; overflow: hidden; overflow-wrap: anywhere; }
+		DIV.VAL { font-family: 'DSEG14-Classic', monospace; font-size: 15px; padding: 3px 2px; white-space: nowrap; overflow: hidden; background: #050505; color: #39ff4d; text-shadow: 0 0 6px rgba(57, 255, 77, 0.7); margin: 2px 4px 4px; box-shadow: inset 0 0 0 1px #000, inset 0 2px 6px rgba(0, 0, 0, 0.9); }
+		/* 7セグの小数点は小さいので、ドットだけ拡大して視認性を上げる */
+		DIV.VAL SPAN.DP { font-size: 1.6em; margin-left: 0.18em; margin-right: 0.18em; }
+		/* オーバーヘッドパネル風プッシュボタン（状態系セルのON/OFF表示） */
+		DIV.SW { display: flex; flex-direction: column; gap: 2px; background: #101014; border: 1px solid #000; box-shadow: inset 0 0 0 1px #3a3f45; padding: 2px; margin: 1px 6px 3px; }
+		DIV.SW SPAN { font-family: 'Abel-FixedKern', 'arial narrow', sans-serif; font-size: 10px; letter-spacing: 3px; line-height: 1.6; color: #3f444b; background: #1a1b1f; text-align: center; }
+		DIV.SW SPAN.LIT-ON { background: #37e05a; color: #06130a; font-weight: bold; box-shadow: 0 0 7px #37e05a; }
+		DIV.SW SPAN.LIT-OFF { background: #ffb300; color: #1a1200; font-weight: bold; box-shadow: 0 0 7px #ffb300; }
+		/* 分野（discipline）ごとの色 — 主張の強い色でダッシュボードらしく */
+		DIV.EVA { background: #0288D1; }
+		DIV.ETHOS { background: #2F9E44; }
+		DIV.CDH { background: #F59F00; color: black; }
+		DIV.SPARTAN { background: #E91E63; }
+		DIV.CATO { background: #0097A7; }
+		DIV.VVO { background: #3D5AFE; }
+		DIV.SPARTAN-VVO { background: #8E24AA; }
+		DIV.CATO-VVO { background: #5C6BC0; }
+		DIV.ADCO { background: #EF6C00; }
+		DIV.ADCO-VVO { background: #6D4C41; }
+		DIV.TOPO { background: #C0CA33; color: black; }
+		DIV.ADCO-TOPO { background: #7CB342; }
+		DIV.ODIN { background: #607D8B; }
+		DIV.CSA { background: #D32F2F; }
+		DIV.ODIN-VVO { background: #7E57C2; }
+		DIV.MIMIC { background: #37474F; }
+	</STYLE>
+</HEAD>
+<BODY>
+	<HEADER>
+		<SPAN CLASS="TITLE">ISS MIMIC TELEMETRY</SPAN><SPAN ID="AOS">CONNECTING</SPAN>
+	</HEADER>
+	<DIV ID="WALL"></DIV>
+	<DIV ID="INTRO" CLASS="HIDDEN">
+		<DIV CLASS="DIALOG">
+			<DIV CLASS="DIALOG-TITLE">このページについて</DIV>
+			<P>ISS（国際宇宙ステーション）の実テレメトリを、NASA の公開フィードからリアルタイムで受信して表示しています。</P>
+			<P>この仕組みは、オープンソースプロジェクト <B>ISS Mimic</B> をフォークしたものです。<BR>
+			本家： <A HREF="https://github.com/ISS-Mimic/Mimic" TARGET="_blank" REL="noopener">ISS-Mimic/Mimic</A><BR>
+			フォーク： <A HREF="https://github.com/SINtyanneru/ISS-Mimic" TARGET="_blank" REL="noopener">SINtyanneru/ISS-Mimic</A></P>
+			<P>なお、このページや受信プログラムのコードは、ISS のデータを見たいがために AI アシスタント「Muse」に全部書かせたもので、実質バイブコーディングです。</P>
+			<P CLASS="NOTE">※ 閉じると、次回からこのダイアログは表示されません（Cookie に記録します）。</P>
+			<BUTTON ID="INTRO-CLOSE" TYPE="button">閉じる</BUTTON>
+		</DIV>
+	</DIV>
+	<SCRIPT>
+		// discipline 名 → CSSクラス名（本家は "SPARTAN/VVO" を "SPARTAN-VVO" と表記）
+		function disciplineClass(discipline) {
+			if (!discipline || /Mimic/.test(discipline)) return 'MIMIC';
+			if (discipline === 'CSA/MSS') return 'CSA';
+			return discipline.replace(/\//g, '-');
+		}
+
+		const tileByLabel = {};
+
+		async function buildWall() {
+			const labelInfo = await (await fetch('iss-telemetry-labels-ja.json')).json();
+			const wall = document.getElementById('WALL');
+			for (const [label, info] of Object.entries(labelInfo)) {
+				const tile = document.createElement('DIV');
+				tile.className = 'TILE ' + disciplineClass(info.discipline);
+				tile.title = (info.description_ja || '') + '\n' + label + (info.description ? '\n' + info.description : '');
+
+				const desc = document.createElement('DIV');
+				desc.className = 'DESC';
+				desc.textContent = info.name_ja || info.description_ja || label;
+
+				const val = document.createElement('DIV');
+				val.className = 'VAL';
+
+				const entry = { tile, val, unit: info.unit || '', isStatus: !!info.value_map, swOn: null, swOff: null };
+				if (entry.isStatus) {
+					// 状態系はオーバーヘッドパネル風のON/OFFプッシュボタンにする
+					const sw = document.createElement('DIV');
+					sw.className = 'SW';
+					const on = document.createElement('SPAN');
+					on.textContent = 'ON';
+					const off = document.createElement('SPAN');
+					off.textContent = 'OFF';
+					sw.append(on, off);
+					val.appendChild(sw);
+					entry.swOn = on;
+					entry.swOff = off;
+				} else {
+					val.textContent = 'NO DATA';
+				}
+
+				tile.append(desc, val);
+				wall.appendChild(tile);
+				tileByLabel[label] = entry;
+			}
+		}
+
+		// 長い数値は精度を落としてセルに収まる長さにする（元の値はツールチップで見れる）
+		function fitValue(raw) {
+			if (raw.length <= 10) return raw;
+			const n = Number(raw);
+			if (Number.isNaN(n)) return raw;
+			let s = n.toPrecision(6);
+			if (s.includes('e')) {
+				const [m, e] = s.split('e');
+				s = m.replace(/\.?0+$/, '') + 'E' + parseInt(e, 10);
+			} else if (s.includes('.')) {
+				s = s.replace(/\.?0+$/, '');
+			}
+			return s.length <= 11 ? s : n.toExponential(2).replace('e', 'E');
+		}
+
+		function applyRows(rows) {
+			for (const row of rows) {
+				const t = tileByLabel[row.Label];
+				if (!t) continue;
+				if (t.isStatus) {
+					// 状態系はボタン側のランプを点灯させる
+					const isOn = (row.Value === '1' || row.Value === '1.0');
+					const isOff = (row.Value === '0' || row.Value === '0.0');
+					t.swOn.className = isOn ? 'LIT-ON' : '';
+					t.swOff.className = isOff ? 'LIT-OFF' : '';
+				} else {
+					const display = fitValue(row.Value);
+					// 小数点だけ SPAN.DP で包んで拡大表示する
+					t.val.textContent = '';
+					display.split('.').forEach((part, i) => {
+						if (i > 0) {
+							const dp = document.createElement('SPAN');
+							dp.className = 'DP';
+							dp.textContent = '.';
+							t.val.appendChild(dp);
+						}
+						t.val.appendChild(document.createTextNode(part));
+					});
+					if (t.unit) t.val.appendChild(document.createTextNode(' ' + t.unit));
+					t.val.title = row.Value;
+					// 長さに応じてフォントを段階的に小さくする
+					const len = display.length + (t.unit ? t.unit.length + 1 : 0);
+					t.val.style.fontSize = len <= 9 ? '15px' : len <= 12 ? '12px' : len <= 15 ? '10.5px' : '9px';
+				}
+				t.tile.classList.remove('HIGHLIGHT');
+				void t.tile.offsetWidth; // アニメーション再発火用
+				t.tile.classList.add('HIGHLIGHT');
+
+				if (row.Label === 'aos') {
+					const badge = document.getElementById('AOS');
+					if (row.Value === '1')      { badge.textContent = 'AOS'; badge.className = 'ON'; }
+					else if (row.Value === '2') { badge.textContent = 'SIGNAL ERROR'; badge.className = 'ERR'; }
+					else                        { badge.textContent = 'LOS'; badge.className = ''; }
+				}
+			}
+		}
+
+		// 初回訪問時（Cookie がなければ）だけ「このページについて」を出す
+		function initIntro() {
+			const intro = document.getElementById('INTRO');
+			const close = () => {
+				intro.classList.add('HIDDEN');
+				document.cookie = 'iss_mimic_intro=1; max-age=' + (60 * 60 * 24 * 365) + '; path=/; SameSite=Lax';
+			};
+			document.getElementById('INTRO-CLOSE').addEventListener('click', close);
+			intro.addEventListener('click', e => { if (e.target === intro) close(); });
+			const seen = document.cookie.split('; ').some(c => c.startsWith('iss_mimic_intro='));
+			if (!seen) intro.classList.remove('HIDDEN');
+		}
+
+		async function main() {
+			initIntro();
+			await buildWall();
+			const es = new EventSource('sse.php');
+			es.addEventListener('init',   e => applyRows(JSON.parse(e.data)));
+			es.addEventListener('update', e => applyRows(JSON.parse(e.data)));
+		}
+		main();
+	</SCRIPT>
+</BODY>
+</HTML>
