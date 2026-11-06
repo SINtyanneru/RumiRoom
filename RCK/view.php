@@ -43,6 +43,7 @@ function convert_byte(int $size) {
 		<LINK REL="stylesheet" HREF="Style/RST_Codeblock.css">
 		<LINK REL="stylesheet" HREF="Style/RST_Inlinecode.css">
 		<LINK REL="stylesheet" HREF="Style/RST_Texteffect.css">
+		<LINK REL="stylesheet" HREF="Style/RST_Reference.css">
 	</HEAD>
 	<BODY>
 		<A HREF="https://rumi-room.net/"><IMG SRC="/Asset/Haiku/png/32x32/Action_GoHome_2.png" ALT="ホームに戻る"></A>
