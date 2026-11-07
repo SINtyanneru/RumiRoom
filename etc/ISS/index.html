@@ -24,17 +24,68 @@
 		#AOS { display: inline-block; margin-left: 10px; padding: 1px 10px; font-size: 14px; background: gray; color: white; }
 		#AOS.ON { background: green; }
 		#AOS.ERR { background: firebrick; }
-		#INTRO { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); display: flex; align-items: center; justify-content: center; z-index: 10; }
-		#INTRO.HIDDEN { display: none; }
+		#INTRO, #HELP { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); display: flex; align-items: center; justify-content: center; z-index: 10; }
+		#INTRO.HIDDEN, #HELP.HIDDEN { display: none; }
 		DIV.DIALOG { background: #2b2d31; color: #f2f2f2; width: calc(100% - 40px); max-width: 560px; padding: 20px 22px; border: 2px solid #55585f; font-size: 15px; line-height: 1.7; }
 		DIV.DIALOG-TITLE { font-size: 19px; letter-spacing: 1px; margin-bottom: 10px; }
 		DIV.DIALOG A { color: #6db3ff; }
 		DIV.DIALOG P { margin: 8px 0; }
 		DIV.DIALOG .NOTE { font-size: 12px; color: #b9bcc2; }
-		#INTRO-CLOSE { display: block; margin: 14px 0 0 auto; padding: 6px 22px; font-family: inherit; font-size: 15px; background: #3d5afe; color: white; border: none; cursor: pointer; }
-		#INTRO-CLOSE:hover { filter: brightness(1.2); }
-		#WALL { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); grid-auto-rows: 88px; gap: 4px; }
-		DIV.TILE { display: flex; flex-direction: column; text-align: center; color: white; cursor: default; overflow: hidden; }
+		#INTRO-CLOSE, #HELP-CLOSE { display: block; margin: 14px 0 0 auto; padding: 6px 22px; font-family: inherit; font-size: 15px; background: #3d5afe; color: white; border: none; cursor: pointer; }
+		#INTRO-CLOSE:hover, #HELP-CLOSE:hover { filter: brightness(1.2); }
+		#WALL { flex: 1 1 0; min-height: 0; overflow-y: auto; min-width: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); grid-auto-rows: 88px; gap: 4px; }
+		/* 左右分割: 左に3Dモデル、右にグリッド */
+		#MAIN { display: flex; gap: 6px; align-items: flex-start; }
+		#LEFT { position: sticky; top: 6px; width: 46%; height: calc(100vh - 52px); flex-shrink: 0; }
+		#VIEW3D { position: relative; width: 100%; height: 100%; background: #05070d; overflow: hidden; }
+		#RIGHT { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; position: sticky; top: 6px; height: calc(100vh - 52px); }
+		#PANELS { display: flex; flex-wrap: wrap; gap: 6px; overflow-y: auto; flex: 1 1 0; min-height: 0; align-content: flex-start; }
+		.PANEL { flex: 1 1 300px; min-width: 270px; background: #17181c; border: 1px solid #34363c; padding: 8px 10px 6px; color: #f2f2f2; }
+		.PANEL-TITLE { font-size: 13px; letter-spacing: 1px; margin-bottom: 6px; }
+		#PANELS .P-SUBTITLE { font-size: 11px; color: #b9bcc2; letter-spacing: 1px; margin: 6px 0 2px; }
+		#PANELS .P-NOTE { margin-top: 6px; font-size: 10.5px; color: #83868d; line-height: 1.5; }
+		.KV { display: flex; justify-content: space-between; font-family: monospace; font-size: 12px; margin: 3px 0; }
+		.KV .K { color: #b9bcc2; }
+		.KV .V { color: #39ff4d; }
+		.MINIROW { display: flex; gap: 12px; flex-wrap: wrap; font-family: monospace; font-size: 12px; color: #39ff4d; margin: 2px 0 4px; }
+		.PROW .P-NAMEW { width: 74px; color: #b9bcc2; }
+		.P-BAR.B-WATER { background: #3d9bfe; }
+		.P-BAR.B-COOL { background: #37c8d9; }
+		#ORBITMAP { width: 100%; display: block; background: #05070d; margin-bottom: 4px; }
+		#POWER { background: #17181c; border: 1px solid #34363c; padding: 8px 10px 6px; color: #f2f2f2; }
+		#POWER .P-TITLE { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; letter-spacing: 1px; margin-bottom: 6px; }
+		#POWER .P-AVG { color: #39ff4d; font-family: monospace; font-size: 13px; }
+		.PROW { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-family: monospace; font-size: 12px; }
+		.PROW .P-NAME { width: 26px; color: #b9bcc2; }
+		.PROW .P-BARWRAP { flex: 1; height: 9px; background: #26282e; }
+		.PROW .P-BAR { height: 100%; width: 0%; background: #f5b301; transition: width 0.4s; }
+		.PROW .P-VAL { width: 74px; text-align: right; color: #39ff4d; }
+		#POWER .P-SUB { margin-top: 7px; padding-top: 6px; border-top: 1px solid #34363c; }
+		#POWER .P-SUBTITLE { font-size: 11px; color: #b9bcc2; letter-spacing: 1px; margin-bottom: 2px; }
+		#POWER .P-CMG { display: flex; gap: 12px; font-family: monospace; font-size: 12px; color: #39ff4d; flex-wrap: wrap; }
+		#POWER .P-NOTE { margin-top: 6px; font-size: 10.5px; color: #83868d; line-height: 1.5; }
+		#VIEW3D CANVAS { display: block; }
+		#VIEW3D-TITLE { position: absolute; top: 8px; left: 10px; color: #f2f2f2; font-size: 15px; letter-spacing: 1px; z-index: 2; pointer-events: none; }
+		#VIEW3D-READOUT { position: absolute; left: 10px; bottom: 8px; color: #39ff4d; font-family: monospace; font-size: 12px; line-height: 1.5; white-space: pre-line; z-index: 2; pointer-events: none; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); }
+		#WXBTN { position: absolute; top: 34px; left: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #9fdcff; border: 1px solid #3a5a78; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
+		#HELPBTN { position: absolute; top: 8px; right: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #cfe8ff; border: 1px solid #55585f; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
+		#FOCUSBAR { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 3; }
+		#FOCUSBAR BUTTON { background: rgba(8, 12, 22, 0.8); color: #cfe8ff; border: 1px solid #55585f; padding: 5px 9px; font-size: 12px; cursor: pointer; letter-spacing: 1px; white-space: nowrap; }
+		#FOCUSBAR BUTTON.ON { color: #ffe28a; border-color: #a8842c; }
+		#WXBTN.ON { color: #ffe28a; border-color: #a8842c; }
+		#WXINFO { position: absolute; top: 66px; left: 10px; z-index: 3; color: #cfe8ff; font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-line; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); display: none; pointer-events: none; }
+		#WXLOADING { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4; background: rgba(8, 12, 22, 0.92); color: #cfe8ff; border: 1px solid #3a5a78; padding: 16px 26px; font-size: 14px; letter-spacing: 2px; display: none; }
+		#WXLOADING .SPIN { display: inline-block; width: 14px; height: 14px; border: 2px solid #3a5a78; border-top-color: #9fdcff; border-radius: 50%; animation: WXSPIN 0.8s linear infinite; vertical-align: -2px; margin-right: 10px; }
+		@keyframes WXSPIN { to { transform: rotate(360deg); } }
+		@media (max-width: 900px) {
+			#MAIN { flex-direction: column; }
+			#LEFT { position: static; width: 100%; height: auto; }
+			#VIEW3D { height: 46vh; }
+			#RIGHT { position: static; height: auto; }
+			#WALL { overflow-y: visible; flex: none; }
+			#PANELS { flex: none; }
+		}
+		DIV.TILE { display: flex; flex-direction: column; text-align: center; color: white; cursor: pointer; overflow: hidden; }
 		DIV.TILE:hover { filter: brightness(1.2); }
 		DIV.HIGHLIGHT { animation: HIFADE 0.5s; }
 		DIV.DESC { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 11px; line-height: 1.15; padding: 2px; overflow: hidden; overflow-wrap: anywhere; }
@@ -46,6 +97,20 @@
 		DIV.SW SPAN { font-family: 'Abel-FixedKern', 'arial narrow', sans-serif; font-size: 10px; letter-spacing: 3px; line-height: 1.6; color: #3f444b; background: #1a1b1f; text-align: center; }
 		DIV.SW SPAN.LIT-ON { background: #37e05a; color: #06130a; font-weight: bold; box-shadow: 0 0 7px #37e05a; }
 		DIV.SW SPAN.LIT-OFF { background: #ffb300; color: #1a1200; font-weight: bold; box-shadow: 0 0 7px #ffb300; }
+		/* 履歴パネル（画面右に固定表示、セルをクリックすると開く） */
+		#HISTORY { position: fixed; top: 0; right: 0; width: 340px; max-width: calc(100% - 24px); height: 100%; background: #2b2d31; color: #f2f2f2; border-left: 2px solid #55585f; z-index: 9; display: flex; flex-direction: column; }
+		#HISTORY.HIDDEN { display: none; }
+		DIV.HIST-HEAD { position: relative; padding: 10px 12px 8px; border-bottom: 1px solid #55585f; }
+		DIV.HIST-TITLE { font-size: 16px; letter-spacing: 1px; padding-right: 64px; }
+		DIV.HIST-SUB { font-size: 12px; color: #b9bcc2; overflow-wrap: anywhere; }
+		#HISTORY-CLOSE { position: absolute; top: 8px; right: 8px; padding: 4px 12px; font-family: inherit; font-size: 13px; background: #3d5afe; color: white; border: none; cursor: pointer; }
+		#HISTORY-CLOSE:hover { filter: brightness(1.2); }
+		#HISTORY-LIST { flex: 1; overflow-y: auto; padding: 6px 10px; }
+		DIV.HIST-ROW { display: flex; justify-content: space-between; gap: 8px; padding: 3px 4px; border-bottom: 1px solid #3a3c41; font-size: 13px; }
+		DIV.HIST-ROW.HIGHLIGHT { animation: HIFADE 0.5s; }
+		SPAN.HIST-TIME { color: #b9bcc2; white-space: nowrap; }
+		SPAN.HIST-VAL { font-family: 'DSEG14-Classic', monospace; color: #39ff4d; text-align: right; overflow-wrap: anywhere; }
+		DIV.HIST-EMPTY { color: #b9bcc2; font-size: 13px; padding: 8px 4px; }
 		/* 分野（discipline）ごとの色 — 主張の強い色でダッシュボードらしく */
 		DIV.EVA { background: #0288D1; }
 		DIV.ETHOS { background: #2F9E44; }
@@ -69,7 +134,93 @@
 	<HEADER>
 		<SPAN CLASS="TITLE">ISS MIMIC TELEMETRY</SPAN><SPAN ID="AOS">CONNECTING</SPAN>
 	</HEADER>
-	<DIV ID="WALL"></DIV>
+	<DIV ID="MAIN">
+		<DIV ID="LEFT">
+		<DIV ID="VIEW3D">
+			<DIV ID="VIEW3D-TITLE">ISS 3D MODEL（実テレメトリ連動）</DIV>
+			<BUTTON ID="WXBTN" TYPE="BUTTON">宇宙天気 OFF</BUTTON>
+			<DIV ID="WXINFO"></DIV>
+			<DIV ID="WXLOADING"><SPAN CLASS="SPIN"></SPAN>読み込み中...</DIV>
+			<BUTTON ID="HELPBTN" TYPE="BUTTON">操作方法</BUTTON>
+			<DIV ID="FOCUSBAR">
+				<BUTTON TYPE="BUTTON" DATA-F="all">全体</BUTTON>
+				<BUTTON TYPE="BUTTON" DATA-F="modules">与圧部</BUTTON>
+				<BUTTON TYPE="BUTTON" DATA-F="array">アレイ</BUTTON>
+				<BUTTON TYPE="BUTTON" DATA-F="arm">アーム2</BUTTON>
+				<BUTTON TYPE="BUTTON" DATA-F="spdm">デクスター</BUTTON>
+				<BUTTON TYPE="BUTTON" DATA-F="sgant">アンテナ</BUTTON>
+			</DIV>
+			<DIV ID="VIEW3D-READOUT">3Dモデルを読み込んでいます…</DIV>
+		</DIV>
+		</DIV>
+		<DIV ID="RIGHT">
+		<DIV ID="WALL"></DIV>
+		<DIV ID="PANELS">
+		<DIV ID="POWER" CLASS="PANEL">
+			<DIV CLASS="P-TITLE"><SPAN>電力 — 太陽電池アレイ電圧</SPAN><SPAN CLASS="P-AVG" ID="PAVG">平均 --- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">1A</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-1A"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-1A">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">1B</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-1B"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-1B">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">2A</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-2A"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-2A">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">2B</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-2B"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-2B">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">3A</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-3A"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-3A">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">3B</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-3B"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-3B">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">4A</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-4A"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-4A">--- V</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">4B</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR" ID="PB-4B"></DIV></DIV><SPAN CLASS="P-VAL" ID="PV-4B">--- V</SPAN></DIV>
+			<DIV CLASS="P-SUB">
+				<DIV CLASS="P-SUBTITLE">CMG スピンモーター電流（消費側）</DIV>
+				<DIV CLASS="P-CMG"><SPAN>CMG1 <SPAN ID="PC-1">---</SPAN> A</SPAN><SPAN>CMG2 <SPAN ID="PC-2">---</SPAN> A</SPAN><SPAN>CMG3 <SPAN ID="PC-3">---</SPAN> A</SPAN><SPAN>CMG4 <SPAN ID="PC-4">---</SPAN> A</SPAN></DIV>
+			</DIV>
+			<DIV CLASS="P-NOTE">※ アレイの電流・発電量（W）とバッテリー情報は、公開テレメトリ（296項目）には含まれていません（電流ラベルは受信実績なし）。</DIV>
+		</DIV>
+		<DIV ID="LIFE" CLASS="PANEL">
+			<DIV CLASS="PANEL-TITLE">生命維持</DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">船内圧力</SPAN><SPAN CLASS="V" ID="LF-PRES">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">酸素分圧 Lab</SPAN><SPAN CLASS="V" ID="LF-PO2L">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">酸素分圧 Node 3</SPAN><SPAN CLASS="V" ID="LF-PO2N">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">CO2分圧 Lab</SPAN><SPAN CLASS="V" ID="LF-PCO2L">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">CO2分圧 Node 3</SPAN><SPAN CLASS="V" ID="LF-PCO2N">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">室温</SPAN><SPAN CLASS="V" ID="LF-TEMP">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">酸素生成装置</SPAN><SPAN CLASS="V" ID="LF-OGA">---</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">清水</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR B-WATER" ID="LF-B1"></DIV></DIV><SPAN CLASS="P-VAL" ID="LF-W1">--- %</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">排水</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR B-WATER" ID="LF-B2"></DIV></DIV><SPAN CLASS="P-VAL" ID="LF-W2">--- %</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAME">尿</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR B-WATER" ID="LF-B3"></DIV></DIV><SPAN CLASS="P-VAL" ID="LF-W3">--- %</SPAN></DIV>
+		</DIV>
+		<DIV ID="ORBIT" CLASS="PANEL">
+			<DIV CLASS="PANEL-TITLE">軌道</DIV>
+			<CANVAS ID="ORBITMAP" WIDTH="560" HEIGHT="280"></CANVAS>
+			<DIV CLASS="KV"><SPAN CLASS="K">高度</SPAN><SPAN CLASS="V" ID="ORB-ALT">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">速度</SPAN><SPAN CLASS="V" ID="ORB-VEL">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">軌道周期</SPAN><SPAN CLASS="V" ID="ORB-PERIOD">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">直下点</SPAN><SPAN CLASS="V" ID="ORB-LL">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">太陽ベータ角</SPAN><SPAN CLASS="V" ID="ORB-BETA">---</SPAN></DIV>
+			<DIV CLASS="P-NOTE">軌跡は状態ベクトルから二体問題で伝播した概算（前後 約1周期分）です。</DIV>
+		</DIV>
+		<DIV ID="ATT" CLASS="PANEL">
+			<DIV CLASS="PANEL-TITLE">姿勢・CMG</DIV>
+			<DIV CLASS="P-SUBTITLE">CMG ホイール回転数 [rpm]</DIV>
+			<DIV CLASS="MINIROW"><SPAN>CMG1 <SPAN ID="AT-R1">---</SPAN></SPAN><SPAN>CMG2 <SPAN ID="AT-R2">---</SPAN></SPAN><SPAN>CMG3 <SPAN ID="AT-R3">---</SPAN></SPAN><SPAN>CMG4 <SPAN ID="AT-R4">---</SPAN></SPAN></DIV>
+			<DIV CLASS="P-SUBTITLE">CMG ベアリング温度 [℃]</DIV>
+			<DIV CLASS="MINIROW"><SPAN>CMG1 <SPAN ID="AT-T1">---</SPAN></SPAN><SPAN>CMG2 <SPAN ID="AT-T2">---</SPAN></SPAN><SPAN>CMG3 <SPAN ID="AT-T3">---</SPAN></SPAN><SPAN>CMG4 <SPAN ID="AT-T4">---</SPAN></SPAN></DIV>
+			<DIV CLASS="P-SUBTITLE">姿勢変化率 [°/s]</DIV>
+			<DIV CLASS="MINIROW"><SPAN>X <SPAN ID="AT-X">---</SPAN></SPAN><SPAN>Y <SPAN ID="AT-Y">---</SPAN></SPAN><SPAN>Z <SPAN ID="AT-Z">---</SPAN></SPAN></DIV>
+		</DIV>
+		<DIV ID="COOL" CLASS="PANEL">
+			<DIV CLASS="PANEL-TITLE">冷却</DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">ループA 温度</SPAN><SPAN CLASS="V" ID="CL-AT">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">ループA 圧力</SPAN><SPAN CLASS="V" ID="CL-AP">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">ループB 温度</SPAN><SPAN CLASS="V" ID="CL-BT">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">ループB 圧力</SPAN><SPAN CLASS="V" ID="CL-BP">---</SPAN></DIV>
+			<DIV CLASS="P-SUBTITLE">冷却水温 空調系 [℃]</DIV>
+			<DIV CLASS="MINIROW"><SPAN>Lab <SPAN ID="CL-L1">---</SPAN></SPAN><SPAN>Node2 <SPAN ID="CL-L2">---</SPAN></SPAN><SPAN>Node3 <SPAN ID="CL-L3">---</SPAN></SPAN></DIV>
+			<DIV CLASS="P-SUBTITLE">冷却水温 機器系 [℃]</DIV>
+			<DIV CLASS="MINIROW"><SPAN>Lab <SPAN ID="CL-M1">---</SPAN></SPAN><SPAN>Node2 <SPAN ID="CL-M2">---</SPAN></SPAN><SPAN>Node3 <SPAN ID="CL-M3">---</SPAN></SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAMEW">冷却水 Lab</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR B-COOL" ID="CL-B1"></DIV></DIV><SPAN CLASS="P-VAL" ID="CL-Q1">--- %</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAMEW">冷却水 Node2</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR B-COOL" ID="CL-B2"></DIV></DIV><SPAN CLASS="P-VAL" ID="CL-Q2">--- %</SPAN></DIV>
+			<DIV CLASS="PROW"><SPAN CLASS="P-NAMEW">冷却水 Node3</SPAN><DIV CLASS="P-BARWRAP"><DIV CLASS="P-BAR B-COOL" ID="CL-B3"></DIV></DIV><SPAN CLASS="P-VAL" ID="CL-Q3">--- %</SPAN></DIV>
+		</DIV>
+		</DIV>
+		</DIV>
+	</DIV>
 	<DIV ID="INTRO" CLASS="HIDDEN">
 		<DIV CLASS="DIALOG">
 			<DIV CLASS="DIALOG-TITLE">このページについて</DIV>
@@ -82,6 +233,27 @@
 			<BUTTON ID="INTRO-CLOSE" TYPE="button">閉じる</BUTTON>
 		</DIV>
 	</DIV>
+	<DIV ID="HELP" CLASS="HIDDEN">
+		<DIV CLASS="DIALOG">
+			<DIV CLASS="DIALOG-TITLE">操作方法</DIV>
+			<P><B>3Dモデル（左側）</B><BR>
+			・ドラッグ： 回転<BR>
+			・ホイール / ピンチ： ズーム<BR>
+			・右ドラッグ： 視点の移動<BR>
+			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面下部のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。左上の「宇宙天気」ボタンでは、オーロラや太陽風の可視化もできます。</P>
+			<P><B>テレメトリのセル（右側）</B><BR>
+			・セルをクリックすると、右側にその項目の履歴パネルが開き、過去100件の値がリアルタイムで更新されます。別のセルをクリックすると表示が切り替わり、閉じるときはパネル右上の × を押してください。</P>
+			<BUTTON ID="HELP-CLOSE" TYPE="button">閉じる</BUTTON>
+		</DIV>
+	</DIV>
+	<DIV ID="HISTORY" CLASS="HIDDEN">
+		<DIV CLASS="HIST-HEAD">
+			<DIV CLASS="HIST-TITLE" ID="HISTORY-TITLE">履歴</DIV>
+			<DIV CLASS="HIST-SUB" ID="HISTORY-SUB"></DIV>
+			<BUTTON ID="HISTORY-CLOSE" TYPE="button">閉じる</BUTTON>
+		</DIV>
+		<DIV ID="HISTORY-LIST"></DIV>
+	</DIV>
 	<SCRIPT>
 		// discipline 名 → CSSクラス名（本家は "SPARTAN/VVO" を "SPARTAN-VVO" と表記）
 		function disciplineClass(discipline) {
@@ -91,9 +263,11 @@
 		}
 
 		const tileByLabel = {};
+		let labelInfoAll = {};
 
 		async function buildWall() {
 			const labelInfo = await (await fetch('iss-telemetry-labels-ja.json')).json();
+			labelInfoAll = labelInfo;
 			const wall = document.getElementById('WALL');
 			for (const [label, info] of Object.entries(labelInfo)) {
 				const tile = document.createElement('DIV');
@@ -107,7 +281,9 @@
 				const val = document.createElement('DIV');
 				val.className = 'VAL';
 
-				const entry = { tile, val, unit: info.unit || '', isStatus: !!info.value_map, swOn: null, swOff: null };
+				const entry = { tile, val, unit: info.unit || '', isStatus: !!info.value_map, swOn: null, swOff: null, info };
+				// セルをクリックしたら右側パネルにその項目の履歴を出す
+				tile.addEventListener('click', () => openHistory(label));
 				if (entry.isStatus) {
 					// 状態系はオーバーヘッドパネル風のON/OFFプッシュボタンにする
 					const sw = document.createElement('DIV');
@@ -145,8 +321,12 @@
 			return s.length <= 11 ? s : n.toExponential(2).replace('e', 'E');
 		}
 
+		// 3Dモデル側から参照する最新のテレメトリ値
+		window.telemetryState = {};
+
 		function applyRows(rows) {
 			for (const row of rows) {
+				window.telemetryState[row.Label] = row.Value;
 				const t = tileByLabel[row.Label];
 				if (!t) continue;
 				if (t.isStatus) {
@@ -185,14 +365,200 @@
 					else                        { badge.textContent = 'LOS'; badge.className = ''; }
 				}
 			}
+			renderPower();
+			renderInfoPanels();
+		}
+
+		// ===== 電力パネル =====
+		// アレイ電圧（voltage_1a〜4b）と CMG スピンモーター電流を表示する。
+		// アレイ電流は公開フィードで未更新（種値0のまま）のため、W は算出しない。
+		const P_CH = ['1a', '1b', '2a', '2b', '3a', '3b', '4a', '4b'];
+		function renderPower() {
+			const st = window.telemetryState;
+			let sum = 0, cnt = 0;
+			for (const ch of P_CH) {
+				const v = parseFloat(st['voltage_' + ch]);
+				const valEl = document.getElementById('PV-' + ch.toUpperCase());
+				const barEl = document.getElementById('PB-' + ch.toUpperCase());
+				if (!valEl || !barEl) continue;
+				if (Number.isFinite(v)) {
+					valEl.textContent = v.toFixed(1) + ' V';
+					barEl.style.width = Math.max(0, Math.min(100, (v - 100) / 70 * 100)) + '%';
+					sum += v; cnt++;
+				}
+			}
+			const avg = document.getElementById('PAVG');
+			if (avg && cnt) avg.textContent = '平均 ' + (sum / cnt).toFixed(1) + ' V';
+			for (let i = 1; i <= 4; i++) {
+				const el = document.getElementById('PC-' + i);
+				const a = parseFloat(st['USGNC_CMG' + i + '_SpinMtr_Current']);
+				if (el && Number.isFinite(a)) el.textContent = a.toFixed(2);
+			}
+		}
+
+		// ===== 情報パネル群（生命維持・姿勢CMG・冷却） =====
+		function fmtT(v, dec) {
+			const n = parseFloat(v);
+			if (!Number.isFinite(n)) return '---';
+			const f = Math.pow(10, dec);
+			return (Math.trunc(n * f) / f).toFixed(dec);
+		}
+		function setTxt(id, txt) { const el = document.getElementById(id); if (el) el.textContent = txt; }
+		function setBar(id, pct) { const el = document.getElementById(id); if (el) el.style.width = Math.max(0, Math.min(100, pct)) + '%'; }
+		function renderInfoPanels() {
+			const st = window.telemetryState;
+			// 生命維持
+			setTxt('LF-PRES', fmtT(st['LAB_PCA_Cabin_Pressure'], 1) + ' torr');
+			setTxt('LF-PO2L', fmtT(st['LAB_MCA_ppO2'], 1) + ' torr');
+			setTxt('LF-PO2N', fmtT(st['Node_3_MCA_ppO2'], 1) + ' torr');
+			setTxt('LF-PCO2L', fmtT(st['LAB_MCA_ppCO2'], 2) + ' torr');
+			setTxt('LF-PCO2N', fmtT(st['Node_3_MCA_ppCO2'], 2) + ' torr');
+			setTxt('LF-TEMP', fmtT(st['LAB1P6_CCAA_In_T1'], 1) + ' ℃');
+			const oga = st['Node_3_OGA_Process_Cmd_Status'];
+			setTxt('LF-OGA', oga === '1' ? '稼働中' : oga === '0' ? '停止' : fmtT(oga, 0));
+			const tanks = [['Node_3_WPA_Water_Storage_Qty_Ctrl', 'LF-B1', 'LF-W1'], ['Node_3_WPA_Waste_Water_Qty_Ctrl', 'LF-B2', 'LF-W2'], ['Node_3_UPA_WSTA_Qty_Ctrl_Pct', 'LF-B3', 'LF-W3']];
+			for (const [label, bar, val] of tanks) {
+				const q = parseFloat(st[label]);
+				if (Number.isFinite(q)) { setBar(bar, q); setTxt(val, fmtT(q, 1) + ' %'); }
+			}
+			// 姿勢・CMG
+			for (let i = 1; i <= 4; i++) {
+				setTxt('AT-R' + i, fmtT(st['USGNC_CMG' + i + '_Current_Wheel_Speed'], 0));
+				setTxt('AT-T' + i, fmtT(st['USGNC_CMG' + i + '_SpinBrg_Temp1'], 1));
+			}
+			setTxt('AT-X', fmtT(st['USGNC_PS_Pointing_Current_Inert_Rate_Vector_X'], 4));
+			setTxt('AT-Y', fmtT(st['USGNC_PS_Pointing_Current_Inert_Rate_Vector_Y'], 4));
+			setTxt('AT-Z', fmtT(st['USGNC_PS_Pointing_Current_Inert_Rate_Vector_Z'], 4));
+			// 冷却
+			setTxt('CL-AT', fmtT(st['loopa_temp'], 1) + ' ℃');
+			setTxt('CL-AP', fmtT(st['loopa_pressure'], 0) + ' kPa');
+			setTxt('CL-BT', fmtT(st['loopb_temp'], 1) + ' ℃');
+			setTxt('CL-BP', fmtT(st['loopb_pressure'], 0) + ' kPa');
+			setTxt('CL-L1', fmtT(st['LAB_LTL_TWMV_Out_Temp'], 1));
+			setTxt('CL-L2', fmtT(st['Node2_LTL_TWMV_Out_Temp'], 1));
+			setTxt('CL-L3', fmtT(st['Node3_LTL_TWMV_Out_Temp'], 1));
+			setTxt('CL-M1', fmtT(st['LAB_MTL_Regen_TWMV_Out_Temp'], 1));
+			setTxt('CL-M2', fmtT(st['Node2_MTL_TWMV_Out_Temp'], 1));
+			setTxt('CL-M3', fmtT(st['Node3_MTL_TWMV_Out_Temp'], 1));
+			const qty = [['LAB_MTL_PPA_Avg_Accum_Qty', 'CL-B1', 'CL-Q1'], ['Node2_MTL_PPA_Avg_Accum_Qty', 'CL-B2', 'CL-Q2'], ['Node3_MTL_PPA_Avg_Accum_Qty', 'CL-B3', 'CL-Q3']];
+			for (const [label, bar, val] of qty) {
+				const q = parseFloat(st[label]);
+				if (Number.isFinite(q)) { setBar(bar, q); setTxt(val, fmtT(q, 1) + ' %'); }
+			}
+		}
+
+		// ===== 履歴パネル =====
+		// sse.php?history=<Label> に別途 EventSource で接続し、初回は過去100件、
+		// 以降は新しい行が増えるたびに先頭へ差し込む（リアルタイム更新）。
+		let historyES = null;
+
+		function formatHistoryValue(info, raw) {
+			// 状態系はダッシュボード側と同じく OK / OFF で表示する
+			if (info && info.value_map) {
+				if (raw === '1' || raw === '1.0') return info.value_map['1'];
+				if (raw === '0' || raw === '0.0') return info.value_map['0'];
+			}
+			return truncSig(raw);
+		}
+
+		// 数値は有効数字6桁で「切り捨て」て表示する（四捨五入はしない）
+		function truncSig(raw) {
+			const n = parseFloat(raw);
+			if (!Number.isFinite(n)) return raw;
+			if (n === 0) return '0';
+			const a = Math.abs(n);
+			const exp = Math.floor(Math.log10(a));
+			const dec = Math.max(0, 6 - 1 - exp);
+			const f = Math.pow(10, dec);
+			const t = Math.trunc(a * f + a * f * 1e-12) / f;
+			let s = t.toFixed(dec);
+			if (s.includes('.')) s = s.replace(/0+$/, '').replace(/\.$/, '');
+			return (n < 0 ? '-' : '') + s;
+		}
+
+		function historyRowElement(info, row, highlight) {
+			const el = document.createElement('DIV');
+			el.className = 'HIST-ROW' + (highlight ? ' HIGHLIGHT' : '');
+			const time = document.createElement('SPAN');
+			time.className = 'HIST-TIME';
+			time.textContent = row.Timestamp ?? '';
+			const val = document.createElement('SPAN');
+			val.className = 'HIST-VAL';
+			val.textContent = formatHistoryValue(info, row.Value) + (info && info.unit && !info.value_map ? ' ' + info.unit : '');
+			el.append(time, val);
+			return el;
+		}
+
+		function openHistory(label) {
+			closeHistory();
+			const info = labelInfoAll[label] || {};
+			document.getElementById('HISTORY-TITLE').textContent = (info.name_ja || label) + ' の履歴';
+			document.getElementById('HISTORY-SUB').textContent = label + (info.description_ja ? ' — ' + info.description_ja : '');
+			const list = document.getElementById('HISTORY-LIST');
+			list.textContent = '';
+			const loading = document.createElement('DIV');
+			loading.className = 'HIST-EMPTY';
+			loading.textContent = '読み込み中…';
+			list.appendChild(loading);
+			document.getElementById('HISTORY').classList.remove('HIDDEN');
+
+			let gotInit = false;
+			const es = new EventSource('sse.php?history=' + encodeURIComponent(label));
+			historyES = es;
+			es.addEventListener('history_init', e => {
+				gotInit = true;
+				const rows = JSON.parse(e.data);
+				list.textContent = '';
+				if (rows.length === 0) {
+					const empty = document.createElement('DIV');
+					empty.className = 'HIST-EMPTY';
+					empty.textContent = '履歴はまだありません';
+					list.appendChild(empty);
+					return;
+				}
+				for (const row of rows) list.appendChild(historyRowElement(info, row, false));
+			});
+			es.addEventListener('history_update', e => {
+				const emptyEl = list.querySelector('.HIST-EMPTY');
+				if (emptyEl) emptyEl.remove();
+				const rows = JSON.parse(e.data);
+				// 新しい順に表示したいので、届いた行（古い順）を逆向きに先頭へ差し込む
+				for (let i = rows.length - 1; i >= 0; i--) {
+					list.insertBefore(historyRowElement(info, rows[i], true), list.firstChild);
+				}
+				// 表示は100件まで（古い方は下から落とす）
+				while (list.children.length > 100) list.removeChild(list.lastChild);
+			});
+			es.onerror = () => {
+				// 初回データが来る前のエラーは、履歴テーブル未作成などの可能性として案内する
+				// （接続済みの定期再接続時のエラーでは表示を壊さない）
+				if (!gotInit) {
+					list.textContent = '';
+					const err = document.createElement('DIV');
+					err.className = 'HIST-EMPTY';
+					err.textContent = '履歴を取得できませんでした（telemetry_history テーブルがまだ無い可能性があります）';
+					list.appendChild(err);
+				}
+			};
+		}
+
+		function closeHistory() {
+			if (historyES) { historyES.close(); historyES = null; }
+			document.getElementById('HISTORY').classList.add('HIDDEN');
 		}
 
 		// 初回訪問時（Cookie がなければ）だけ「このページについて」を出す
 		function initIntro() {
 			const intro = document.getElementById('INTRO');
+			const help = document.getElementById('HELP');
+			const closeHelp = () => help.classList.add('HIDDEN');
+			document.getElementById('HELP-CLOSE').addEventListener('click', closeHelp);
+			document.getElementById('HELPBTN').addEventListener('click', () => help.classList.remove('HIDDEN'));
+			help.addEventListener('click', e => { if (e.target === help) closeHelp(); });
 			const close = () => {
 				intro.classList.add('HIDDEN');
 				document.cookie = 'iss_mimic_intro=1; max-age=' + (60 * 60 * 24 * 365) + '; path=/; SameSite=Lax';
+				help.classList.remove('HIDDEN'); // 続けて操作方法を出す
 			};
 			document.getElementById('INTRO-CLOSE').addEventListener('click', close);
 			intro.addEventListener('click', e => { if (e.target === intro) close(); });
@@ -202,12 +568,1177 @@
 
 		async function main() {
 			initIntro();
+			document.getElementById('HISTORY-CLOSE').addEventListener('click', closeHistory);
 			await buildWall();
 			const es = new EventSource('sse.php');
 			es.addEventListener('init',   e => applyRows(JSON.parse(e.data)));
 			es.addEventListener('update', e => applyRows(JSON.parse(e.data)));
 		}
 		main();
+	</SCRIPT>
+	<SCRIPT TYPE="importmap">
+		{ "imports": {
+			"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+			"three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+		} }
+	</SCRIPT>
+	<SCRIPT TYPE="module">
+		import * as THREE from 'three';
+		import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+		// ===== ISS 簡易3Dモデル =====
+		// 実テレメトリの関節角度に連動する:
+		//   psarj / ssarj : SARJ（トラス全体の回転、X軸まわり）
+		//   beta1a〜beta4b: BGA（各太陽電池アレイの回転、そのスパン軸まわり）
+		//   ptrrj / strrj : TRRJ（熱放射ラジエーターの回転、X軸まわり）
+		//   sgant_elevation / sgant_xel: Kuバンド SGANT の2軸ジンバル
+		//   sasa1/2_azimuth / elevation: Sバンドアンテナの2軸ジンバル
+		//   SSRMS * Measured Joint Position: カナダアーム2の7関節
+		//   MSS OCS SPDM *: デクスターの本体ロール + 2本アーム×7関節
+		//   position_* / velocity_* (J2000 状態ベクトル): 軌道位置と軌道フレーム
+		//   USGNC_PS_Solar_Beta_Angle: 太陽方向（軌道面からの高さ）
+		//   USGNC_PS_Pointing_LVLH_Att_Quatrn_0..3: ステーション全体の姿勢
+		// 角度は window.telemetryState（SSE受信側が更新）を毎フレーム参照し、
+		// 最短方向へなめらかに追従させる。
+		const container = document.getElementById('VIEW3D');
+		const readout = document.getElementById('VIEW3D-READOUT');
+
+		const scene = new THREE.Scene();
+		scene.background = new THREE.Color(0x05070d);
+		const camera = new THREE.PerspectiveCamera(45, 1, 1, 9000); // near を 1 にし、薄い部品の前後面の深度競合（見え透け）を抑える
+		camera.position.set(48, 30, 64);
+
+		const renderer = new THREE.WebGLRenderer({ antialias: true });
+		renderer.setPixelRatio(window.devicePixelRatio);
+		container.appendChild(renderer.domElement);
+
+		const controls = new OrbitControls(camera, renderer.domElement);
+		controls.minDistance = 10; // 近づきすぎてモデルにめり込むのを防ぐ
+		controls.maxDistance = 1500; // 引きすぎて何も見えなくなるのを防ぐ
+		controls.enableDamping = true;
+
+		scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+		const sun = new THREE.DirectionalLight(0xffffff, 1.7);
+		sun.position.set(60, 45, 35);
+		scene.add(sun);
+
+		// 星空
+		{
+			const pos = new Float32Array(2600 * 3);
+			for (let i = 0; i < 2600; i++) {
+				const r = 4000, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+				pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
+				pos[i * 3 + 1] = r * Math.cos(ph);
+				pos[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th);
+			}
+			const g = new THREE.BufferGeometry();
+			g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+			scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0xffffff, size: 1.6, sizeAttenuation: false })));
+		}
+
+		// ===== 天体（太陽・地球・月） =====
+		// テクスチャは Canvas で生成する（外部画像に依存しない）
+		function seededRandom(seed) {
+			return function () {
+				seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+				let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+				t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+				return ((t ^ t >>> 14) >>> 0) / 4294967296;
+			};
+		}
+		function earthTexture() {
+			const c = document.createElement('canvas');
+			c.width = 1024; c.height = 512;
+			const g = c.getContext('2d');
+			const grad = g.createLinearGradient(0, 0, 0, 512);
+			grad.addColorStop(0, '#1b4f8a');
+			grad.addColorStop(0.5, '#1d6fb8');
+			grad.addColorStop(1, '#1b4f8a');
+			g.fillStyle = grad;
+			g.fillRect(0, 0, 1024, 512);
+			const rnd = seededRandom(42);
+			// 大陸っぽい塊
+			for (let i = 0; i < 46; i++) {
+				const cx = rnd() * 1024, cy = 70 + rnd() * 372;
+				g.fillStyle = rnd() > 0.35 ? '#3e8e4f' : '#8a7a4a';
+				for (let j = 0; j < 14; j++) {
+					g.beginPath();
+					g.ellipse(cx + (rnd() - 0.5) * 130, cy + (rnd() - 0.5) * 62, 12 + rnd() * 42, 8 + rnd() * 26, rnd() * 3, 0, Math.PI * 2);
+					g.fill();
+				}
+			}
+			// 極冠
+			g.fillStyle = 'rgba(240,248,255,0.95)';
+			g.fillRect(0, 0, 1024, 26);
+			g.fillRect(0, 486, 1024, 26);
+			const tex = new THREE.CanvasTexture(c);
+			tex.colorSpace = THREE.SRGBColorSpace;
+			return tex;
+		}
+		function cloudTexture() {
+			const c = document.createElement('canvas');
+			c.width = 1024; c.height = 512;
+			const g = c.getContext('2d');
+			const rnd = seededRandom(7);
+			g.fillStyle = 'rgba(255,255,255,0.85)';
+			for (let i = 0; i < 240; i++) {
+				g.beginPath();
+				g.ellipse(rnd() * 1024, rnd() * 512, 14 + rnd() * 52, 4 + rnd() * 10, (rnd() - 0.5) * 0.6, 0, Math.PI * 2);
+				g.fill();
+			}
+			const tex = new THREE.CanvasTexture(c);
+			tex.colorSpace = THREE.SRGBColorSpace;
+			return tex;
+		}
+		function moonTexture() {
+			const c = document.createElement('canvas');
+			c.width = 512; c.height = 256;
+			const g = c.getContext('2d');
+			g.fillStyle = '#b5b5b5';
+			g.fillRect(0, 0, 512, 256);
+			const rnd = seededRandom(99);
+			for (let i = 0; i < 260; i++) {
+				const v = 130 + Math.floor(rnd() * 70);
+				g.fillStyle = 'rgba(' + v + ',' + v + ',' + v + ',0.55)';
+				g.beginPath();
+				g.arc(rnd() * 512, rnd() * 256, 2 + rnd() * 13, 0, Math.PI * 2);
+				g.fill();
+			}
+			const tex = new THREE.CanvasTexture(c);
+			tex.colorSpace = THREE.SRGBColorSpace;
+			return tex;
+		}
+		function glowTexture() {
+			const c = document.createElement('canvas');
+			c.width = 256; c.height = 256;
+			const g = c.getContext('2d');
+			const grad = g.createRadialGradient(128, 128, 8, 128, 128, 128);
+			grad.addColorStop(0, 'rgba(255,240,190,1)');
+			grad.addColorStop(0.25, 'rgba(255,210,110,0.55)');
+			grad.addColorStop(1, 'rgba(255,190,80,0)');
+			g.fillStyle = grad;
+			g.fillRect(0, 0, 256, 256);
+			return new THREE.CanvasTexture(c);
+		}
+
+		// 地球: 世界の中心に置く。半径 500 = 6371 km として軌道連動の基準にする
+		const earthCenter = new THREE.Vector3(0, 0, 0);
+		const earth = new THREE.Mesh(
+			new THREE.SphereGeometry(500, 48, 32),
+			new THREE.MeshPhongMaterial({ map: earthTexture(), shininess: 18, specular: new THREE.Color(0x224466) })
+		);
+		earth.position.copy(earthCenter);
+		scene.add(earth);
+		// 実写テクスチャ: NASA GIBS の MODIS 実画像（前日）を Blue Marble の上に合成する
+		// MODIS には欠測の黒い部分があるので、暗い画素は Blue Marble で埋める。雲は実画像そのもの
+		let earthImageryDate = '';
+		function loadImage(url) {
+			return new Promise((resolve, reject) => {
+				const img = new Image();
+				img.crossOrigin = 'anonymous';
+				img.onload = () => resolve(img);
+				img.onerror = reject;
+				img.src = url;
+			});
+		}
+		function applyEarthImage(img) {
+			const tex = new THREE.CanvasTexture(img);
+			tex.colorSpace = THREE.SRGBColorSpace;
+			earth.material.map = tex;
+			earth.material.needsUpdate = true;
+		}
+		async function loadRealEarth() {
+			let bm = null;
+			for (const u of [
+				'https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/textures/planets/earth_atmos_2048.jpg',
+				'https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg',
+			]) {
+				try { bm = await loadImage(u); break; } catch (e) { /* 次の候補へ */ }
+			}
+			if (!bm) return;
+			applyEarthImage(bm); // まず Blue Marble 単体を貼る
+			// Terra / Aqua × 前日・前々日を優先順に集め、欠測（ひし形の隙間）を別ソースで埋める
+			const gibsImages = [];
+			let freshest = '';
+			const sources = [
+				['MODIS_Terra_CorrectedReflectance_TrueColor', 1],
+				['MODIS_Aqua_CorrectedReflectance_TrueColor', 1],
+				['MODIS_Terra_CorrectedReflectance_TrueColor', 2],
+				['MODIS_Aqua_CorrectedReflectance_TrueColor', 2],
+			];
+			for (const [layer, back] of sources) {
+				const iso = new Date(Date.now() - back * 86400000).toISOString().slice(0, 10);
+				const url = 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&LAYERS=' + layer + '&STYLES=&FORMAT=image/jpeg&CRS=EPSG:4326&BBOX=-90,-180,90,180&WIDTH=2048&HEIGHT=1024&TIME=' + iso;
+				try {
+					gibsImages.push(await loadImage(url));
+					if (!freshest) freshest = iso;
+				} catch (e) { /* そのソースは欠測扱いにする */ }
+			}
+			if (gibsImages.length) {
+				composeEarth(bm, gibsImages);
+				earthImageryDate = freshest;
+				clouds.visible = false; // 雲は実画像に含まれるので生成雲レイヤーは消す
+			}
+		}
+		// 分離型ボックスブラー（横は日付変更線をまたいで巻く、縦は端でクランプ）
+		function boxBlur(src, W, H, r) {
+			const tmp = new Float32Array(src.length);
+			const dst = new Float32Array(src.length);
+			const win = 2 * r + 1;
+			for (let y = 0; y < H; y++) {
+				const row = y * W;
+				let acc = 0;
+				for (let x = -r; x <= r; x++) acc += src[row + ((x % W) + W) % W];
+				for (let x = 0; x < W; x++) {
+					tmp[row + x] = acc / win;
+					acc += src[row + (x + r + 1) % W] - src[row + ((x - r) % W + W) % W];
+				}
+			}
+			for (let x = 0; x < W; x++) {
+				let acc = 0;
+				for (let y = -r; y <= r; y++) acc += tmp[Math.min(H - 1, Math.max(0, y)) * W + x];
+				for (let y = 0; y < H; y++) {
+					dst[y * W + x] = acc / win;
+					acc += tmp[Math.min(H - 1, y + r + 1) * W + x] - tmp[Math.max(0, y - r) * W + x];
+				}
+			}
+			return dst;
+		}
+		function composeEarth(bm, gis) {
+			const W = 2048, H = 1024, N = W * H;
+			const mk = img => {
+				const c = document.createElement('canvas');
+				c.width = W; c.height = H;
+				c.getContext('2d').drawImage(img, 0, 0, W, H);
+				return c;
+			};
+			const cBm = mk(bm);
+			const dBm = cBm.getContext('2d').getImageData(0, 0, W, H);
+			const dGis = gis.map(gi => {
+				const c = mk(gi);
+				return c.getContext('2d').getImageData(0, 0, W, H);
+			});
+			// 有効画素マスク（欠測は真っ黒なので輝度で判定する）
+			const masks = dGis.map(d => {
+				const m = new Float32Array(N);
+				for (let p = 0; p < N; p++) {
+					const i = p * 4;
+					m[p] = (0.299 * d.data[i] + 0.587 * d.data[i + 1] + 0.114 * d.data[i + 2]) > 20 ? 1 : 0;
+				}
+				return m;
+			});
+			// 観測帯の縁には暗いフチができるので、有効範囲を少し侵食してフチごと切り落とす
+			const eroded = masks.map(m => {
+				const b = boxBlur(m, W, H, 5);
+				const e = new Float32Array(N);
+				for (let p = 0; p < N; p++) e[p] = b[p] > 0.999 ? 1 : 0;
+				return e;
+			});
+			// ソースごとの明るさ合わせ（基準ソースとの重なり領域の平均比、チャンネル別）
+			const gains = dGis.map((d, k) => {
+				if (k === 0) return [1, 1, 1];
+				const s0 = [0, 0, 0], sk = [0, 0, 0];
+				let cnt = 0;
+				for (let p = 0; p < N; p++) {
+					if (eroded[0][p] && eroded[k][p]) {
+						const i = p * 4;
+						for (let c = 0; c < 3; c++) { s0[c] += dGis[0].data[i + c]; sk[c] += d.data[i + c]; }
+						cnt++;
+					}
+				}
+				if (cnt < 1000) return [1, 1, 1];
+				return [0, 1, 2].map(c => Math.min(1.4, Math.max(0.7, (s0[c] / cnt) / Math.max(1, sk[c] / cnt))));
+			});
+			// マスクをぼかして境界をフェザーし、古いソースから順に重ねる
+			const soft = eroded.map(m => boxBlur(m, W, H, 6));
+			const out = cBm.getContext('2d').createImageData(W, H);
+			out.data.set(dBm.data);
+			for (let k = dGis.length - 1; k >= 0; k--) {
+				const d = dGis[k].data, f = soft[k], g = gains[k];
+				for (let p = 0; p < N; p++) {
+					const w = f[p];
+					if (w <= 0) continue;
+					const i = p * 4, v = 1 - w;
+					out.data[i] = Math.min(255, d[i] * g[0]) * w + out.data[i] * v;
+					out.data[i + 1] = Math.min(255, d[i + 1] * g[1]) * w + out.data[i + 1] * v;
+					out.data[i + 2] = Math.min(255, d[i + 2] * g[2]) * w + out.data[i + 2] * v;
+				}
+			}
+			// 日付変更線（左右端）の継ぎ目をぼかす
+			const S = 48;
+			for (let y = 0; y < H; y++) {
+				const row = y * W * 4;
+				for (let d = 0; d < S; d++) {
+					const w = d / S;
+					const iL = row + (W - S + d) * 4;
+					const iR = row + d * 4;
+					for (let c = 0; c < 3; c++) {
+						const a = out.data[iL + c], b = out.data[iR + c];
+						out.data[iL + c] = a + (b - a) * w * 0.5;
+						out.data[iR + c] = b + (a - b) * (1 - w) * 0.5;
+					}
+				}
+			}
+			cBm.getContext('2d').putImageData(out, 0, 0);
+			applyEarthImage(cBm);
+		}
+		loadRealEarth();
+		setInterval(loadRealEarth, 6 * 3600 * 1000);
+		const clouds = new THREE.Mesh(
+			new THREE.SphereGeometry(506, 48, 32),
+			new THREE.MeshLambertMaterial({ map: cloudTexture(), transparent: true, opacity: 0.5, depthWrite: false })
+		);
+		clouds.position.copy(earthCenter);
+		scene.add(clouds);
+		const atmosphere = new THREE.Mesh(
+			new THREE.SphereGeometry(525, 48, 32),
+			new THREE.MeshBasicMaterial({ color: 0x4d9fff, transparent: true, opacity: 0.10, side: THREE.BackSide })
+		);
+		atmosphere.position.copy(earthCenter);
+		scene.add(atmosphere);
+
+		// 直下点マーカー（ステーションから地表へ線を引く）
+		const subLineGeo = new THREE.BufferGeometry();
+		subLineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
+		const subLine = new THREE.Line(subLineGeo, new THREE.LineBasicMaterial({ color: 0xff5252, transparent: true, opacity: 0.55 }));
+		scene.add(subLine);
+		const subMarker = new THREE.Mesh(new THREE.SphereGeometry(7, 12, 8), new THREE.MeshBasicMaterial({ color: 0xff5252 }));
+		scene.add(subMarker);
+
+		// 月: 地球のまわりをゆっくり回る
+		const moon = new THREE.Mesh(
+			new THREE.SphereGeometry(90, 32, 24),
+			new THREE.MeshStandardMaterial({ map: moonTexture(), roughness: 1 })
+		);
+		scene.add(moon);
+		let moonAngle = 2.2;
+
+		// 太陽: テレメトリの太陽ベータ角から位置を決める（tick で毎フレーム更新）
+		const sunBall = new THREE.Mesh(
+			new THREE.SphereGeometry(30, 24, 18),
+			new THREE.MeshBasicMaterial({ color: 0xffd76a })
+		);
+		scene.add(sunBall);
+		const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), transparent: true, depthWrite: false }));
+		sunGlow.scale.set(420, 420, 1);
+		scene.add(sunGlow);
+		scene.add(sun.target);
+
+		// 宇宙空間の空白が目立たないよう、遠方に淡い星雲を散らす
+		{
+			const nebColors = [0x3355aa, 0x553377, 0x226677, 0x444488];
+			const rnd = seededRandom(1234);
+			for (let i = 0; i < 7; i++) {
+				const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: nebColors[i % nebColors.length], transparent: true, opacity: 0.10, depthWrite: false }));
+				const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 3400;
+				sp.position.set(r * Math.sin(ph) * Math.cos(th), r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th));
+				const s = 1500 + rnd() * 1400;
+				sp.scale.set(s, s, 1);
+				scene.add(sp);
+			}
+		}
+
+		// ===== 宇宙天気（NOAA SWPC の実データで可視化する） =====
+		const wx = { on: false, kp: null, speed: null, density: null, bz: null, flare: '---' };
+		const wxBtn = document.getElementById('WXBTN');
+		const wxInfo = document.getElementById('WXINFO');
+		const wxLoading = document.getElementById('WXLOADING');
+
+		// オーロラ層: OVATION モデルの出現確率を極域に光らせる
+		const auroraCanvas = document.createElement('canvas');
+		auroraCanvas.width = 720;
+		auroraCanvas.height = 360;
+		const auroraTex = new THREE.CanvasTexture(auroraCanvas);
+		auroraTex.colorSpace = THREE.SRGBColorSpace;
+		const aurora = new THREE.Mesh(
+			new THREE.SphereGeometry(515, 48, 32),
+			new THREE.MeshBasicMaterial({ map: auroraTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })
+		);
+		aurora.visible = false;
+		scene.add(aurora);
+
+		// 太陽風パーティクル: 太陽方向から地球へ流す
+		const WIND_N = 700;
+		const windPos = new Float32Array(WIND_N * 3);
+		const windSeed = [];
+		for (let i = 0; i < WIND_N; i++) windSeed.push({ t: Math.random(), r: Math.sqrt(Math.random()), a: Math.random() * Math.PI * 2 });
+		const windGeo = new THREE.BufferGeometry();
+		windGeo.setAttribute('position', new THREE.BufferAttribute(windPos, 3));
+		const windMat = new THREE.PointsMaterial({ color: 0x8affc1, size: 3.2, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false });
+		const wind = new THREE.Points(windGeo, windMat);
+		wind.visible = false;
+		wind.frustumCulled = false;
+		scene.add(wind);
+
+		function drawAurora(coords) {
+			const g = auroraCanvas.getContext('2d');
+			g.clearRect(0, 0, 720, 360);
+			g.globalCompositeOperation = 'lighter';
+			for (const [lon, lat, val] of coords) {
+				if (val <= 2) continue;
+				const x = ((lon + 180) % 360) / 360 * 720;
+				const y = (90 - lat) / 180 * 360;
+				const r = 5 + val * 0.12;
+				const hue = val > 55 ? '170,120,255' : val > 30 ? '80,255,190' : '60,255,120';
+				const grad = g.createRadialGradient(x, y, 0, x, y, r);
+				grad.addColorStop(0, 'rgba(' + hue + ',' + Math.min(0.85, val / 90) + ')');
+				grad.addColorStop(1, 'rgba(' + hue + ',0)');
+				g.fillStyle = grad;
+				for (const ox of [0, -720, 720]) {
+					if (x + ox < -r || x + ox > 720 + r) continue;
+					g.beginPath();
+					g.arc(x + ox, y, r, 0, Math.PI * 2);
+					g.fill();
+				}
+			}
+			auroraTex.needsUpdate = true;
+		}
+		function flareClass(f) {
+			if (!f || f <= 0) return '---';
+			for (const [th, ch] of [[1e-4, 'X'], [1e-5, 'M'], [1e-6, 'C'], [1e-7, 'B']]) {
+				if (f >= th) return ch + (f / th).toFixed(1);
+			}
+			return 'A' + (f / 1e-8).toFixed(1);
+		}
+		function updateWxInfo() {
+			const kp = wx.kp;
+			const gScale = kp === null ? '---' : kp >= 9 ? 'G5' : kp >= 8 ? 'G4' : kp >= 7 ? 'G3' : kp >= 6 ? 'G2' : kp >= 5 ? 'G1' : 'G0（静穏）';
+			wxInfo.textContent =
+				'Kp指数 ' + (kp === null ? '---' : kp.toFixed(1)) + ' / 磁気嵐 ' + gScale + '\n' +
+				'太陽風 ' + (wx.speed === null ? '---' : Math.round(wx.speed) + ' km/s') + ' / 密度 ' + (wx.density === null ? '---' : wx.density.toFixed(1)) + ' /cm3\n' +
+				'IMF Bz ' + (wx.bz === null ? '---' : wx.bz.toFixed(1) + ' nT') + '\n' +
+				'X線フレア（24h最大） ' + wx.flare;
+		}
+		async function fetchJson(url) {
+			const r = await fetch(url);
+			return r.json();
+		}
+		async function updateWxData() {
+			try {
+				const arr = await fetchJson('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json');
+				const last = arr[arr.length - 1];
+				wx.kp = last.estimated_kp !== undefined && last.estimated_kp !== null ? last.estimated_kp : last.kp_index;
+			} catch (e) { /* 前の値を保持する */ }
+			try {
+				const w = await fetchJson('https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json');
+				for (let i = w.length - 1; i >= 0; i--) {
+					if (w[i].proton_speed) { wx.speed = w[i].proton_speed; wx.density = w[i].proton_density; break; }
+				}
+			} catch (e) { /* 前の値を保持する */ }
+			try {
+				const m = await fetchJson('https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json');
+				for (let i = m.length - 1; i >= 0; i--) {
+					if (m[i].active && m[i].bz_gsm !== null && m[i].bz_gsm !== undefined) { wx.bz = m[i].bz_gsm; break; }
+				}
+			} catch (e) { /* 前の値を保持する */ }
+			try {
+				const x = await fetchJson('https://services.swpc.noaa.gov/json/goes/primary/xrays-1-day.json');
+				let maxF = 0;
+				for (const e of x) if (e.energy === '0.1-0.8nm' && e.flux > maxF) maxF = e.flux;
+				wx.flare = flareClass(maxF);
+			} catch (e) { /* 前の値を保持する */ }
+			if (wx.kp !== null) windMat.color.setHSL(Math.max(0, 0.38 - wx.kp * 0.045), 1, 0.65);
+			updateWxInfo();
+		}
+		async function updateAurora() {
+			try {
+				const o = await fetchJson('https://services.swpc.noaa.gov/json/ovation_aurora_latest.json');
+				drawAurora(o.coordinates);
+			} catch (e) { /* 前のオーロラを保持する */ }
+		}
+		let wxTimer = null, auroraTimer = null;
+		wxBtn.addEventListener('click', () => {
+			wx.on = !wx.on;
+			wxBtn.textContent = wx.on ? '宇宙天気 ON' : '宇宙天気 OFF';
+			wxBtn.classList.toggle('ON', wx.on);
+			aurora.visible = wx.on;
+			wind.visible = wx.on;
+			wxInfo.style.display = wx.on ? 'block' : 'none';
+			if (wx.on) {
+				// 初回取得が終わるまで「読み込み中...」ダイアログを出す
+				wxLoading.style.display = 'block';
+				Promise.allSettled([updateWxData(), updateAurora()]).then(() => {
+					if (wx.on) wxLoading.style.display = 'none';
+				});
+				wxTimer = setInterval(updateWxData, 5 * 60 * 1000);
+				auroraTimer = setInterval(updateAurora, 10 * 60 * 1000);
+			} else {
+				wxLoading.style.display = 'none';
+				clearInterval(wxTimer);
+				clearInterval(auroraTimer);
+			}
+		});
+
+		function mat(color) {
+			return new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0.35 });
+		}
+		function dishMat() {
+			// お椀は開いた円錐なので、内側からも見えるよう両面描画にする
+			return new THREE.MeshStandardMaterial({ color: 0xe8e8e8, roughness: 0.6, metalness: 0.35, side: THREE.DoubleSide });
+		}
+		function box(w, h, d, color, x = 0, y = 0, z = 0) {
+			const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color));
+			m.position.set(x, y, z);
+			return m;
+		}
+		function moduleCyl(r, len, color, x, y = 0, z = 0, axis = 'x') {
+			const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 20), mat(color));
+			if (axis === 'x') m.rotation.z = Math.PI / 2;
+			if (axis === 'z') m.rotation.x = Math.PI / 2;
+			m.position.set(x, y, z);
+			return m;
+		}
+
+		const station = new THREE.Group();
+		scene.add(station);
+
+		// ===== 軌道連動（J2000 状態ベクトル） =====
+		// ECI(x, y, z) → シーン(x, z, -y) の右手系変換をして、地球半径 500 = 6371 km で縮尺する
+		const ORBIT_SCALE = 500 / 6371;
+		const EARTH_R = 500;
+		const ALT_EXAG = 3.5; // 高度の誇張倍率（地球との見た目の距離を空けるため）
+		function eciToScene(x, y, z, out) { return out.set(x, z, -y); }
+		const orbitState = {
+			// テレメトリが届くまでの既定値（高度約400km・傾斜軌道）
+			pos: eciToScene(6771, 0, 0, new THREE.Vector3()).normalize().multiplyScalar(EARTH_R + 400 * ORBIT_SCALE * ALT_EXAG),
+			vel: eciToScene(0, 4800, 5980, new THREE.Vector3()).normalize(),
+			hat: new THREE.Vector3(0, 1, 0),
+		};
+		// 太陽の慣性参照方向（この方向の「軌道面からの高さ」をベータ角で差し替える）
+		const SUN_REF = eciToScene(1, 0.35, 0.45, new THREE.Vector3()).normalize();
+		station.position.copy(orbitState.pos);
+		camera.position.set(orbitState.pos.x + 52, orbitState.pos.y + 30, orbitState.pos.z + 68);
+		controls.target.copy(orbitState.pos);
+		const prevStationPos = orbitState.pos.clone();
+
+		// 中央部: S0トラス + 与圧モジュール群（簡略化）
+		station.add(box(28, 1.4, 1.4, 0x9aa0a8));
+		station.add(moduleCyl(2.1, 8, 0xd8dde3, -2));        // Destiny（米国ラボ）
+		station.add(moduleCyl(2.1, 7, 0xd0d5db, 5));         // Harmony（ノード2）
+		station.add(moduleCyl(1.9, 6.5, 0xcdd6e4, 5, 0, 5, 'z'));  // Columbus
+		station.add(moduleCyl(1.9, 6.5, 0xe4dcc8, 5, 0, -5, 'z')); // きぼう
+		station.add(moduleCyl(2.0, 9, 0xcfc4ae, -11));       // Zvezda
+		station.add(moduleCyl(1.4, 5, 0xb9c0c9, -2, 0, -4.5, 'z')); // Unity 側
+		station.add(box(1, 4.5, 1, 0x9aa0a8, 0, 3.2, 0));    // Z1トラス
+
+		// Kuバンド SGANT（EL / クロスEL の2軸ジンバル）
+		const sgantBase = new THREE.Group();
+		sgantBase.position.set(1.5, 5.4, 0);
+		station.add(sgantBase);
+		const sgantXel = new THREE.Group();
+		sgantBase.add(sgantXel);
+		const sgantEl = new THREE.Group();
+		sgantXel.add(sgantEl);
+		const dish = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 0.15, 0.9, 16, 1, true), dishMat());
+		dish.position.y = 0.5;
+		sgantEl.add(dish);
+
+		// 太陽電池アレイ1枚（BGAピボット付き）。dir=+1 で +Y、-1 で -Y へ伸ばす
+		function makeWing(dir) {
+			const g = new THREE.Group();
+			const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 3, 10), mat(0x9aa0a8));
+			g.add(mast);
+			g.add(box(4.0, 21, 0.2, 0x707882, 0, 12.2 * dir, -0.38));
+			g.add(box(3.6, 20.4, 0.6, 0x2447b8, 0, 12.2 * dir, 0));
+			return g;
+		}
+
+		// 熱放射ラジエーター（3枚組、TRRJピボット付き）
+		function makeRadiator() {
+			const g = new THREE.Group();
+			for (let i = 0; i < 3; i++) {
+				g.add(box(4.6, 0.12, 10, 0xe9edf2, (i - 1) * 5.0, 0, 5.8));
+			}
+			return g;
+		}
+
+		// 片側分の外側トラス（SARJピボット付き）。sign=-1: 左舷 / +1: 右舷
+		// inboard/outboard のアレイとラジエーターをぶら下げて返す
+		function makeSide(sign, inboardLabels, outboardLabels) {
+			const sarj = new THREE.Group();
+			sarj.position.x = 14 * sign;
+			station.add(sarj);
+			sarj.add(box(38, 1.1, 1.1, 0x9aa0a8, 19 * sign, 0, 0));
+			const ring = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 1.2, 20), mat(0x7d838c));
+			ring.rotation.z = Math.PI / 2;
+			sarj.add(ring);
+
+			const wings = {};
+			const put = (label, x, dir) => {
+				const w = makeWing(dir);
+				w.position.x = x;
+				sarj.add(w);
+				wings[label] = w;
+			};
+			put(inboardLabels[0], 10 * sign, 1);
+			put(inboardLabels[1], 10 * sign, -1);
+			put(outboardLabels[0], 30 * sign, 1);
+			put(outboardLabels[1], 30 * sign, -1);
+
+			const radiator = makeRadiator();
+			radiator.position.x = 5 * sign;
+			sarj.add(radiator);
+			return { sarj, wings, radiator };
+		}
+
+		// 実配置: 左舷インボード=2A/2B, アウトボード=4A/4B / 右舷インボード=1A/1B, アウトボード=3A/3B
+		const port = makeSide(-1, ['beta2a', 'beta2b'], ['beta4a', 'beta4b']);
+		const stbd = makeSide(1, ['beta1a', 'beta1b'], ['beta3a', 'beta3b']);
+
+		// Sバンドアンテナ（RFG）: 方位 / 仰角の2軸ジンバル。トラス上に置く
+		function makeSasa(parent, x) {
+			const base = new THREE.Group();
+			base.position.set(x, 1.1, 0);
+			parent.add(base);
+			const az = new THREE.Group();
+			base.add(az);
+			const mastMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 1.4, 8), mat(0x9aa0a8));
+			mastMesh.position.y = 0.7;
+			az.add(mastMesh);
+			const el = new THREE.Group();
+			el.position.y = 1.4;
+			az.add(el);
+			const d = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 0.1, 0.5, 14, 1, true), dishMat());
+			d.rotation.x = Math.PI / 2;
+			el.add(d);
+			return { az, el };
+		}
+		const sasa1 = makeSasa(stbd.sarj, 6);
+		const sasa2 = makeSasa(port.sarj, -6);
+
+		// カナダアーム2（SSRMS）: 7関節（SY/SR/SP/EP/WP/WY/WR）
+		function boom(len, r = 0.32) {
+			const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 12), mat(0xe3e6ea));
+			m.position.y = len / 2;
+			return m;
+		}
+		function jointBall(r = 0.55) {
+			return new THREE.Mesh(new THREE.SphereGeometry(r, 14, 10), mat(0xb9bec7));
+		}
+		const armBase = new THREE.Group();
+		armBase.position.set(-2, 2.0, 0);
+		station.add(armBase);
+		const pedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.95, 1.2, 12), mat(0x9aa0a8));
+		pedestal.position.y = 0.6;
+		armBase.add(pedestal);
+		const armSY = new THREE.Group();
+		armSY.position.y = 1.2;
+		armBase.add(armSY);
+		armSY.add(jointBall());
+		const armSR = new THREE.Group();
+		armSY.add(armSR);
+		const armSP = new THREE.Group();
+		armSR.add(armSP);
+		armSP.add(jointBall());
+		armSP.add(boom(13));
+		const armEP = new THREE.Group();
+		armEP.position.y = 13;
+		armSP.add(armEP);
+		armEP.add(jointBall());
+		armEP.add(boom(12));
+		const armWP = new THREE.Group();
+		armWP.position.y = 12;
+		armEP.add(armWP);
+		armWP.add(jointBall(0.45));
+		armWP.add(boom(2.5, 0.24));
+		const armWY = new THREE.Group();
+		armWY.position.y = 2.5;
+		armWP.add(armWY);
+		const armWR = new THREE.Group();
+		armWY.add(armWR);
+		const lee = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.28, 1.4, 10), mat(0xd8b13c));
+		lee.position.y = 0.7;
+		armWR.add(lee);
+
+		// デクスター（SPDM）: 本体ロール + 2本アーム × 7関節
+		function makeArmChain(len1, len2, lenW, r) {
+			const sy = new THREE.Group();
+			sy.add(jointBall(r * 1.6));
+			const sr = new THREE.Group();
+			sy.add(sr);
+			const sp = new THREE.Group();
+			sr.add(sp);
+			sp.add(jointBall(r * 1.6));
+			sp.add(boom(len1, r));
+			const ep = new THREE.Group();
+			ep.position.y = len1;
+			sp.add(ep);
+			ep.add(jointBall(r * 1.6));
+			ep.add(boom(len2, r));
+			const wp = new THREE.Group();
+			wp.position.y = len2;
+			ep.add(wp);
+			wp.add(jointBall(r * 1.3));
+			wp.add(boom(lenW, r * 0.75));
+			const wy = new THREE.Group();
+			wy.position.y = lenW;
+			wp.add(wy);
+			const wr = new THREE.Group();
+			wy.add(wr);
+			const tip = new THREE.Mesh(new THREE.CylinderGeometry(r * 1.5, r * 0.9, lenW * 1.1, 10), mat(0xd8b13c));
+			tip.position.y = lenW * 0.55;
+			wr.add(tip);
+			return { sy, sr, sp, ep, wp, wy, wr };
+		}
+
+		const spdmBase = new THREE.Group();
+		// Harmony 上だと両脇の筒（Columbus / きぼう）にアームが届いてしまうので、
+		// ステーション下面（トラス中央の下）に吊るす形へ移設した
+		spdmBase.position.set(0, -1.2, 0);
+		spdmBase.rotation.z = Math.PI; // 上下反転して下向きに生やす
+		station.add(spdmBase);
+		const spdmPedestal = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 0.7, 0.9, 12), mat(0x9aa0a8));
+		spdmPedestal.position.y = 0.45;
+		spdmBase.add(spdmPedestal);
+		const spdmBody = new THREE.Group(); // 本体ロール
+		spdmBody.position.y = 0.9;
+		spdmBase.add(spdmBody);
+		const spdmBodyMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.55, 0.55, 2.2, 14), mat(0xdde2e8));
+		spdmBodyMesh.position.y = 1.1;
+		spdmBody.add(spdmBodyMesh);
+
+		const spdmArms = [];
+		for (const side of [1, -1]) {
+			const root = new THREE.Group();
+			root.position.set(0.55 * side, 2.3, 0);
+			root.rotation.z = -0.55 * side; // 左右へ少し開いた初期姿勢
+			spdmBody.add(root);
+			const chain = makeArmChain(3.4, 3.0, 1.0, 0.15);
+			root.add(chain.sy);
+			spdmArms.push(chain);
+		}
+
+		const joints = [
+			{ obj: port.sarj, label: 'psarj', axis: 'x', cur: 0 },
+			{ obj: stbd.sarj, label: 'ssarj', axis: 'x', cur: 0 },
+			{ obj: port.radiator, label: 'ptrrj', axis: 'x', cur: 0 },
+			{ obj: stbd.radiator, label: 'strrj', axis: 'x', cur: 0 },
+		];
+		for (const [label, w] of Object.entries({ ...port.wings, ...stbd.wings })) {
+			joints.push({ obj: w, label, axis: 'y', cur: 0 });
+		}
+		// アンテナのジンバル
+		joints.push(
+			{ obj: sgantEl, label: 'sgant_elevation', axis: 'x', cur: 0 },
+			{ obj: sgantXel, label: 'sgant_xel', axis: 'z', cur: 0 },
+			{ obj: sasa1.az, label: 'sasa1_azimuth', axis: 'y', cur: 0 },
+			{ obj: sasa1.el, label: 'sasa1_elevation', axis: 'x', cur: 0 },
+			{ obj: sasa2.az, label: 'sasa2_azimuth', axis: 'y', cur: 0 },
+			{ obj: sasa2.el, label: 'sasa2_elevation', axis: 'x', cur: 0 },
+		);
+		// SSRMS の7関節（ロール系はブーム軸まわり、ピッチ系は Z 軸まわりとして近似）
+		joints.push(
+			{ obj: armSY, label: 'SSRMS SY Measured Joint Position', axis: 'y', cur: 0 },
+			{ obj: armSR, label: 'SSRMS SR Measured Joint Position', axis: 'y', cur: 0 },
+			{ obj: armSP, label: 'SSRMS SP Measured Joint Position', axis: 'z', cur: 0 },
+			{ obj: armEP, label: 'SSRMS EP Measured Joint Position', axis: 'z', cur: 0 },
+			{ obj: armWP, label: 'SSRMS WP Measured Joint Position', axis: 'z', cur: 0 },
+			{ obj: armWY, label: 'SSRMS WY Measured Joint Position', axis: 'y', cur: 0 },
+			{ obj: armWR, label: 'SSRMS WR Measured Joint Position', axis: 'y', cur: 0 },
+		);
+
+		// SPDM: 本体ロール + 両アームの関節
+		joints.push({ obj: spdmBody, label: 'MSS OCS SPDM Body Roll Joint Position', axis: 'y', cur: 0 });
+		spdmArms.forEach((chain, i) => {
+			const p = 'MSS OCS SPDM ' + (i + 1) + ' ';
+			joints.push(
+				{ obj: chain.sy, label: p + 'SY Measured Joint Position', axis: 'y', cur: 0 },
+				{ obj: chain.sr, label: p + 'SR Measured Joint Position', axis: 'y', cur: 0 },
+				{ obj: chain.sp, label: p + 'SP Measured Joint Position', axis: 'z', cur: 0 },
+				{ obj: chain.ep, label: p + 'EP Measured Joint Position', axis: 'z', cur: 0 },
+				{ obj: chain.wp, label: p + 'WP Measured Joint Position', axis: 'z', cur: 0 },
+				{ obj: chain.wy, label: p + 'WY Measured Joint Position', axis: 'y', cur: 0 },
+				{ obj: chain.wr, label: p + 'WR Measured Joint Position', axis: 'y', cur: 0 },
+			);
+		});
+
+		// 軌道連動の計算用ワーク
+		const tmpV1 = new THREE.Vector3();
+		const tmpV2 = new THREE.Vector3();
+		const tmpV3 = new THREE.Vector3();
+		const tmpV4 = new THREE.Vector3();
+		const basisM = new THREE.Matrix4();
+		const orbitQ = new THREE.Quaternion();
+		const attQ = new THREE.Quaternion();
+		const frameQ = new THREE.Quaternion();
+		const q2 = new THREE.Quaternion();
+		// ユーザーが操作するまでは、地球が背景に入る構図へカメラを自動で寄せる
+		let autoFrame = true;
+
+		// カメラフォーカス: 部位ボタンで対象へ寄せ、動きに追従し続ける
+		const arrayAnchor = new THREE.Object3D();
+		arrayAnchor.position.set(44, 0, 0);
+		station.add(arrayAnchor);
+		const focusTargets = {
+			all: { obj: station, dist: 150, dir: new THREE.Vector3(0.55, 0.35, 0.75) },
+			modules: { obj: station, dist: 55, dir: new THREE.Vector3(0.5, 0.3, 1.0) },
+			array: { obj: arrayAnchor, dist: 85, dir: new THREE.Vector3(0.35, 0.45, 1.0) },
+			arm: { obj: armBase, dist: 34, dir: new THREE.Vector3(0.8, 0.55, 0.9) },
+			spdm: { obj: spdmBase, dist: 26, dir: new THREE.Vector3(0.55, -0.75, 0.85) },
+			sgant: { obj: sgantBase, dist: 22, dir: new THREE.Vector3(0.75, 0.5, 0.85) },
+		};
+		let focusObj = null;
+		let focusDist = 100;
+		let focusDir = null;
+		const focusBtns = document.querySelectorAll('#FOCUSBAR BUTTON');
+		focusBtns.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const t = focusTargets[btn.dataset.f];
+				if (!t) return;
+				focusObj = t.obj;
+				focusDist = t.dist;
+				focusDir = t.dir;
+				autoFrame = false;
+				focusBtns.forEach(b => b.classList.toggle('ON', b === btn));
+			});
+		});
+		controls.addEventListener('start', () => {
+			autoFrame = false;
+			focusObj = null;
+			focusDir = null;
+			focusBtns.forEach(b => b.classList.remove('ON'));
+		});
+
+		function fmtDeg(v) {
+			const n = parseFloat(v);
+			return Number.isNaN(n) ? '---' : n.toFixed(1) + '°';
+		}
+		function fmtOrbit(st) {
+			const r = Math.hypot(parseFloat(st['position_x']), parseFloat(st['position_y']), parseFloat(st['position_z']));
+			if (!Number.isFinite(r) || r < 6000) return '軌道 ---';
+			const beta = parseFloat(st['USGNC_PS_Solar_Beta_Angle']);
+			return '高度 ' + Math.round(r - 6371) + ' km / 太陽ベータ角 ' + (Number.isFinite(beta) ? beta.toFixed(1) + '°' : '---');
+		}
+		// グリニッジ平均恒星時（ラジアン）。地球の自転と経度計算の基準
+		function gmstRad(date) {
+			const jd = date.getTime() / 86400000 + 2440587.5;
+			const T = (jd - 2451545.0) / 36525;
+			let g = 280.46061837 + 360.98564736629 * (jd - 2451545) + 0.000387933 * T * T - T * T * T / 38710000;
+			g = ((g % 360) + 360) % 360;
+			return THREE.MathUtils.degToRad(g);
+		}
+		// 国境データ（world-atlas 110m）を読み、点が含まれる国を引けるようにする
+		let countryShapes = null;
+		(async () => {
+			try {
+				const topo = await (await fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json')).json();
+				const tj = await import('https://cdn.jsdelivr.net/npm/topojson-client@3/+esm');
+				const fc = tj.feature(topo, topo.objects.countries);
+				countryShapes = fc.features.map(f => ({ name: f.properties.name, geom: f.geometry }));
+			} catch (e) { countryShapes = []; /* 読めなければ海洋名のみで表示する */ }
+		})();
+		function pointInRing(lon, lat, ring) {
+			let inside = false;
+			for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+				const xi = ring[i][0], yi = ring[i][1];
+				const xj = ring[j][0], yj = ring[j][1];
+				if ((yi > lat) !== (yj > lat) && lon < (xj - xi) * (lat - yi) / (yj - yi) + xi) inside = !inside;
+			}
+			return inside;
+		}
+		function pointInPolygon(lon, lat, poly) {
+			if (!pointInRing(lon, lat, poly[0])) return false;
+			for (let h = 1; h < poly.length; h++) if (pointInRing(lon, lat, poly[h])) return false;
+			return true;
+		}
+		function countryAt(lon, lat) {
+			if (!countryShapes) return null;
+			for (const c of countryShapes) {
+				if (!c.geom) continue;
+				const polys = c.geom.type === 'Polygon' ? [c.geom.coordinates] : c.geom.type === 'MultiPolygon' ? c.geom.coordinates : [];
+				for (const poly of polys) if (pointInPolygon(lon, lat, poly)) return c.name;
+			}
+			return null;
+		}
+		function oceanName(lon, lat) {
+			if (lat > 66) return '北極海';
+			if (lat < -58) return '南極海';
+			if (lon >= -70 && lon <= 20) return lat >= 0 ? '北大西洋' : '南大西洋';
+			if (lon > 20 && lon < 146 && lat < 28) return 'インド洋';
+			return lat >= 0 ? '北太平洋' : '南太平洋';
+		}
+		const JA_NAMES = {
+			'Japan': '日本', 'United States of America': 'アメリカ', 'China': '中国', 'Russia': 'ロシア',
+			'Canada': 'カナダ', 'Australia': 'オーストラリア', 'Brazil': 'ブラジル', 'India': 'インド',
+			'Indonesia': 'インドネシア', 'Thailand': 'タイ', 'Vietnam': 'ベトナム', 'Philippines': 'フィリピン',
+			'South Korea': '韓国', 'North Korea': '北朝鮮', 'Mongolia': 'モンゴル', 'Kazakhstan': 'カザフスタン',
+			'Mexico': 'メキシコ', 'Argentina': 'アルゼンチン', 'Chile': 'チリ', 'Peru': 'ペルー',
+			'Colombia': 'コロンビア', 'Egypt': 'エジプト', 'Libya': 'リビア', 'Algeria': 'アルジェリア',
+			'Saudi Arabia': 'サウジアラビア', 'Iran': 'イラン', 'Iraq': 'イラク', 'Turkey': 'トルコ',
+			'Ukraine': 'ウクライナ', 'Poland': 'ポーランド', 'Germany': 'ドイツ', 'France': 'フランス',
+			'Spain': 'スペイン', 'United Kingdom': 'イギリス', 'Italy': 'イタリア', 'New Zealand': 'ニュージーランド',
+			'South Africa': '南アフリカ', 'Nigeria': 'ナイジェリア', 'Ethiopia': 'エチオピア', 'Sudan': 'スーダン',
+			'Pakistan': 'パキスタン', 'Myanmar': 'ミャンマー', 'Malaysia': 'マレーシア', 'Papua New Guinea': 'パプアニューギニア',
+		};
+		let groundCache = { lon: 999, lat: 999, name: '' };
+		function groundName(lon, lat) {
+			if (!countryShapes) return '国データ読込中';
+			if (Math.abs(lon - groundCache.lon) < 0.3 && Math.abs(lat - groundCache.lat) < 0.3) return groundCache.name;
+			const c = countryAt(lon, lat);
+			const name = c ? (JA_NAMES[c] || c) + '上空' : oceanName(lon, lat);
+			groundCache = { lon, lat, name };
+			return name;
+		}
+		function fmtGround(st) {
+			const px = parseFloat(st['position_x']), py = parseFloat(st['position_y']), pz = parseFloat(st['position_z']);
+			const r = Math.hypot(px, py, pz);
+			if (!Number.isFinite(r) || r < 6000) return '直下 ---';
+			const lat = THREE.MathUtils.radToDeg(Math.asin(pz / r));
+			let lon = THREE.MathUtils.radToDeg(Math.atan2(py, px)) - THREE.MathUtils.radToDeg(gmstRad(new Date()));
+			lon = ((lon + 540) % 360) - 180;
+			const latTxt = (lat >= 0 ? '北緯 ' : '南緯 ') + Math.abs(lat).toFixed(1) + '°';
+			const lonTxt = (lon >= 0 ? '東経 ' : '西経 ') + Math.abs(lon).toFixed(1) + '°';
+			return '直下 ' + latTxt + ' / ' + lonTxt + '（' + groundName(lon, lat) + '）';
+		}
+		let lastReadout = '';
+		function updateReadout(st) {
+			const text =
+				'左舷SARJ ' + fmtDeg(st.psarj) + ' / 右舷SARJ ' + fmtDeg(st.ssarj) + '\n' +
+				'BGA 1A ' + fmtDeg(st.beta1a) + ' 2A ' + fmtDeg(st.beta2a) + ' 3A ' + fmtDeg(st.beta3a) + ' 4A ' + fmtDeg(st.beta4a) + '\n' +
+				'TRRJ 左 ' + fmtDeg(st.ptrrj) + ' / 右 ' + fmtDeg(st.strrj) + '\n' +
+				'SGANT EL ' + fmtDeg(st.sgant_elevation) + ' XEL ' + fmtDeg(st.sgant_xel) + '\n' +
+				'SSRMS SP ' + fmtDeg(st['SSRMS SP Measured Joint Position']) + ' EP ' + fmtDeg(st['SSRMS EP Measured Joint Position']) + ' WP ' + fmtDeg(st['SSRMS WP Measured Joint Position']) + '\n' +
+				'SPDM1 SP ' + fmtDeg(st['MSS OCS SPDM 1 SP Measured Joint Position']) + ' EP ' + fmtDeg(st['MSS OCS SPDM 1 EP Measured Joint Position']) + ' / SPDM2 SP ' + fmtDeg(st['MSS OCS SPDM 2 SP Measured Joint Position']) + ' EP ' + fmtDeg(st['MSS OCS SPDM 2 EP Measured Joint Position']) + '\n' +
+				fmtOrbit(st) + '\n' +
+				fmtGround(st) +
+				(earthImageryDate ? '\n地表面は NASA MODIS 実画像（' + earthImageryDate + '）' : '');
+			if (text !== lastReadout) {
+				readout.textContent = text;
+				lastReadout = text;
+			}
+		}
+
+		// ===== 軌道パネル（数値とグラウンドトラック地図） =====
+		const orbitCanvas = document.getElementById('ORBITMAP');
+		const MU = 398600.8; // 地球の重力定数 [km^3/s^2]
+		// 二体問題を速度ベルレ法で前後に伝播し、[緯度, 経度] の列を返す（速度は km/s）
+		function propagateTrack(px, py, pz, vx, vy, vz, periodSec) {
+			const steps = 300, dt = periodSec / steps;
+			const run = (dirSign, count, collect) => {
+				let x = px, y = py, z = pz, ux = vx, uy = vy, uz = vz;
+				const h = dt * dirSign;
+				for (let i = 0; i < count; i++) {
+					const r = Math.hypot(x, y, z), a1 = -MU / (r * r * r);
+					const hx = ux + a1 * x * h / 2, hy = uy + a1 * y * h / 2, hz = uz + a1 * z * h / 2;
+					x += hx * h; y += hy * h; z += hz * h;
+					const r2 = Math.hypot(x, y, z), a2 = -MU / (r2 * r2 * r2);
+					ux = hx + a2 * x * h / 2; uy = hy + a2 * y * h / 2; uz = hz + a2 * z * h / 2;
+					collect(x, y, z, (i + 1) * h);
+				}
+			};
+			const gmst0 = gmstRad(new Date());
+			const raw = [];
+			const back = [];
+			run(-1, steps / 2, (x, y, z, t) => back.push([x, y, z, t]));
+			back.reverse();
+			raw.push(...back, [px, py, pz, 0]);
+			run(1, steps / 2, (x, y, z, t) => raw.push([x, y, z, t]));
+			return raw.map(([x, y, z, t]) => {
+				const r = Math.hypot(x, y, z);
+				const lat = Math.asin(z / r) * 180 / Math.PI;
+				const lon = ((Math.atan2(y, x) - gmst0 - 7.2921159e-5 * t) * 180 / Math.PI + 540) % 360 - 180;
+				return [lat, lon];
+			});
+		}
+		function drawOrbitPanel() {
+			const st = window.telemetryState || {};
+			const setT = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+			const beta = parseFloat(st['USGNC_PS_Solar_Beta_Angle']);
+			if (Number.isFinite(beta)) setT('ORB-BETA', beta.toFixed(1) + '°');
+			const px = parseFloat(st['position_x']), py = parseFloat(st['position_y']), pz = parseFloat(st['position_z']);
+			const vx = parseFloat(st['velocity_x']) / 1000, vy = parseFloat(st['velocity_y']) / 1000, vz = parseFloat(st['velocity_z']) / 1000;
+			const rKm = Math.hypot(px, py, pz), vKm = Math.hypot(vx, vy, vz);
+			if (!(Number.isFinite(rKm) && rKm > 6000 && rKm < 8000 && Number.isFinite(vKm))) return;
+			const a = 1 / (2 / rKm - vKm * vKm / MU);
+			const period = 2 * Math.PI * Math.sqrt(a * a * a / MU);
+			setT('ORB-ALT', (rKm - 6371).toFixed(1) + ' km');
+			setT('ORB-VEL', vKm.toFixed(2) + ' km/s');
+			setT('ORB-PERIOD', (period / 60).toFixed(1) + ' 分');
+			const g = gmstRad(new Date());
+			const lat = Math.asin(pz / rKm) * 180 / Math.PI;
+			const lon = ((Math.atan2(py, px) - g) * 180 / Math.PI + 540) % 360 - 180;
+			setT('ORB-LL', Math.abs(lat).toFixed(1) + '°' + (lat >= 0 ? 'N' : 'S') + ' / ' + Math.abs(lon).toFixed(1) + '°' + (lon >= 0 ? 'E' : 'W'));
+			// 地図: 陸地（国境データ）＋軌跡＋現在位置
+			const ctx = orbitCanvas.getContext('2d');
+			const W = orbitCanvas.width, H = orbitCanvas.height;
+			const X = lo => (lo + 180) / 360 * W, Y = la => (90 - la) / 180 * H;
+			ctx.fillStyle = '#05070d'; ctx.fillRect(0, 0, W, H);
+			ctx.strokeStyle = 'rgba(120,140,160,0.16)'; ctx.lineWidth = 1;
+			for (let lo = -150; lo <= 150; lo += 30) { ctx.beginPath(); ctx.moveTo(X(lo), 0); ctx.lineTo(X(lo), H); ctx.stroke(); }
+			for (let la = -60; la <= 60; la += 30) { ctx.beginPath(); ctx.moveTo(0, Y(la)); ctx.lineTo(W, Y(la)); ctx.stroke(); }
+			if (countryShapes) {
+				ctx.fillStyle = '#22371f'; ctx.strokeStyle = '#3a5a34'; ctx.lineWidth = 0.5;
+				for (const c of countryShapes) {
+					const polys = c.geom.type === 'Polygon' ? [c.geom.coordinates] : c.geom.type === 'MultiPolygon' ? c.geom.coordinates : [];
+					for (const poly of polys) for (const ring of poly) {
+						ctx.beginPath();
+						ring.forEach(([lo, la], i) => { if (i === 0) ctx.moveTo(X(lo), Y(la)); else ctx.lineTo(X(lo), Y(la)); });
+						ctx.closePath(); ctx.fill('evenodd'); ctx.stroke();
+					}
+				}
+			}
+			const track = propagateTrack(px, py, pz, vx, vy, vz, period);
+			ctx.strokeStyle = '#ffb340'; ctx.lineWidth = 1.6; ctx.beginPath();
+			let prev = null;
+			for (const [la, lo] of track) {
+				if (prev === null) { ctx.moveTo(X(lo), Y(la)); prev = [la, lo]; continue; }
+				if (Math.abs(lo - prev[1]) > 180) {
+					// 日付変更線をまたぐ区間: 線を地図の端まで伸ばし、反対の端から同じ緯度で続ける
+					const lo2u = lo + (prev[1] > 0 ? 360 : -360);
+					const edge = prev[1] > 0 ? 180 : -180;
+					const f = (edge - prev[1]) / (lo2u - prev[1]);
+					const laEdge = prev[0] + (la - prev[0]) * f;
+					ctx.lineTo(X(edge), Y(laEdge));
+					ctx.moveTo(X(-edge), Y(laEdge));
+				}
+				ctx.lineTo(X(lo), Y(la));
+				prev = [la, lo];
+			}
+			ctx.stroke();
+			ctx.fillStyle = '#ff4040';
+			ctx.beginPath(); ctx.arc(X(lon), Y(lat), 4, 0, Math.PI * 2); ctx.fill();
+			ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5;
+			ctx.beginPath(); ctx.arc(X(lon), Y(lat), 4, 0, Math.PI * 2); ctx.stroke();
+		}
+		setInterval(drawOrbitPanel, 1000);
+
+		function resize() {
+			const w = container.clientWidth, h = container.clientHeight;
+			if (!w || !h) return;
+			renderer.setSize(w, h);
+			camera.aspect = w / h;
+			camera.updateProjectionMatrix();
+		}
+		new ResizeObserver(resize).observe(container);
+		resize();
+
+		function tick() {
+			requestAnimationFrame(tick);
+			const st = window.telemetryState || {};
+			// ===== 軌道位置と姿勢の連動 =====
+			const px = parseFloat(st['position_x']), py = parseFloat(st['position_y']), pz = parseFloat(st['position_z']);
+			const vx = parseFloat(st['velocity_x']), vy = parseFloat(st['velocity_y']), vz = parseFloat(st['velocity_z']);
+			const rKm = Math.hypot(px, py, pz);
+			if (Number.isFinite(rKm) && rKm > 6000 && rKm < 8000 && [vx, vy, vz].every(v => Number.isFinite(v))) {
+				// 方向は状態ベクトルどおり、距離は高度だけ誇張して地球から離す
+				eciToScene(px, py, pz, orbitState.pos).normalize().multiplyScalar(EARTH_R + (rKm - 6371) * ORBIT_SCALE * ALT_EXAG);
+				eciToScene(vx, vy, vz, orbitState.vel).normalize();
+			}
+			// 軌道フレーム: x=進行方向、y=天頂、z=-軌道面法線。これで地球が常に足下に来る
+			const zen = tmpV1.copy(orbitState.pos).normalize();
+			const hat = tmpV2.crossVectors(orbitState.pos, orbitState.vel).normalize();
+			orbitState.hat.copy(hat);
+			const xAxis = tmpV3.crossVectors(hat, zen);
+			const zAxis = tmpV4.crossVectors(xAxis, zen);
+			basisM.makeBasis(xAxis, zen, zAxis);
+			orbitQ.setFromRotationMatrix(basisM);
+			frameQ.copy(orbitQ);
+			// LVLH姿勢クォータニオン（成分0〜3を x, y, z, w とみなす）を軌道フレームへ重ねる
+			const q = [0, 1, 2, 3].map(i => parseFloat(st['USGNC_PS_Pointing_LVLH_Att_Quatrn_' + i]));
+			if (q.every(v => Number.isFinite(v))) {
+				const n = Math.hypot(q[0], q[1], q[2], q[3]);
+				if (n > 0.5 && n < 1.5) {
+					attQ.set(q[0] / n, q[1] / n, q[2] / n, q[3] / n);
+					orbitQ.multiply(attQ);
+				}
+			}
+			station.quaternion.slerp(orbitQ, 0.05);
+			// 位置へなめらかに追従し、カメラも同じだけ運んで相対視点を保つ
+			station.position.lerp(orbitState.pos, 0.08);
+			if (focusObj) {
+				// フォーカス中: 対象へ注視点を移し、部位ごとの向き（ステーション基準）から距離を詰める
+				focusObj.getWorldPosition(tmpV2);
+				station.getWorldQuaternion(q2);
+				tmpV3.copy(focusDir).applyQuaternion(q2).normalize().multiplyScalar(focusDist);
+				tmpV4.copy(tmpV2).add(tmpV3);
+				camera.position.lerp(tmpV4, 0.06);
+				controls.target.lerp(tmpV2, 0.15);
+			} else {
+				tmpV1.copy(station.position).sub(prevStationPos);
+				camera.position.add(tmpV1);
+				controls.target.copy(station.position);
+			}
+			prevStationPos.copy(station.position);
+			// 直下点マーカーとラインを更新する
+			tmpV2.copy(station.position).setLength(EARTH_R + 3);
+			subMarker.position.copy(tmpV2);
+			const lp = subLineGeo.attributes.position.array;
+			lp[0] = station.position.x; lp[1] = station.position.y; lp[2] = station.position.z;
+			lp[3] = tmpV2.x; lp[4] = tmpV2.y; lp[5] = tmpV2.z;
+			subLineGeo.attributes.position.needsUpdate = true;
+			// 未操作のあいだは地球が背景に入る位置へカメラを寄せ続ける
+			if (autoFrame && !focusObj) {
+				tmpV3.set(58, 34, 78).applyQuaternion(frameQ);
+				tmpV4.copy(station.position).add(tmpV3);
+				camera.position.lerp(tmpV4, 0.06);
+			}
+
+			// ===== 太陽の連動（太陽ベータ角） =====
+			// 慣性参照方向の「軌道面内の向き」は保ち、面からの高さだけベータ角に一致させる
+			const betaDeg = parseFloat(st['USGNC_PS_Solar_Beta_Angle']);
+			const inPlane = tmpV2.copy(SUN_REF).addScaledVector(orbitState.hat, -SUN_REF.dot(orbitState.hat)).normalize();
+			const betaRad = THREE.MathUtils.degToRad(Number.isFinite(betaDeg)
+				? betaDeg
+				: THREE.MathUtils.radToDeg(Math.asin(THREE.MathUtils.clamp(SUN_REF.dot(orbitState.hat), -1, 1))));
+			const sunDir = tmpV3.copy(inPlane).multiplyScalar(Math.cos(betaRad)).addScaledVector(orbitState.hat, Math.sin(betaRad)).normalize();
+			sunBall.position.copy(station.position).addScaledVector(sunDir, 1100);
+			sunGlow.position.copy(sunBall.position);
+			sun.position.copy(station.position).addScaledVector(sunDir, 200);
+			sun.target.position.copy(station.position);
+			// 太陽方向に地球があれば影に入ったとみなして光を落とす
+			const tca = -tmpV4.copy(station.position).dot(sunDir);
+			let targetIntensity = 1.7;
+			if (tca > 0 && station.position.lengthSq() - tca * tca < EARTH_R * EARTH_R) targetIntensity = 0.12;
+			sun.intensity += (targetIntensity - sun.intensity) * 0.05;
+			for (const j of joints) {
+				const raw = parseFloat(st[j.label]);
+				if (Number.isNaN(raw)) continue;
+				// 360°の折り返しをまたいでも最短方向へ追従させる
+				const delta = ((raw - j.cur + 540) % 360) - 180;
+				j.cur += delta * 0.06;
+				j.obj.rotation[j.axis] = THREE.MathUtils.degToRad(j.cur);
+			}
+			// 天体の動き: すべて実時刻ベース（実速度）
+			// 地球は GMST で回してテクスチャの国と直下表示を一致させる
+			const gmst = gmstRad(new Date());
+			earth.rotation.y = gmst;
+			aurora.rotation.y = gmst;
+			// 雲は地表に対して4日で1周分だけずれる（気象スケールの近似）
+			clouds.rotation.y = gmst + (Date.now() / 1000) * (Math.PI * 2 / (4 * 86400));
+			// 月は平均黄経の式から実位置を出す（公転周期 27.3日）
+			const tCent = (Date.now() / 86400000 + 2440587.5 - 2451545.0) / 36525;
+			moonAngle = THREE.MathUtils.degToRad(218.316 + 481267.8813 * tCent);
+			moon.position.set(
+				Math.cos(moonAngle) * 1500,
+				Math.sin(moonAngle) * 520,
+				Math.sin(moonAngle) * 1500
+			);
+			moon.lookAt(0, 0, 0); // 潮汐ロック: 常に同じ面を地球へ向ける
+			// 太陽風パーティクル: 太陽方向から流れ、地球の手前で磁気圏のように膨らむ
+			if (wx.on) {
+				const sd = tmpV1.copy(sunBall.position).normalize();
+				const u = tmpV2.crossVectors(sd, Math.abs(sd.y) > 0.9 ? tmpV3.set(1, 0, 0) : tmpV3.set(0, 1, 0)).normalize();
+				const v = tmpV4.crossVectors(sd, u);
+				const spd = 0.0016 * ((wx.speed || 400) / 400);
+				for (let i = 0; i < WIND_N; i++) {
+					const s = windSeed[i];
+					s.t += spd * (0.7 + s.r * 0.6);
+					if (s.t > 1) s.t -= 1;
+					const axial = 1500 - s.t * 1900;
+					const bulge = 1 + 1.1 * Math.exp(-Math.pow(axial / 430, 2));
+					const rr = s.r * 620 * bulge;
+					const ca = Math.cos(s.a) * rr, sa = Math.sin(s.a) * rr;
+					windPos[i * 3] = sd.x * axial + u.x * ca + v.x * sa;
+					windPos[i * 3 + 1] = sd.y * axial + u.y * ca + v.y * sa;
+					windPos[i * 3 + 2] = sd.z * axial + u.z * ca + v.z * sa;
+				}
+				windGeo.attributes.position.needsUpdate = true;
+			}
+			updateReadout(st);
+			controls.update();
+			renderer.render(scene, camera);
+		}
+		tick();
 	</SCRIPT>
 </BODY>
 </HTML>
