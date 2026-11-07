@@ -66,6 +66,7 @@
 		#POWER .P-NOTE { margin-top: 6px; font-size: 10.5px; color: #83868d; line-height: 1.5; }
 		#VIEW3D CANVAS { display: block; }
 		#VIEW3D-TITLE { position: absolute; top: 8px; left: 10px; color: #f2f2f2; font-size: 15px; letter-spacing: 1px; z-index: 2; pointer-events: none; }
+		#FPSDISP { position: absolute; top: 30px; left: 10px; color: #39ff4d; font-family: monospace; font-size: 12px; z-index: 2; pointer-events: none; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); }
 		#VIEW3D-READOUT { position: absolute; left: 10px; bottom: 8px; color: #39ff4d; font-family: monospace; font-size: 12px; line-height: 1.5; white-space: pre-line; z-index: 2; pointer-events: none; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); }
 		#WXBTN { display: none; /* 表示は右上のチェックボックスへ移行。ボタン自体は切り替え処理の実体として残す */ position: absolute; top: 34px; left: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #9fdcff; border: 1px solid #3a5a78; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
 		#HELPBTN { position: absolute; top: 8px; right: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #cfe8ff; border: 1px solid #55585f; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
@@ -73,6 +74,8 @@
 		#LINECTL { position: absolute; top: 44px; right: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); border: 1px solid #55585f; padding: 6px 9px; font-size: 12px; color: #cfe8ff; display: flex; flex-direction: column; gap: 4px; }
 		#LINECTL LABEL { cursor: pointer; white-space: nowrap; }
 		#LINECTL INPUT { margin: 0 4px 0 0; vertical-align: -1px; cursor: pointer; }
+		#LINECTL SELECT { background: #101623; color: #cfe8ff; border: 1px solid #55585f; font-size: 12px; cursor: pointer; }
+		#LINECTL .QROW { white-space: nowrap; margin-top: 2px; }
 		#WXBOX { border: 1px solid #55585f; padding: 5px 7px; margin-top: 2px; display: flex; flex-direction: column; gap: 4px; }
 		#WXBOX .WXBOX-TITLE { font-size: 11px; color: #8fb8dd; letter-spacing: 1px; }
 		#LINECTL LABEL.OFF { color: #66707c; cursor: default; }
@@ -82,6 +85,9 @@
 		#WXBTN.ON { color: #ffe28a; border-color: #a8842c; }
 		#WXINFO { position: absolute; top: 66px; left: 10px; z-index: 3; color: #cfe8ff; font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-line; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); display: none; pointer-events: none; }
 		#WXCHART { position: absolute; top: 152px; left: 10px; z-index: 3; width: 300px; height: 115px; background: rgba(8, 12, 22, 0.78); border: 1px solid #22344e; display: none; }
+		#BODYINFO { position: absolute; left: 10px; bottom: 170px; z-index: 6; background: rgba(8, 12, 22, 0.92); border: 1px solid #55585f; color: #dfe8ff; padding: 9px 12px; font-size: 12px; line-height: 1.7; display: none; max-width: 280px; }
+		#BODYINFO .BI-NAME { font-size: 14px; font-weight: bold; }
+		#BODYINFO-CLOSE { float: right; cursor: pointer; color: #8fa8c8; margin-left: 12px; }
 		#WXLOADING { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4; background: rgba(8, 12, 22, 0.92); color: #cfe8ff; border: 1px solid #3a5a78; padding: 16px 26px; font-size: 14px; letter-spacing: 2px; display: none; }
 		#WXLOADING .SPIN { display: inline-block; width: 14px; height: 14px; border: 2px solid #3a5a78; border-top-color: #9fdcff; border-radius: 50%; animation: WXSPIN 0.8s linear infinite; vertical-align: -2px; margin-right: 10px; }
 		@keyframes WXSPIN { to { transform: rotate(360deg); } }
@@ -146,6 +152,7 @@
 		<DIV ID="LEFT">
 		<DIV ID="VIEW3D">
 			<DIV ID="VIEW3D-TITLE">ISS 3D MODEL（実テレメトリ連動）</DIV>
+			<DIV ID="FPSDISP">-- FPS</DIV>
 			<BUTTON ID="WXBTN" TYPE="BUTTON">宇宙天気 OFF</BUTTON>
 			<DIV ID="WXINFO"></DIV>
 			<CANVAS ID="WXCHART" WIDTH="600" HEIGHT="230"></CANVAS>
@@ -154,7 +161,9 @@
 			<DIV ID="LINECTL">
 				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKCONST" CHECKED>星座線</LABEL>
 				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKORBIT" CHECKED>軌道リング</LABEL>
+				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKBELT" CHECKED>小惑星帯</LABEL>
 				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKREAL">リアルモデル</LABEL>
+				<DIV CLASS="QROW">画質 <SELECT ID="QUALITY"><OPTION VALUE="light">最軽量</OPTION><OPTION VALUE="standard" SELECTED>デフォルト</OPTION><OPTION VALUE="heavy">最重量</OPTION></SELECT></DIV>
 				<DIV ID="WXBOX">
 					<DIV CLASS="WXBOX-TITLE">宇宙天気</DIV>
 					<LABEL><INPUT TYPE="CHECKBOX" ID="CHKWX">表示</LABEL>
@@ -170,6 +179,7 @@
 				<BUTTON TYPE="BUTTON" DATA-F="spdm">デクスター</BUTTON>
 				<BUTTON TYPE="BUTTON" DATA-F="sgant">アンテナ</BUTTON>
 			</DIV>
+			<DIV ID="BODYINFO"><SPAN ID="BODYINFO-CLOSE">✕</SPAN><DIV CLASS="BI-NAME" ID="BI-NAME"></DIV><DIV ID="BI-BODY"></DIV></DIV>
 			<DIV ID="VIEW3D-READOUT">3Dモデルを読み込んでいます…</DIV>
 		</DIV>
 		</DIV>
@@ -213,7 +223,9 @@
 			<DIV CLASS="KV"><SPAN CLASS="K">軌道周期</SPAN><SPAN CLASS="V" ID="ORB-PERIOD">---</SPAN></DIV>
 			<DIV CLASS="KV"><SPAN CLASS="K">直下点</SPAN><SPAN CLASS="V" ID="ORB-LL">---</SPAN></DIV>
 			<DIV CLASS="KV"><SPAN CLASS="K">太陽ベータ角</SPAN><SPAN CLASS="V" ID="ORB-BETA">---</SPAN></DIV>
-			<DIV CLASS="P-NOTE">軌跡は状態ベクトルから二体問題で伝播した概算（前後 約1周期分）です。</DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">次の松山上空通過</SPAN><SPAN CLASS="V" ID="ORB-PASS">---</SPAN></DIV>
+			<DIV CLASS="KV"><SPAN CLASS="K">ISSの昼夜</SPAN><SPAN CLASS="V" ID="ORB-ECL">---</SPAN></DIV>
+			<DIV CLASS="P-NOTE">軌跡と予報は状態ベクトルから二体問題で伝播した概算（軌跡は前後 約1周期分、予報は48時間先まで）です。</DIV>
 		</DIV>
 		<DIV ID="ATT" CLASS="PANEL">
 			<DIV CLASS="PANEL-TITLE">姿勢・CMG</DIV>
@@ -260,7 +272,7 @@
 			・ドラッグ： 回転<BR>
 			・ホイール / ピンチ： ズーム<BR>
 			・右ドラッグ： 視点の移動<BR>
-			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面右下のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。右上のチェックボックスでは、宇宙天気（オーロラ・太陽風・磁気圏・太陽嵐）の表示や、星座線・軌道リングの表示、NASA 公式のリアルモデル（姿勢に加えて SARJ・太陽電池パドル・Canadarm2 も連動）への切り替えができます。</P>
+			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面右下のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。右上のチェックボックスでは、宇宙天気（オーロラ・太陽風・磁気圏・太陽嵐）の表示や、星座線・軌道リング・小惑星帯の表示、NASA 公式のリアルモデル（姿勢に加えて SARJ・太陽電池パドル・Canadarm2 も連動）への切り替えができます。惑星や彗星・探査機をクリックすると、太陽や地球からの距離が表示されます。軌道パネルには、次に松山上空を ISS が通過する予報と、地球の影に入るまでの時間も出ます。</P>
 			<P><B>テレメトリのセル（右側）</B><BR>
 			・セルをクリックすると、右側にその項目の履歴パネルが開き、過去100件の値がリアルタイムで更新されます。別のセルをクリックすると表示が切り替わり、閉じるときはパネル右上の × を押してください。</P>
 			<BUTTON ID="HELP-CLOSE" TYPE="button">閉じる</BUTTON>
@@ -640,14 +652,16 @@
 		bootEl.style.display = 'block';
 
 		const scene = new THREE.Scene();
+		const clickBodies = []; // クリックで情報を出す天体（地球・太陽・惑星・準惑星・彗星・探査機）
 		scene.background = new THREE.Color(0x05070d);
 		const camera = new THREE.PerspectiveCamera(45, 1, 1, 1200000); // near を 1 にし、薄い部品の前後面の深度競合（見え透け）を抑える。far は月・惑星・星空（実距離スケール）を収めるため大きく取る
 		camera.position.set(48, 30, 64);
 
-		const renderer = new THREE.WebGLRenderer({ antialias: true });
-		renderer.setPixelRatio(window.devicePixelRatio);
+		const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // 解像度は最大1.5倍に制限（負荷の最大要因）。FPS が低いときは自動でさらに落とす
 		renderer.shadowMap.enabled = true; // 太陽光によるセルフシャドウ（実物感の要）
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		renderer.shadowMap.autoUpdate = false; // 影マップは1フレームおきに更新して負荷を半減（tick 内で needsUpdate を立てる）
 		container.appendChild(renderer.domElement);
 
 		const controls = new OrbitControls(camera, renderer.domElement);
@@ -659,7 +673,7 @@
 		const sun = new THREE.DirectionalLight(0xffffff, 1.7);
 		sun.position.set(60, 45, 35);
 		sun.castShadow = true;
-		sun.shadow.mapSize.set(2048, 2048);
+		sun.shadow.mapSize.set(1024, 1024);
 		sun.shadow.camera.left = -85; sun.shadow.camera.right = 85;
 		sun.shadow.camera.top = 85; sun.shadow.camera.bottom = -85;
 		sun.shadow.camera.near = 20; sun.shadow.camera.far = 400;
@@ -835,6 +849,9 @@
 		);
 		earth.position.copy(earthCenter);
 		earthSystem.add(earth);
+		earth.userData.body = { name: '地球', kind: '惑星', periodYr: 1 };
+		earth.userData.posAU = new THREE.Vector3(1, 0, 0);
+		clickBodies.push(earth);
 		// 実写テクスチャ: NASA GIBS の MODIS 実画像（前日）を Blue Marble の上に合成する
 		// MODIS には欠測の黒い部分があるので、暗い画素は Blue Marble で埋める。雲は実画像そのもの
 		let earthImageryDate = '';
@@ -1026,6 +1043,9 @@
 		scene.add(sunBall);
 		const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), transparent: true, depthWrite: false }));
 		sunGlow.scale.set(1650, 1650, 1);
+		sunBall.userData.body = { name: '太陽', kind: '恒星' };
+		sunBall.userData.posAU = new THREE.Vector3(0, 0, 0);
+		clickBodies.push(sunBall);
 		scene.add(sunGlow);
 		scene.add(sun.target);
 
@@ -1159,6 +1179,9 @@
 			label.position.y = p.size + 180;
 			mesh.add(label);
 			scene.add(mesh);
+			mesh.userData.body = { name: p.name, kind: '惑星', periodYr: Math.pow(p.el[0], 1.5) };
+			mesh.userData.posAU = new THREE.Vector3();
+			clickBodies.push(mesh);
 			planetObjs.push({ el: p.el, mesh: mesh, color: p.color });
 		}
 		// ===== 準惑星 =====
@@ -1182,6 +1205,9 @@
 			label.position.y = dw.size + 180;
 			mesh.add(label);
 			scene.add(mesh);
+			mesh.userData.body = { name: dw.name, kind: '準惑星', periodYr: Math.pow(dw.a, 1.5) };
+			mesh.userData.posAU = new THREE.Vector3();
+			clickBodies.push(mesh);
 			dwarfObjs.push(Object.assign({}, dw, { mesh: mesh }));
 		}
 		function dwarfPos(dw, jd, out) {
@@ -1191,6 +1217,53 @@
 			for (let k = 0; k < 5; k++) E = E - (E - dw.e * Math.sin(E) - M) / (1 - dw.e * Math.cos(E));
 			const xp = dw.a * (Math.cos(E) - dw.e), yp = dw.a * Math.sqrt(1 - dw.e * dw.e) * Math.sin(E);
 			return rotPerifocal(xp, yp, THREE.MathUtils.degToRad(dw.w), THREE.MathUtils.degToRad(dw.i), THREE.MathUtils.degToRad(dw.om), out);
+		}
+
+		// ===== ハレー彗星とボイジャー探査機 =====
+		// ハレー彗星: 軌道要素は JPL の接点要素。元期は前回の近日点通過（1986-02-09、JD 2446470.5）で平均近点角 0
+		// 2023-12 に遠日点（約35.1 AU）を通過し、現在は内側へ戻り始めている。次回近日点は 2061 年
+		const HALLEY_EL = { a: 17.834, e: 0.967140, i: 162.262691, om: 58.420081, w: 111.332343, ma: 0, epoch: 2446470.5 };
+		const halleyMesh = new THREE.Mesh(
+			new THREE.SphereGeometry(110, 20, 14),
+			new THREE.MeshStandardMaterial({ color: 0xbfe8e0, roughness: 1, emissive: 0xbfe8e0, emissiveIntensity: 0.25 })
+		);
+		const halleyGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: 0x9fd8cc, transparent: true, opacity: 0.5, depthWrite: false }));
+		halleyGlow.scale.set(700, 700, 1);
+		halleyMesh.add(halleyGlow);
+		const halleyLabel = nameSprite('ハレー彗星');
+		halleyLabel.position.y = 320;
+		halleyMesh.add(halleyLabel);
+		scene.add(halleyMesh);
+		halleyMesh.userData.body = { name: 'ハレー彗星', kind: '彗星', periodYr: 75.3, note: '2023年12月に遠日点を通過。次回近日点は2061年' };
+		halleyMesh.userData.posAU = new THREE.Vector3();
+		clickBodies.push(halleyMesh);
+		const halleyObj = Object.assign({}, HALLEY_EL, { mesh: halleyMesh });
+		// ボイジャー1号/2号: 進行方向はほぼ固定として、距離を元期＋年率で近似する（位置は概算）
+		function voyagerDir(raDeg, decDeg) {
+			const ra = THREE.MathUtils.degToRad(raDeg), dec = THREE.MathUtils.degToRad(decDeg);
+			return new THREE.Vector3(Math.cos(dec) * Math.cos(ra), Math.cos(dec) * Math.sin(ra), Math.sin(dec)); // 赤道座標 (x, y, z)
+		}
+		const VOYAGERS = [
+			{ name: 'ボイジャー1号', dir: voyagerDir(258.5, 12.1), distEpoch: 166.0, rate: 3.55, epochYear: 2026.0, note: '1977年打上げ。人類が作った最も遠くの物体（位置は概算）' },
+			{ name: 'ボイジャー2号', dir: voyagerDir(299.0, -55.5), distEpoch: 139.5, rate: 3.12, epochYear: 2026.0, note: '1977年打上げ。星間空間を飛行中（位置は概算）' }
+		];
+		const voyagerObjs = [];
+		for (const vg of VOYAGERS) {
+			const mesh = new THREE.Mesh(
+				new THREE.SphereGeometry(70, 16, 12),
+				new THREE.MeshBasicMaterial({ color: 0xffe9a8 })
+			);
+			const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: 0xffd76a, transparent: true, opacity: 0.65, depthWrite: false }));
+			glow.scale.set(620, 620, 1);
+			mesh.add(glow);
+			const label = nameSprite(vg.name);
+			label.position.y = 300;
+			mesh.add(label);
+			scene.add(mesh);
+			mesh.userData.body = { name: vg.name, kind: '探査機', note: vg.note };
+			mesh.userData.posAU = new THREE.Vector3();
+			clickBodies.push(mesh);
+			voyagerObjs.push(Object.assign({}, vg, { mesh: mesh }));
 		}
 		const planetTmpE = new THREE.Vector3(), planetTmpQ = new THREE.Vector3(), planetTmpH = new THREE.Vector3();
 		const PL_EPS = THREE.MathUtils.degToRad(23.43928), PL_CE = Math.cos(PL_EPS), PL_SE = Math.sin(PL_EPS);
@@ -1212,9 +1285,19 @@
 			helioPos(EARTH_EL, T, planetTmpE);
 			// 地球系（地球・月・ISS・磁気圏の一式）を公転位置へ置き、太陽方向もここから決める
 			eclToSceneWarped(planetTmpE, earthSystem.position);
+			earth.userData.posAU.copy(planetTmpE);
 			sunDirScene.copy(earthSystem.position).multiplyScalar(-1).normalize();
-			for (const p of planetObjs) { helioPos(p.el, T, planetTmpH); placeBody(p); }
-			for (const dw of dwarfObjs) { dwarfPos(dw, jd, planetTmpH); placeBody(dw); }
+			for (const p of planetObjs) { helioPos(p.el, T, planetTmpH); placeBody(p); p.mesh.userData.posAU.copy(planetTmpH); }
+			for (const dw of dwarfObjs) { dwarfPos(dw, jd, planetTmpH); placeBody(dw); dw.mesh.userData.posAU.copy(planetTmpH); }
+			dwarfPos(halleyObj, jd, planetTmpH); placeBody(halleyObj); halleyObj.mesh.userData.posAU.copy(planetTmpH);
+			const yearNow = 1970 + Date.now() / 31557600000;
+			for (const vg of voyagerObjs) {
+				const dAU = vg.distEpoch + vg.rate * (yearNow - vg.epochYear);
+				eciToScene(vg.dir.x, vg.dir.y, vg.dir.z, planetTmpQ).multiplyScalar(7500 * Math.pow(dAU, 0.45));
+				vg.mesh.position.copy(planetTmpQ);
+				// 距離計算用に黄道座標 [AU] へ直して保持する（赤道→黄道は x 軸まわりの回転）
+				vg.mesh.userData.posAU.set(vg.dir.x * dAU, (vg.dir.y * PL_CE + vg.dir.z * PL_SE) * dAU, (-vg.dir.y * PL_SE + vg.dir.z * PL_CE) * dAU);
+			}
 		}
 		// 公転軌道のサンプリング（離心近点角を一周させ、惑星本体と同じ距離圧縮をかけて太陽中心に描く）
 		function helioOrbitPoints(el, T) {
@@ -1244,7 +1327,42 @@
 			makeOrbitLine(helioOrbitPoints(EARTH_EL, Tnow), 0x6f87a8); // 地球の公転軌道
 			for (const p of planetObjs) makeOrbitLine(helioOrbitPoints(p.el, Tnow), p.color);
 			for (const dw of dwarfObjs) makeOrbitLine(dwarfOrbitPoints(dw), dw.color);
+			makeOrbitLine(dwarfOrbitPoints(HALLEY_EL), 0x9fd8cc);
 		}
+
+		// ===== 小惑星帯・カイパーベルト・散乱円盤（点の帯。個々の位置は模式的に散らしたもの） =====
+		const beltGroup = new THREE.Group();
+		scene.add(beltGroup);
+		function beltPoints(count, aMin, aMax, iMaxDeg, color, size, opacity) {
+			const pos = new Float32Array(count * 3);
+			const v = new THREE.Vector3();
+			for (let i = 0; i < count; i++) {
+				const a = aMin + Math.random() * (aMax - aMin);
+				const e = Math.random() * 0.12;
+				const inc = Math.random() * iMaxDeg * Math.PI / 180;
+				const Om = Math.random() * Math.PI * 2, w = Math.random() * Math.PI * 2, M = Math.random() * Math.PI * 2;
+				let E = M;
+				for (let k = 0; k < 4; k++) E = M + e * Math.sin(E); // ケプラー方程式
+				const xp = a * (Math.cos(E) - e), yp = a * Math.sqrt(1 - e * e) * Math.sin(E);
+				const cw = Math.cos(w), sw = Math.sin(w), cO = Math.cos(Om), sO = Math.sin(Om), ci = Math.cos(inc), si = Math.sin(inc);
+				v.set(
+					(cw * cO - sw * ci * sO) * xp + (-sw * cO - cw * ci * sO) * yp,
+					(cw * sO + sw * ci * cO) * xp + (-sw * sO + cw * ci * cO) * yp,
+					(sw * si) * xp + (cw * si) * yp
+				);
+				const p = eclToSceneWarped(v, new THREE.Vector3());
+				pos[i * 3] = p.x; pos[i * 3 + 1] = p.y; pos[i * 3 + 2] = p.z;
+			}
+			const g = new THREE.BufferGeometry();
+			g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+			const points = new THREE.Points(g, new THREE.PointsMaterial({ color, size, transparent: true, opacity, depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true }));
+			points.frustumCulled = false;
+			beltGroup.add(points);
+		}
+		beltPoints(2600, 2.06, 3.28, 9, 0xcbb28a, 70, 0.5); // 小惑星帯（火星と木星の間、2.06〜3.28 AU）
+		beltPoints(1700, 39.5, 47.7, 12, 0x8fa8c8, 90, 0.35); // カイパーベルト
+		beltPoints(450, 48, 95, 25, 0x7d90ad, 90, 0.22); // 散乱円盤（まばらに）
+		document.getElementById('CHKBELT').addEventListener('change', (e) => { beltGroup.visible = e.target.checked; });
 
 		// 宇宙空間の空白が目立たないよう、遠方に淡い星雲を散らす
 		{
@@ -1259,6 +1377,43 @@
 				scene.add(sp);
 			}
 		}
+
+		// ===== 天体クリックで情報表示（太陽からの距離・地球からの距離・公転周期） =====
+		const raycaster = new THREE.Raycaster();
+		const pointerNDC = new THREE.Vector2();
+		let selectedBody = null;
+		let downX = 0, downY = 0;
+		renderer.domElement.addEventListener('pointerdown', (e) => { downX = e.clientX; downY = e.clientY; });
+		renderer.domElement.addEventListener('pointerup', (e) => {
+			if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) return; // ドラッグ（回転・ズーム）はクリックとみなさない
+			const rect = renderer.domElement.getBoundingClientRect();
+			pointerNDC.set(((e.clientX - rect.left) / rect.width) * 2 - 1, -((e.clientY - rect.top) / rect.height) * 2 + 1);
+			raycaster.setFromCamera(pointerNDC, camera);
+			const hits = raycaster.intersectObjects(clickBodies, true);
+			let obj = hits.length ? hits[0].object : null;
+			while (obj && !obj.userData.body) obj = obj.parent; // ラベルや環を拾ったら本体へたどる
+			selectedBody = obj;
+			if (selectedBody) showBodyInfo();
+			else document.getElementById('BODYINFO').style.display = 'none';
+		});
+		function showBodyInfo() {
+			if (!selectedBody) return;
+			const b = selectedBody.userData.body, p = selectedBody.userData.posAU;
+			const dSun = p.length(), dEarth = p.distanceTo(earth.userData.posAU);
+			const fmtAU = (d) => d >= 10 ? d.toFixed(1) : d.toFixed(2);
+			document.getElementById('BI-NAME').textContent = b.name + '（' + b.kind + '）';
+			let html = '太陽から ' + fmtAU(dSun) + ' AU（約' + (dSun * 1.496).toFixed(1) + '億km）<BR>' +
+				'地球から ' + fmtAU(dEarth) + ' AU（約' + (dEarth * 1.496).toFixed(1) + '億km）';
+			if (b.periodYr) html += '<BR>公転周期 約' + (b.periodYr >= 10 ? b.periodYr.toFixed(1) : b.periodYr.toFixed(2)) + ' 年';
+			if (b.note) html += '<BR>' + b.note;
+			document.getElementById('BI-BODY').innerHTML = html;
+			document.getElementById('BODYINFO').style.display = 'block';
+		}
+		setInterval(() => { if (selectedBody) showBodyInfo(); }, 1000); // 動く天体なので数値は毎秒追随する
+		document.getElementById('BODYINFO-CLOSE').addEventListener('click', () => {
+			selectedBody = null;
+			document.getElementById('BODYINFO').style.display = 'none';
+		});
 
 		// ===== 宇宙天気（NOAA SWPC の実データで可視化する） =====
 		const wx = { on: false, kp: null, speed: null, density: null, bz: null, flare: '---', kpSeries: [], bzSeries: [] };
@@ -1293,17 +1448,17 @@
 		const auroraTex = new THREE.CanvasTexture(auroraCanvas);
 		auroraTex.colorSpace = THREE.SRGBColorSpace;
 		const aurora = new THREE.Mesh(
-			new THREE.SphereGeometry(515, 48, 32),
+			new THREE.SphereGeometry(515, 32, 24),
 			new THREE.MeshBasicMaterial({ map: auroraTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })
 		);
 		aurora.visible = false;
 		earthSystem.add(aurora);
 
 		// 太陽風パーティクル: 太陽方向から地球へ流す
-		const WIND_N = 700;
+		const WIND_N = 450;
 		const windPos = new Float32Array(WIND_N * 3);
 		const windSeed = [];
-		for (let i = 0; i < WIND_N; i++) windSeed.push({ t: Math.random(), r: Math.sqrt(Math.random()), a: Math.random() * Math.PI * 2 });
+		for (let i = 0; i < WIND_N; i++) { const a = Math.random() * Math.PI * 2; windSeed.push({ t: Math.random(), r: Math.sqrt(Math.random()), ca: Math.cos(a), sa: Math.sin(a) }); } // 角度の sin/cos は毎フレーム同じなので先に計算しておく
 		const windGeo = new THREE.BufferGeometry();
 		windGeo.setAttribute('position', new THREE.BufferAttribute(windPos, 3));
 		const windMat = new THREE.PointsMaterial({ color: 0x8affc1, size: 3.2, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending, depthWrite: false });
@@ -1352,6 +1507,7 @@
 		sheet.position.x = -7.2 * MAG_S;
 		magGroup.add(sheet);
 		const magState = { comp: 0.85, stretch: 1.5 };
+		let magFrame = 0; // 磁力線の頂点再計算の間引きカウンタ
 		let showMagLines = true; // 磁力線の表示チェック（宇宙天気 ON のときだけ有効）
 		const magBasis = new THREE.Matrix4();
 		const magNorth = new THREE.Vector3(0, 1, 0);
@@ -1384,7 +1540,8 @@
 			const sheetT = (wx.bz !== null && wx.bz < 0) ? Math.min(0.3, 0.12 - wx.bz * 0.012) : 0.1;
 			sheetMat.opacity += (sheetT - sheetMat.opacity) * 0.04;
 			const wigAmp = 2 + (wx.kp || 0) * 2.4;
-			for (const ml of magLines) {
+			// 頂点の再計算（60本×約60点）は毎フレームだと重いので、表示中かつ5フレームに1回だけにする（変形パラメータはゆっくり変わるので見た目はほぼ同じ）
+			if (magGroup.visible && (magFrame++ % 5 === 0)) for (const ml of magLines) {
 				const pos = ml.line.geometry.attributes.position;
 				for (let i = 0; i < ml.base.length; i++) {
 					magP.set(ml.base[i][0], ml.base[i][1], ml.base[i][2]).applyQuaternion(magDipQ);
@@ -1411,11 +1568,11 @@
 		scene.add(stormGroup);
 		let showStorms = true; // 太陽嵐の表示チェック（宇宙天気 ON のときだけ有効）
 		let stormImpact = 0; // 嵐が地球へ到達した余韻（updateMagnetosphere の圧縮・伸長に使う）
-		const stormGeo = new THREE.SphereGeometry(1, 48, 32);
+		const stormGeo = new THREE.SphereGeometry(1, 24, 16);
 		const stormFronts = [];
 		let stormLastEmit = 0;
 		const earthFlash = new THREE.Mesh(
-			new THREE.SphereGeometry(1, 32, 24),
+			new THREE.SphereGeometry(1, 24, 16),
 			new THREE.MeshBasicMaterial({ color: 0xbfe8ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide })
 		);
 		earthFlash.visible = false;
@@ -1438,7 +1595,7 @@
 			stormGroup.visible = wx.on && showStorms;
 			if (!stormGroup.visible) return;
 			const act = stormActivity();
-			if (nowSec - stormLastEmit > act.interval && stormFronts.length < 7) {
+			if (nowSec - stormLastEmit > act.interval && stormFronts.length < 5) {
 				const mat = new THREE.MeshBasicMaterial({ color: (wx.kp || 0) >= 5 ? 0xff8a5f : 0xffc37a, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
 				const m = new THREE.Mesh(stormGeo, mat);
 				m.frustumCulled = false;
@@ -1468,6 +1625,33 @@
 					stormFronts.splice(i, 1);
 				}
 			}
+		}
+
+		// ===== フレア連動: GOES が新しい M クラス以上のフレアを捉えたら、太陽嵐を1発撃つ =====
+		let sunFlashT = 1; // 太陽フラッシュの進行（1 = 終了）
+		let lastFlareTriggerMs = -1; // 最後に処理したフレアピークの時刻（-1 = 初期化前）
+		function flareStorm() {
+			sunFlashT = 0; // 太陽フラッシュは宇宙天気の表示 ON/OFF によらず出す
+			if (!wx.on || !showStorms) return;
+			const mat = new THREE.MeshBasicMaterial({ color: 0xff9a6a, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+			const m = new THREE.Mesh(stormGeo, mat);
+			m.frustumCulled = false;
+			stormGroup.add(m);
+			stormFronts.push({ mesh: m, r: 60, peak: 0.26, hit: false });
+		}
+		function detectNewFlare(xray) {
+			let peakMs = 0, peakFlux = 0;
+			for (const e of xray) {
+				if (e.energy !== '0.1-0.8nm' || !(e.flux >= 1e-5)) continue; // M クラス以上だけ
+				const t = new Date(e.time_tag + (e.time_tag.endsWith('Z') ? '' : 'Z')).getTime();
+				if (Number.isFinite(t) && e.flux > peakFlux) { peakFlux = e.flux; peakMs = t; }
+			}
+			if (!peakMs) return;
+			if (lastFlareTriggerMs < 0) { lastFlareTriggerMs = peakMs; return; } // 初回は既存のフレアを基準にする（開いた瞬間に撃たない）
+			if (peakMs > lastFlareTriggerMs + 30 * 60000) { // 前回より30分以上新しいピークだけを新しいフレアとみなす
+				lastFlareTriggerMs = peakMs;
+				flareStorm();
+			} else if (peakMs > lastFlareTriggerMs) lastFlareTriggerMs = peakMs;
 		}
 
 		function drawAurora(coords) {
@@ -1561,6 +1745,7 @@
 				let maxF = 0;
 				for (const e of x) if (e.energy === '0.1-0.8nm' && e.flux > maxF) maxF = e.flux;
 				wx.flare = flareClass(maxF);
+				detectNewFlare(x);
 			} catch (e) { /* 前の値を保持する */ }
 			if (wx.kp !== null) windMat.color.setHSL(Math.max(0, 0.38 - wx.kp * 0.045), 1, 0.65);
 			updateWxInfo();
@@ -2067,14 +2252,20 @@
 			spdmArms.push(chain);
 		}
 
+		// SARJ/BGA の符号とオフセットは実テレメトリ105点との照合で決めた校正値（全8翼のパネル法線が太陽と平均0.2°以内で一致）
 		const joints = [
-			{ obj: port.sarj, label: 'psarj', axis: 'x', cur: 0 },
-			{ obj: stbd.sarj, label: 'ssarj', axis: 'x', cur: 0 },
+			{ obj: port.sarj, label: 'psarj', axis: 'x', cur: 0, sign: -1, off: -11.6 },
+			{ obj: stbd.sarj, label: 'ssarj', axis: 'x', cur: 0, sign: 1, off: -11.6 },
 			{ obj: port.radiator, label: 'ptrrj', axis: 'x', cur: 0 },
 			{ obj: stbd.radiator, label: 'strrj', axis: 'x', cur: 0 },
 		];
+		const BGA_CAL = { // [符号, ゼロ点オフセット°]（上記の照合による校正値）
+			beta1a: [-1, -138.4], beta1b: [1, -138.4], beta3a: [1, -138.5], beta3b: [-1, -138.4],
+			beta2a: [1, 41.7], beta2b: [-1, 46.0], beta4a: [-1, 41.7], beta4b: [1, 42.1]
+		};
 		for (const [label, w] of Object.entries({ ...port.wings, ...stbd.wings })) {
-			joints.push({ obj: w, label, axis: 'y', cur: 0 });
+			const cal = BGA_CAL[label] || [1, 0];
+			joints.push({ obj: w, label, axis: 'y', cur: 0, sign: cal[0], off: cal[1] });
 		}
 		// アンテナのジンバル
 		joints.push(
@@ -2120,6 +2311,9 @@
 		const orbitQ = new THREE.Quaternion();
 		const attQ = new THREE.Quaternion();
 		const frameQ = new THREE.Quaternion();
+		// モデル座標（トラス=X）と実機ボディ座標の対応づけ（実テレメトリ105点との照合で特定した校正）
+		const MODEL_Q = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(
+			new THREE.Vector3(0, 0, 1), new THREE.Vector3(-1, 0, 0), new THREE.Vector3(0, -1, 0)));
 		const q2 = new THREE.Quaternion();
 		// ユーザーが操作するまでは、地球が背景に入る構図へカメラを自動で寄せる
 		let autoFrame = true;
@@ -2366,6 +2560,76 @@
 		}
 		setInterval(drawOrbitPanel, 1000);
 
+		// ===== 予報: 松山上空の通過と、地球の影（食）の出入り =====
+		// 状態ベクトルを二体問題で48時間先まで伝播して求める概算（摂動は無視。仰角10°以上の通過を対象）
+		const OBS_LAT = 33.8272 * Math.PI / 180, OBS_LON = 132.6997 * Math.PI / 180; // 松山空港
+		const sunTmpE = new THREE.Vector3();
+		function sunDirECI(date) {
+			const jd = date.getTime() / 86400000 + 2440587.5;
+			const T = (jd - 2451545.0) / 36525;
+			const v = helioPos(EARTH_EL, T, sunTmpE); // 太陽から見た地球 [AU]（黄道座標）
+			const cy = v.y * PL_CE - v.z * PL_SE, cz = v.y * PL_SE + v.z * PL_CE; // 赤道座標へ
+			const l = Math.hypot(v.x, cy, cz) || 1;
+			return [-v.x / l, -cy / l, -cz / l]; // 地球から見た太陽方向（ECI 単位ベクトル）
+		}
+		function computePredictions() {
+			const setT = (id, txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
+			const st = window.telemetryState || {};
+			let x = parseFloat(st['position_x']), y = parseFloat(st['position_y']), z = parseFloat(st['position_z']);
+			let ux = parseFloat(st['velocity_x']) / 1000, uy = parseFloat(st['velocity_y']) / 1000, uz = parseFloat(st['velocity_z']) / 1000;
+			const r0 = Math.hypot(x, y, z);
+			if (!(Number.isFinite(r0) && r0 > 6000 && r0 < 8000)) { setT('ORB-PASS', '---'); setT('ORB-ECL', '---'); return; }
+			const dt = 10, total = 48 * 3600, now = Date.now();
+			const oX = 6371 * Math.cos(OBS_LAT) * Math.cos(OBS_LON), oY = 6371 * Math.cos(OBS_LAT) * Math.sin(OBS_LON), oZ = 6371 * Math.sin(OBS_LAT);
+			const uX = Math.cos(OBS_LAT) * Math.cos(OBS_LON), uY = Math.cos(OBS_LAT) * Math.sin(OBS_LON), uZ = Math.sin(OBS_LAT);
+			let initShadow = null, eclipseAt = -1;
+			let pass = null, inPass = false, curMax = -90, curMaxT = 0, curSunlit = false, curSunEl = 90;
+			for (let t = 0; t <= total; t += dt) {
+				const date = new Date(now + t * 1000);
+				const [sx, sy, sz] = sunDirECI(date);
+				const dot = x * sx + y * sy + z * sz;
+				const rr = Math.hypot(x, y, z);
+				const perp = Math.sqrt(Math.max(0, rr * rr - dot * dot));
+				const shadow = dot < 0 && perp < 6371; // 円筒近似の影
+				if (initShadow === null) initShadow = shadow;
+				else if (eclipseAt < 0 && shadow !== initShadow) eclipseAt = t;
+				const g = gmstRad(date), cg = Math.cos(g), sg = Math.sin(g);
+				const fx = cg * x + sg * y, fy = -sg * x + cg * y; // ECEF（z は共通）
+				const rx = fx - oX, ry = fy - oY, rz = z - oZ;
+				const rl = Math.hypot(rx, ry, rz) || 1;
+				const el = Math.asin((rx * uX + ry * uY + rz * uZ) / rl) * 180 / Math.PI;
+				if (el > 10) {
+					if (!inPass) { inPass = true; curMax = el; curMaxT = t; curSunlit = !shadow; const sfx = cg * sx + sg * sy, sfy = -sg * sx + cg * sy; curSunEl = Math.asin(sfx * uX + sfy * uY + sz * uZ) * 180 / Math.PI; }
+					else if (el > curMax) { curMax = el; curMaxT = t; curSunlit = !shadow; const sfx = cg * sx + sg * sy, sfy = -sg * sx + cg * sy; curSunEl = Math.asin(sfx * uX + sfy * uY + sz * uZ) * 180 / Math.PI; }
+				} else if (inPass) {
+					inPass = false;
+					if (!pass) pass = { maxEl: curMax, atSec: curMaxT, sunlit: curSunlit, sunEl: curSunEl };
+				}
+				if (pass && eclipseAt >= 0) break;
+				// 速度ベルレ法で dt 進める
+				const a1 = -MU / (rr * rr * rr);
+				const hx = ux + a1 * x * dt / 2, hy = uy + a1 * y * dt / 2, hz = uz + a1 * z * dt / 2;
+				x += hx * dt; y += hy * dt; z += hz * dt;
+				const r2 = Math.hypot(x, y, z), a2 = -MU / (r2 * r2 * r2);
+				ux = hx + a2 * x * dt / 2; uy = hy + a2 * y * dt / 2; uz = hz + a2 * z * dt / 2;
+			}
+			if (inPass && !pass) pass = { maxEl: curMax, atSec: curMaxT, sunlit: curSunlit, sunEl: curSunEl };
+			const rel = (sec) => {
+				const m = Math.round(sec / 60);
+				return m >= 60 ? 'あと' + Math.floor(m / 60) + '時間' + (m % 60) + '分' : 'あと' + m + '分';
+			};
+			if (pass) {
+				const d = new Date(now + pass.atSec * 1000);
+				const hm = d.getHours() + ':' + String(d.getMinutes()).padStart(2, '0');
+				const cond = !pass.sunlit ? '・ISSは影の中' : (pass.sunEl < 0 ? '・夜で見える好条件' : '・昼間の通過');
+				setT('ORB-PASS', (d.getMonth() + 1) + '/' + d.getDate() + ' ' + hm + ' 最大' + pass.maxEl.toFixed(0) + '°（' + rel(pass.atSec) + cond + '）');
+			} else setT('ORB-PASS', '48時間以内に なし');
+			if (eclipseAt >= 0) setT('ORB-ECL', initShadow ? '影の中（' + rel(eclipseAt) + 'に日の出）' : '日照中（' + rel(eclipseAt) + 'に影へ）');
+			else setT('ORB-ECL', initShadow ? '影の中' : '日照中');
+		}
+		setInterval(computePredictions, 60000);
+		setTimeout(computePredictions, 4000);
+
 		// ステーションの全メッシュに影の生成・受けを有効化（太陽光のセルフシャドウ）
 		station.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
 
@@ -2374,6 +2638,55 @@
 		const realGroup = new THREE.Group();
 		realGroup.visible = false;
 		earthSystem.add(realGroup);
+
+		// ===== 画質設定（影の付け方と描画解像度を3段階で切り替える。選択は保存される） =====
+		// 最軽量: 影なし＋解像度1.0固定
+		// デフォルト: 地球が影を受ける（ISS の影が太陽方向どおり地表に落ちる）＋解像度は適応（最大1.5）＋影マップ1024・1フレームおき更新
+		// 最重量: ISS のセルフシャドウ＋地球の影の両方。影マップ2048・範囲±120・毎フレーム更新で太陽方向に厳密に追従＋解像度はモニタどおり
+		const DPR_STEPS = [1.5, 1.25, 1.0];
+		let dprIdx = 0;
+		let quality = 'standard';
+		try { const q = localStorage.getItem('iss_quality'); if (q === 'light' || q === 'standard' || q === 'heavy') quality = q; } catch (e) { }
+		const qualitySel = document.getElementById('QUALITY');
+		qualitySel.value = quality;
+		function applyShadowFlags() {
+			const recvStation = quality === 'heavy'; // ISS 自身が影を受けるのは最重量だけ
+			station.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = recvStation; } });
+			realGroup.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = recvStation; } });
+			earth.receiveShadow = quality !== 'light';
+		}
+		function applyQuality() {
+			if (quality === 'light') {
+				renderer.shadowMap.enabled = false;
+				sun.castShadow = false;
+				renderer.setPixelRatio(1.0);
+			} else {
+				renderer.shadowMap.enabled = true;
+				sun.castShadow = true;
+				if (quality === 'heavy') {
+					sun.shadow.mapSize.set(2048, 2048);
+					sun.shadow.camera.left = -120; sun.shadow.camera.right = 120;
+					sun.shadow.camera.top = 120; sun.shadow.camera.bottom = -120;
+					sun.shadow.camera.far = 560;
+					renderer.setPixelRatio(window.devicePixelRatio);
+				} else {
+					sun.shadow.mapSize.set(1024, 1024);
+					sun.shadow.camera.left = -85; sun.shadow.camera.right = 85;
+					sun.shadow.camera.top = 85; sun.shadow.camera.bottom = -85;
+					sun.shadow.camera.far = 400;
+					dprIdx = 0;
+					renderer.setPixelRatio(Math.min(window.devicePixelRatio, DPR_STEPS[0]));
+				}
+				sun.shadow.camera.updateProjectionMatrix();
+				if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; }
+			}
+			applyShadowFlags();
+			// 影の有無はシェーダの組み立てに影響するので、全マテリアルに再コンパイルさせる
+			scene.traverse((o) => { if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { m.needsUpdate = true; }); });
+			try { localStorage.setItem('iss_quality', quality); } catch (e) { }
+		}
+		qualitySel.addEventListener('change', () => { quality = qualitySel.value; applyQuality(); });
+		applyQuality();
 		let realLoaded = false, realLoading = false;
 		const chkReal = document.getElementById('CHKREAL');
 		function setRealVisible(v) {
@@ -2406,7 +2719,7 @@
 				model.traverse((o) => {
 					if (o.isMesh) {
 						o.castShadow = true;
-						o.receiveShadow = true;
+						o.receiveShadow = quality === 'heavy'; // 画質設定に合わせる（applyShadowFlags と同じ規則）
 						if (o.material && o.material.isMeshStandardMaterial) o.material.envMapIntensity = 0.35;
 					}
 				});
@@ -2414,11 +2727,13 @@
 				realGroup.updateMatrixWorld(true);
 				// ===== リアルモデルの関節連動（SARJ + BGA） =====
 				// SARJ: モデル側で回転関節として作られている S4 / P4 ノード（焼き込み 60°）をテレメトリの絶対角で駆動。
-				// 180°反転して配置したため、X 回転の符号は反転させる
+				// 符号とゼロ点オフセットは 2026-11-07 のライブフィット（105サンプル）による校正値。
+				// 右舷 -1 / 281.75°、左舷 +1 / 101.75°（両者は 180° 違いの等価分枝のうち多数決で選んだ側）。
+				// 全8翼のパネル法線と太陽のズレは平均 0.21°・最大 0.30°
 				const sarjS = model.getObjectByName('23 S4 Truss');
 				const sarjP = model.getObjectByName('20 P4 Truss');
-				if (sarjS) joints.push({ obj: sarjS, label: 'ssarj', axis: 'x', cur: -60, sign: -1 });
-				if (sarjP) joints.push({ obj: sarjP, label: 'psarj', axis: 'x', cur: -60, sign: -1 });
+				if (sarjS) joints.push({ obj: sarjS, label: 'ssarj', axis: 'x', cur: -60, sign: -1, off: 281.75 });
+				if (sarjP) joints.push({ obj: sarjP, label: 'psarj', axis: 'x', cur: -60, sign: 1, off: 101.75 });
 				// BGA: 各ウイングの付け根（ベータ軸上）にピボットを作り、ブランケットを付け替えて回す
 				function makeBga(parentName, px, pz, blanketName) {
 					const parentObj = model.getObjectByName(parentName);
@@ -2440,9 +2755,17 @@
 					['08 P6 Truss', 13.49, 0, '08 P6 Truss_01', 'beta4a'],
 					['08 P6 Truss', 13.49, 0, '08 P6 Truss_02', 'beta4b'],
 				];
+				// BGA 校正値（2026-11-07 ライブフィット: 全8翼 平均誤差 0.21°・最大 0.30°）。
+				// 同じウイングの a/b で符号が逆なのは、2枚がベータ軸を挟んで鏡像に付いているため。
+				// beta2b だけ B の動きが 0.02° と小さく符号がほぼ決まらないが、対の beta2a と逆符号＋
+				// 物理ピボット角が左舷4翼で一致（約331.8°）することから +1 を採用
+				const bgaCalReal = {
+					beta1a: [-1, 221.60], beta1b: [1, 221.63], beta3a: [1, 221.44], beta3b: [-1, 221.62],
+					beta2a: [-1, 138.42], beta2b: [1, 134.04], beta4a: [1, 138.27], beta4b: [-1, 137.90]
+				};
 				for (const [pn, px, pz, bn, label] of bgaDefs) {
 					const pivot = makeBga(pn, px, pz, bn);
-					if (pivot) joints.push({ obj: pivot, label, axis: 'z', cur: 0 });
+					if (pivot) { const cal = bgaCalReal[label]; joints.push({ obj: pivot, label, axis: 'z', cur: 0, sign: cal[0], off: cal[1] }); }
 				}
 				// SSRMS（Canadarm2）: チェーン構造のノードへ7関節を割り当てる（_04 はブーム自体なので関節なし）。
 				// 軸は解剖学的な直交関係からの推定: ヨー=Y / ロール=ブーム軸 / ピッチ=Z
@@ -2508,12 +2831,29 @@
 		resize();
 
 		let lastTickMs = performance.now();
+		// FPS 計測と適応解像度（負荷が高い環境では描画解像度を自動で段階的に落とす）
+		const fpsEl = document.getElementById('FPSDISP');
+		let frameNo = 0, fpsFrames = 0, fpsTime = 0, fpsChecks = 0;
+		const tickStartMs = performance.now();
 		function tick() {
 			requestAnimationFrame(tick);
 			const st = window.telemetryState || {};
 			const nowMs = performance.now();
-			const dtSec = Math.min(0.05, (nowMs - lastTickMs) / 1000);
+			const rawDt = (nowMs - lastTickMs) / 1000;
+			const dtSec = Math.min(0.05, rawDt);
 			lastTickMs = nowMs;
+			frameNo++;
+			if (rawDt > 0.25) { fpsFrames = 0; fpsTime = 0; } // タブ復帰直後の巨大な間隔は計測から外す
+			else { fpsFrames++; fpsTime += rawDt; }
+			if (fpsTime >= 0.5) {
+				const fps = Math.round(fpsFrames / fpsTime);
+				fpsEl.textContent = fps + ' FPS';
+				fpsFrames = 0; fpsTime = 0;
+				if (quality === 'standard' && nowMs - tickStartMs > 4000 && (++fpsChecks % 4 === 0)) { // 適応解像度はデフォルト画質のときだけ（2秒ごとに調整、起動直後の読み込み中は除く）
+					if (fps < 40 && dprIdx < DPR_STEPS.length - 1) { dprIdx++; renderer.setPixelRatio(Math.min(window.devicePixelRatio, DPR_STEPS[dprIdx])); }
+					else if (fps >= 57 && dprIdx > 0) { dprIdx--; renderer.setPixelRatio(Math.min(window.devicePixelRatio, DPR_STEPS[dprIdx])); }
+				}
+			}
 			updatePlanets(); // 地球系の公転位置と惑星の位置を先に更新する（太陽方向・カメラ追従が依存する）
 			// ===== 軌道位置と姿勢の連動 =====
 			const px = parseFloat(st['position_x']), py = parseFloat(st['position_y']), pz = parseFloat(st['position_z']);
@@ -2533,13 +2873,14 @@
 			basisM.makeBasis(xAxis, zen, zAxis);
 			orbitQ.setFromRotationMatrix(basisM);
 			frameQ.copy(orbitQ);
-			// LVLH姿勢クォータニオン（成分0〜3を x, y, z, w とみなす）を軌道フレームへ重ねる
+			// LVLH姿勢クォータニオンを軌道フレームへ重ねる
+			// 成分の並びは (w, x, y, z) で、向きは共役が正しい（実テレメトリ105点との照合で特定。従来の x,y,z,w 解釈ではパネルが太陽から大きく外れていた）
 			const q = [0, 1, 2, 3].map(i => parseFloat(st['USGNC_PS_Pointing_LVLH_Att_Quatrn_' + i]));
 			if (q.every(v => Number.isFinite(v))) {
 				const n = Math.hypot(q[0], q[1], q[2], q[3]);
 				if (n > 0.5 && n < 1.5) {
-					attQ.set(q[0] / n, q[1] / n, q[2] / n, q[3] / n);
-					orbitQ.multiply(attQ);
+					attQ.set(q[1] / n, q[2] / n, q[3] / n, q[0] / n).conjugate();
+					orbitQ.multiply(attQ).multiply(MODEL_Q);
 				}
 			}
 			station.quaternion.slerp(orbitQ, 0.05);
@@ -2592,7 +2933,7 @@
 				// 360°の折り返しをまたいでも最短方向へ追従させる
 				const delta = ((raw - j.cur + 540) % 360) - 180;
 				j.cur += delta * 0.06;
-				j.obj.rotation[j.axis] = THREE.MathUtils.degToRad(j.cur) * (j.sign || 1);
+				j.obj.rotation[j.axis] = THREE.MathUtils.degToRad(j.cur) * (j.sign || 1) + THREE.MathUtils.degToRad(j.off || 0);
 			}
 			// 天体の動き: すべて実時刻ベース（実速度）
 			// 地球は GMST で回してテクスチャの国と直下表示を一致させる
@@ -2617,6 +2958,13 @@
 			moonRing.scale.setScalar(mSceneDist);
 			moon.lookAt(earthSystem.position); // 潮汐ロック: 常に同じ面を地球へ向ける
 			// 太陽風パーティクル: 太陽方向から流れ、地球の手前で磁気圏のように膨らむ
+			// 太陽フラッシュ（フレア検知時）: 太陽とグローが一瞬膨らむ
+			if (sunFlashT < 1) {
+				sunFlashT = Math.min(1, sunFlashT + dtSec / 2.2);
+				const fs = 1 + 0.45 * Math.sin(Math.PI * sunFlashT);
+				sunBall.scale.setScalar(fs);
+				sunGlow.scale.set(1650 * fs, 1650 * fs, 1);
+			}
 			if (wx.on) {
 				const sd = tmpV1.copy(sunDirScene); // 地球から見た太陽方向
 				const u = tmpV2.crossVectors(sd, Math.abs(sd.y) > 0.9 ? tmpV3.set(1, 0, 0) : tmpV3.set(0, 1, 0)).normalize();
@@ -2627,9 +2975,10 @@
 					s.t += spd * (0.7 + s.r * 0.6);
 					if (s.t > 1) s.t -= 1;
 					const axial = 1500 - s.t * 1900;
-					const bulge = 1 + 1.1 * Math.exp(-Math.pow(axial / 430, 2));
+					const aq = axial / 430;
+					const bulge = 1 + 1.1 * Math.exp(-aq * aq);
 					const rr = s.r * 620 * bulge;
-					const ca = Math.cos(s.a) * rr, sa = Math.sin(s.a) * rr;
+					const ca = s.ca * rr, sa = s.sa * rr;
 					windPos[i * 3] = sd.x * axial + u.x * ca + v.x * sa;
 					windPos[i * 3 + 1] = sd.y * axial + u.y * ca + v.y * sa;
 					windPos[i * 3 + 2] = sd.z * axial + u.z * ca + v.z * sa;
@@ -2649,7 +2998,8 @@
 				realGroup.position.copy(station.position);
 				realGroup.quaternion.copy(station.quaternion);
 			}
-			updateReadout(st);
+			if (frameNo % 15 === 0) updateReadout(st); // 左下の文字表示は約4回/秒で十分（テレメトリ値は1秒毎にしか変わらない）
+			if (quality === 'heavy' || frameNo % 2 === 0) renderer.shadowMap.needsUpdate = true; // 影マップ更新: 最重量は毎フレーム、それ以外は1フレームおき
 			controls.update();
 			renderer.render(scene, camera);
 		}
