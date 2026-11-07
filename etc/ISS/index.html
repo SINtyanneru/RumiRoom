@@ -67,9 +67,16 @@
 		#VIEW3D CANVAS { display: block; }
 		#VIEW3D-TITLE { position: absolute; top: 8px; left: 10px; color: #f2f2f2; font-size: 15px; letter-spacing: 1px; z-index: 2; pointer-events: none; }
 		#VIEW3D-READOUT { position: absolute; left: 10px; bottom: 8px; color: #39ff4d; font-family: monospace; font-size: 12px; line-height: 1.5; white-space: pre-line; z-index: 2; pointer-events: none; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); }
-		#WXBTN { position: absolute; top: 34px; left: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #9fdcff; border: 1px solid #3a5a78; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
+		#WXBTN { display: none; /* 表示は右上のチェックボックスへ移行。ボタン自体は切り替え処理の実体として残す */ position: absolute; top: 34px; left: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #9fdcff; border: 1px solid #3a5a78; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
 		#HELPBTN { position: absolute; top: 8px; right: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); color: #cfe8ff; border: 1px solid #55585f; padding: 5px 10px; font-size: 12px; cursor: pointer; letter-spacing: 1px; }
-		#FOCUSBAR { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 3; }
+		#FOCUSBAR { position: absolute; bottom: 10px; right: 10px; display: flex; gap: 6px; z-index: 3; }
+		#LINECTL { position: absolute; top: 44px; right: 10px; z-index: 3; background: rgba(8, 12, 22, 0.8); border: 1px solid #55585f; padding: 6px 9px; font-size: 12px; color: #cfe8ff; display: flex; flex-direction: column; gap: 4px; }
+		#LINECTL LABEL { cursor: pointer; white-space: nowrap; }
+		#LINECTL INPUT { margin: 0 4px 0 0; vertical-align: -1px; cursor: pointer; }
+		#WXBOX { border: 1px solid #55585f; padding: 5px 7px; margin-top: 2px; display: flex; flex-direction: column; gap: 4px; }
+		#WXBOX .WXBOX-TITLE { font-size: 11px; color: #8fb8dd; letter-spacing: 1px; }
+		#LINECTL LABEL.OFF { color: #66707c; cursor: default; }
+		#LINECTL LABEL.OFF INPUT { cursor: default; }
 		#FOCUSBAR BUTTON { background: rgba(8, 12, 22, 0.8); color: #cfe8ff; border: 1px solid #55585f; padding: 5px 9px; font-size: 12px; cursor: pointer; letter-spacing: 1px; white-space: nowrap; }
 		#FOCUSBAR BUTTON.ON { color: #ffe28a; border-color: #a8842c; }
 		#WXBTN.ON { color: #ffe28a; border-color: #a8842c; }
@@ -144,6 +151,17 @@
 			<CANVAS ID="WXCHART" WIDTH="600" HEIGHT="230"></CANVAS>
 			<DIV ID="WXLOADING"><SPAN CLASS="SPIN"></SPAN>読み込み中...</DIV>
 			<BUTTON ID="HELPBTN" TYPE="BUTTON">操作方法</BUTTON>
+			<DIV ID="LINECTL">
+				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKCONST" CHECKED>星座線</LABEL>
+				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKORBIT" CHECKED>軌道リング</LABEL>
+				<LABEL><INPUT TYPE="CHECKBOX" ID="CHKREAL">リアルモデル</LABEL>
+				<DIV ID="WXBOX">
+					<DIV CLASS="WXBOX-TITLE">宇宙天気</DIV>
+					<LABEL><INPUT TYPE="CHECKBOX" ID="CHKWX">表示</LABEL>
+					<LABEL CLASS="OFF"><INPUT TYPE="CHECKBOX" ID="CHKMAG" CHECKED DISABLED>磁力線（磁気圏）</LABEL>
+					<LABEL CLASS="OFF"><INPUT TYPE="CHECKBOX" ID="CHKSTORM" CHECKED DISABLED>太陽嵐</LABEL>
+				</DIV>
+			</DIV>
 			<DIV ID="FOCUSBAR">
 				<BUTTON TYPE="BUTTON" DATA-F="all">全体</BUTTON>
 				<BUTTON TYPE="BUTTON" DATA-F="modules">与圧部</BUTTON>
@@ -242,7 +260,7 @@
 			・ドラッグ： 回転<BR>
 			・ホイール / ピンチ： ズーム<BR>
 			・右ドラッグ： 視点の移動<BR>
-			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面下部のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。左上の「宇宙天気」ボタンでは、オーロラや太陽風、地球の磁気圏（模式図）の可視化もできます。</P>
+			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面右下のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。右上のチェックボックスでは、宇宙天気（オーロラ・太陽風・磁気圏・太陽嵐）の表示や、星座線・軌道リングの表示、NASA 公式のリアルモデル（姿勢に加えて SARJ・太陽電池パドル・Canadarm2 も連動）への切り替えができます。</P>
 			<P><B>テレメトリのセル（右側）</B><BR>
 			・セルをクリックすると、右側にその項目の履歴パネルが開き、過去100件の値がリアルタイムで更新されます。別のセルをクリックすると表示が切り替わり、閉じるときはパネル右上の × を押してください。</P>
 			<BUTTON ID="HELP-CLOSE" TYPE="button">閉じる</BUTTON>
@@ -587,6 +605,11 @@
 	<SCRIPT TYPE="module">
 		import * as THREE from 'three';
 		import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+		import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
+		import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
+		import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
+		import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+		import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 		// ===== ISS 簡易3Dモデル =====
 		// 実テレメトリの関節角度に連動する:
@@ -605,38 +628,116 @@
 		const container = document.getElementById('VIEW3D');
 		const readout = document.getElementById('VIEW3D-READOUT');
 
+		// 起動時の読み込み管理: 地表実画像・宇宙天気・リアルモデルの取得がすべて終わるまで「読み込み中」を出す
+		// （失敗した場合も「完了」扱いにして、ダイアログが残り続けないようにする）
+		const bootPending = { earth: true, wx: true, real: true };
+		const bootEl = document.getElementById('WXLOADING');
+		function bootDone(key) {
+			if (!bootPending[key]) return;
+			bootPending[key] = false;
+			if (!bootPending.earth && !bootPending.wx && !bootPending.real) bootEl.style.display = 'none';
+		}
+		bootEl.style.display = 'block';
+
 		const scene = new THREE.Scene();
 		scene.background = new THREE.Color(0x05070d);
-		const camera = new THREE.PerspectiveCamera(45, 1, 1, 30000); // near を 1 にし、薄い部品の前後面の深度競合（見え透け）を抑える。far は磁気圏全体を引いて見るために広げた
+		const camera = new THREE.PerspectiveCamera(45, 1, 1, 1200000); // near を 1 にし、薄い部品の前後面の深度競合（見え透け）を抑える。far は月・惑星・星空（実距離スケール）を収めるため大きく取る
 		camera.position.set(48, 30, 64);
 
 		const renderer = new THREE.WebGLRenderer({ antialias: true });
 		renderer.setPixelRatio(window.devicePixelRatio);
+		renderer.shadowMap.enabled = true; // 太陽光によるセルフシャドウ（実物感の要）
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		container.appendChild(renderer.domElement);
 
 		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.minDistance = 10; // 近づきすぎてモデルにめり込むのを防ぐ
-		controls.maxDistance = 7000; // 磁気圏（尾の先まで約3,300）全体を引いて見られるように
+		controls.maxDistance = 100000; // 太陽系全体（海王星の軌道 約34,700＋地球の公転分）やセドナの現在の位置（約54,700）まで引いて見られるように
 		controls.enableDamping = true;
 
 		scene.add(new THREE.AmbientLight(0xffffff, 0.55));
 		const sun = new THREE.DirectionalLight(0xffffff, 1.7);
 		sun.position.set(60, 45, 35);
+		sun.castShadow = true;
+		sun.shadow.mapSize.set(2048, 2048);
+		sun.shadow.camera.left = -85; sun.shadow.camera.right = 85;
+		sun.shadow.camera.top = 85; sun.shadow.camera.bottom = -85;
+		sun.shadow.camera.near = 20; sun.shadow.camera.far = 400;
+		sun.shadow.bias = -0.0004;
+		sun.shadow.normalBias = 0.03;
 		scene.add(sun);
 
-		// 星空
+		// 星空: まずランダムで仮表示し、実在の星表 (stars.json) が読めたら差し替える
+		const starGroup = new THREE.Group();
+		scene.add(starGroup);
 		{
 			const pos = new Float32Array(2600 * 3);
 			for (let i = 0; i < 2600; i++) {
-				const r = 22000, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+				const r = 220000, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
 				pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
 				pos[i * 3 + 1] = r * Math.cos(ph);
 				pos[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th);
 			}
 			const g = new THREE.BufferGeometry();
 			g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-			scene.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0xffffff, size: 1.6, sizeAttenuation: false })));
+			starGroup.add(new THREE.Points(g, new THREE.PointsMaterial({ color: 0xffffff, size: 1.6, sizeAttenuation: false })));
 		}
+		let constLineMat = null; // 星座線の太線マテリアル（リサイズ時に解像度を合わせる）
+		let constLinesObj = null; // 星座線オブジェクト（チェックボックスで表示切替）
+		let showConstLines = true;
+		// 実在の星々: Yale Bright Star Catalog 系の6等星まで5,044個（d3-celestial の stars.6 から生成）
+		// 赤経・赤緯 (J2000) をテレメトリの軌道位置と同じ慣性座標系に置くので、星座の向きも実物どおりになる
+		fetch('stars.json').then(r => { if (!r.ok) throw new Error('stars'); return r.json(); }).then(list => {
+			while (starGroup.children.length) { const c = starGroup.children.pop(); c.geometry.dispose(); c.material.dispose(); }
+			const bands = [
+				{ max: 2.0, size: 3.4, opacity: 1.0, pos: [], col: [] },
+				{ max: 4.0, size: 2.3, opacity: 0.95, pos: [], col: [] },
+				{ max: 99, size: 1.5, opacity: 0.85, pos: [], col: [] }
+			];
+			const stops = [[0.72, 0.83, 1.0], [1, 1, 1], [1, 0.88, 0.70], [1, 0.62, 0.38]]; // B-V: 青白→白→黄→橙
+			const v = new THREE.Vector3();
+			for (const s of list) {
+				const ra = s[0] * Math.PI / 180, dec = s[1] * Math.PI / 180;
+				eciToScene(Math.cos(dec) * Math.cos(ra), Math.cos(dec) * Math.sin(ra), Math.sin(dec), v).multiplyScalar(220000);
+				const b = s[2] < bands[0].max ? bands[0] : (s[2] < bands[1].max ? bands[1] : bands[2]);
+				b.pos.push(v.x, v.y, v.z);
+				const t = THREE.MathUtils.clamp((s[3] + 0.2) / 2.2, 0, 1) * 3;
+				const i0 = Math.min(2, Math.floor(t)), fr = t - i0;
+				for (let k = 0; k < 3; k++) b.col.push(stops[i0][k] + (stops[i0 + 1][k] - stops[i0][k]) * fr);
+			}
+			for (const b of bands) {
+				if (!b.pos.length) continue;
+				const g = new THREE.BufferGeometry();
+				g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(b.pos), 3));
+				g.setAttribute('color', new THREE.BufferAttribute(new Float32Array(b.col), 3));
+				starGroup.add(new THREE.Points(g, new THREE.PointsMaterial({ size: b.size, sizeAttenuation: false, vertexColors: true, transparent: true, opacity: b.opacity, depthWrite: false })));
+			}
+			// 星座線（薄っすら）: 実在の星が描けたときだけ重ねる。端点は星表の星と一致する
+			fetch('constellations.json').then(r => { if (!r.ok) throw new Error('lines'); return r.json(); }).then(lines => {
+				const seg = [];
+				const put = (raDeg, decDeg) => {
+					const ra = raDeg * Math.PI / 180, dec = decDeg * Math.PI / 180;
+					eciToScene(Math.cos(dec) * Math.cos(ra), Math.cos(dec) * Math.sin(ra), Math.sin(dec), v).multiplyScalar(219000);
+					seg.push(v.x, v.y, v.z);
+				};
+				for (const line of lines) {
+					for (let j = 0; j * 2 + 3 < line.length; j++) {
+						put(line[j * 2], line[j * 2 + 1]);
+						put(line[j * 2 + 2], line[j * 2 + 3]);
+					}
+				}
+				// WebGL の通常の線は太さ1px固定なので、太線用の LineSegments2 で描く
+				const g = new LineSegmentsGeometry();
+				g.setPositions(seg);
+				constLineMat = new LineMaterial({ color: 0x7fa8e8, linewidth: 2, transparent: true, opacity: 0.3, blending: THREE.AdditiveBlending, depthWrite: false });
+				constLineMat.resolution.set(container.clientWidth || 1, container.clientHeight || 1);
+				const lines2 = new LineSegments2(g, constLineMat);
+				lines2.frustumCulled = false;
+				lines2.visible = showConstLines;
+				constLinesObj = lines2;
+				starGroup.add(lines2);
+			}).catch(() => { /* 線だけ無い状態で続行 */ });
+		}).catch(() => { /* 読めなければランダム星空のまま */ });
 
 		// ===== 天体（太陽・地球・月） =====
 		// テクスチャは Canvas で生成する（外部画像に依存しない）
@@ -724,13 +825,16 @@
 		}
 
 		// 地球: 世界の中心に置く。半径 500 = 6371 km として軌道連動の基準にする
+		// 地球系グループ: 地球・月・ISS・磁気圏など地球まわり一式をまとめ、太陽のまわりの公転位置へ置く
+		const earthSystem = new THREE.Group();
+		scene.add(earthSystem);
 		const earthCenter = new THREE.Vector3(0, 0, 0);
 		const earth = new THREE.Mesh(
 			new THREE.SphereGeometry(500, 48, 32),
 			new THREE.MeshPhongMaterial({ map: earthTexture(), shininess: 18, specular: new THREE.Color(0x224466) })
 		);
 		earth.position.copy(earthCenter);
-		scene.add(earth);
+		earthSystem.add(earth);
 		// 実写テクスチャ: NASA GIBS の MODIS 実画像（前日）を Blue Marble の上に合成する
 		// MODIS には欠測の黒い部分があるので、暗い画素は Blue Marble で埋める。雲は実画像そのもの
 		let earthImageryDate = '';
@@ -884,47 +988,263 @@
 			cBm.getContext('2d').putImageData(out, 0, 0);
 			applyEarthImage(cBm);
 		}
-		loadRealEarth();
+		loadRealEarth().then(() => bootDone('earth'));
 		setInterval(loadRealEarth, 6 * 3600 * 1000);
 		const clouds = new THREE.Mesh(
 			new THREE.SphereGeometry(506, 48, 32),
 			new THREE.MeshLambertMaterial({ map: cloudTexture(), transparent: true, opacity: 0.5, depthWrite: false })
 		);
 		clouds.position.copy(earthCenter);
-		scene.add(clouds);
+		earthSystem.add(clouds);
 		const atmosphere = new THREE.Mesh(
 			new THREE.SphereGeometry(525, 48, 32),
 			new THREE.MeshBasicMaterial({ color: 0x4d9fff, transparent: true, opacity: 0.10, side: THREE.BackSide })
 		);
 		atmosphere.position.copy(earthCenter);
-		scene.add(atmosphere);
+		earthSystem.add(atmosphere);
 
 		// 直下点マーカー（ステーションから地表へ線を引く）
 		const subLineGeo = new THREE.BufferGeometry();
 		subLineGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
 		const subLine = new THREE.Line(subLineGeo, new THREE.LineBasicMaterial({ color: 0xff5252, transparent: true, opacity: 0.55 }));
-		scene.add(subLine);
+		earthSystem.add(subLine);
 		const subMarker = new THREE.Mesh(new THREE.SphereGeometry(7, 12, 8), new THREE.MeshBasicMaterial({ color: 0xff5252 }));
-		scene.add(subMarker);
+		earthSystem.add(subMarker);
 
-		// 月: 地球のまわりをゆっくり回る
+		// 月: 簡易の位置計算で実方向を求め、距離は「太陽系の図」のサイズ感に圧縮（tick で毎フレーム更新）
 		const moon = new THREE.Mesh(
-			new THREE.SphereGeometry(90, 32, 24),
+			new THREE.SphereGeometry(136, 32, 24),
 			new THREE.MeshStandardMaterial({ map: moonTexture(), roughness: 1 })
 		);
-		scene.add(moon);
-		let moonAngle = 2.2;
+		earthSystem.add(moon);
 
-		// 太陽: テレメトリの太陽ベータ角から位置を決める（tick で毎フレーム更新）
+		// 太陽: 太陽系の中心（シーン原点）に固定。惑星と地球はこのまわりを公転する
 		const sunBall = new THREE.Mesh(
-			new THREE.SphereGeometry(30, 24, 18),
+			new THREE.SphereGeometry(540, 24, 18),
 			new THREE.MeshBasicMaterial({ color: 0xffd76a })
 		);
 		scene.add(sunBall);
 		const sunGlow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), transparent: true, depthWrite: false }));
-		sunGlow.scale.set(420, 420, 1);
+		sunGlow.scale.set(1650, 1650, 1);
 		scene.add(sunGlow);
 		scene.add(sun.target);
+
+		// 軌道の円: 天体ごとの軌道面（傾斜 i・昇交点 Ω）に単位円を描き、毎フレーム現在距離にスケールする
+		function orbitPoint(u, cO, sO, cI, sI, out) {
+			const cu = Math.cos(u), su = Math.sin(u);
+			const ex = cO * cu - sO * su * cI, ey = sO * cu + cO * su * cI, ez = su * sI; // 黄道座標
+			const epsR = THREE.MathUtils.degToRad(23.43928), ce = Math.cos(epsR), se = Math.sin(epsR);
+			return eciToScene(ex, ey * ce - ez * se, ey * se + ez * ce, out);
+		}
+		const ringGroup = new THREE.Group(); // 軌道リング一式（チェックボックスでまとめて表示切替）
+		scene.add(ringGroup);
+		let ringLineMat = null; // 軌道リング共用の太線マテリアル（色は頂点カラーで分ける）
+		let orbitLineMat = null; // 太陽中心の公転軌道専用マテリアル（遠くからでも見えるよう月の軌道より太くする）
+		function makeOrbitRing(color, opacity, inclDeg, nodeDeg) {
+			const Om = THREE.MathUtils.degToRad(nodeDeg || 0), I = THREE.MathUtils.degToRad(inclDeg || 0);
+			const cO = Math.cos(Om), sO = Math.sin(Om), cI = Math.cos(I), sI = Math.sin(I);
+			const pts = [];
+			const tv = new THREE.Vector3();
+			for (let k = 0; k <= 128; k++) {
+				orbitPoint(k / 128 * Math.PI * 2, cO, sO, cI, sI, tv);
+				pts.push(tv.x, tv.y, tv.z);
+			}
+			// 太線で描くため、折れ線を線分の集まり (LineSegments2) に変換する
+			if (!ringLineMat) {
+				ringLineMat = new LineMaterial({ linewidth: 1.75, vertexColors: true, transparent: true, opacity: 0.32, blending: THREE.AdditiveBlending, depthWrite: false });
+				ringLineMat.resolution.set(container.clientWidth || 1, container.clientHeight || 1);
+			}
+			const seg = [], cols = [];
+			const col = new THREE.Color(color);
+			for (let k = 0; k + 5 < pts.length; k += 3) {
+				seg.push(pts[k], pts[k + 1], pts[k + 2], pts[k + 3], pts[k + 4], pts[k + 5]);
+				cols.push(col.r, col.g, col.b, col.r, col.g, col.b);
+			}
+			const g = new LineSegmentsGeometry();
+			g.setPositions(seg);
+			g.setColors(cols);
+			const ring = new LineSegments2(g, ringLineMat);
+			ring.frustumCulled = false;
+			ringGroup.add(ring);
+			return ring;
+		}
+		// 月の軌道リング: 昇交点は1日で0.05°しか動かないので、読み込み時点の軌道面で固定し、半径だけ毎フレーム合わせる
+		const moonRing = makeOrbitRing(0x9aa4b5, 0.3, 5.14, 125.08 - 0.052954 * (Date.now() / 86400000 + 2440587.5 - 2451545.0));
+		earthSystem.add(moonRing); // 月のリングだけは地球中心（他は太陽中心の公転軌道）
+		// 太陽中心の公転軌道（楕円）: 任意の点列から太線のループを作る
+		function makeOrbitLine(pts, color) {
+			if (!orbitLineMat) {
+				orbitLineMat = new LineMaterial({ linewidth: 3.5, vertexColors: true, transparent: true, opacity: 0.42, blending: THREE.AdditiveBlending, depthWrite: false });
+				orbitLineMat.resolution.set(container.clientWidth || 1, container.clientHeight || 1);
+			}
+			const seg = [], cols = [];
+			const col = new THREE.Color(color);
+			for (let k = 0; k < pts.length; k++) {
+				const a = pts[k], b = pts[(k + 1) % pts.length];
+				seg.push(a.x, a.y, a.z, b.x, b.y, b.z);
+				cols.push(col.r, col.g, col.b, col.r, col.g, col.b);
+			}
+			const g = new LineSegmentsGeometry();
+			g.setPositions(seg);
+			g.setColors(cols);
+			const line = new LineSegments2(g, orbitLineMat);
+			line.frustumCulled = false;
+			ringGroup.add(line);
+			return line;
+		}
+
+		// ===== 太陽系惑星 =====
+		// JPL の近似ケプラー要素から太陽中心の位置を求め、距離は「よく見る太陽系の図」のサイズ感に圧縮して置く
+		// 要素: [a(AU), e, I(°), L(°), ϖ(°), Ω(°), 各々の1ユリウス世紀あたりの変化量]
+		const EARTH_EL = [1.00000261, 0.01671123, -0.00001531, 100.46457166, 102.93768193, 0.0, 0.00000562, -0.00004392, -0.01294668, 35999.37244981, 0.32327364, 0.0];
+		// size は地球（半径500）に対する実比率を平方根で圧縮した図の縮尺。隣の軌道へはみ出さないよう上限も確認済み
+		const PLANETS = [
+			{ name: '水星', color: 0x9c8e84, size: 190, el: [0.38709927, 0.20563593, 7.00497902, 252.25032350, 77.45779628, 48.33076593, 0.00000037, 0.00001906, -0.00594749, 149472.67411175, 0.16047689, -0.12534081] },
+			{ name: '金星', color: 0xe8d8a8, size: 280, el: [0.72333566, 0.00677672, 3.39467605, 181.97909950, 131.60246718, 76.67984255, 0.00000390, -0.00004107, -0.00078890, 58517.81538729, 0.00268329, -0.27769418] },
+			{ name: '火星', color: 0xd1602f, size: 250, el: [1.52371034, 0.09339410, 1.84969142, -4.55343205, -23.94362959, 49.55953891, 0.00001847, 0.00007882, -0.00813131, 19140.30268499, 0.44441088, -0.29257343] },
+			{ name: '木星', color: 0xd8b48f, size: 800, el: [5.20288700, 0.04838624, 1.30439695, 34.39644051, 14.72847983, 100.47390909, -0.00011607, -0.00013253, -0.00183714, 3034.74612775, 0.21252668, 0.20469106] },
+			{ name: '土星', color: 0xe3cf9e, size: 700, ring: true, el: [9.53667594, 0.05386179, 2.48599187, 49.95424423, 92.59887831, 113.66242448, -0.00125060, -0.00050991, 0.00193609, 1222.49362201, -0.41897216, -0.28867794] },
+			{ name: '天王星', color: 0x9fd8d4, size: 520, el: [19.18916464, 0.04725744, 0.77263783, 313.23810451, 170.95427630, 74.01692503, -0.00196176, -0.00004397, -0.00242939, 428.48202785, 0.40805281, 0.04240589] },
+			{ name: '海王星', color: 0x5f7fe8, size: 500, el: [30.06992276, 0.00859048, 1.77004347, -55.12002969, 44.96476227, 131.78422574, 0.00026291, 0.00005105, 0.00035372, 218.45945325, -0.32241464, -0.00508664] }
+		];
+		function helioPos(el, T, out) {
+			const a = el[0] + el[6] * T, e = el[1] + el[7] * T;
+			const I = THREE.MathUtils.degToRad(el[2] + el[8] * T);
+			const L = THREE.MathUtils.degToRad(el[3] + el[9] * T);
+			const lp = THREE.MathUtils.degToRad(el[4] + el[10] * T);
+			const Om = THREE.MathUtils.degToRad(el[5] + el[11] * T);
+			const M = L - lp, w = lp - Om;
+			let E = M + e * Math.sin(M);
+			for (let k = 0; k < 4; k++) E = E - (E - e * Math.sin(E) - M) / (1 - e * Math.cos(E));
+			const xp = a * (Math.cos(E) - e), yp = a * Math.sqrt(1 - e * e) * Math.sin(E);
+			return rotPerifocal(xp, yp, w, I, Om, out);
+		}
+		// 軌道面内の座標 (xp, yp) を黄道座標へ回す（惑星・準惑星で共用）
+		function rotPerifocal(xp, yp, w, I, Om, out) {
+			const cw = Math.cos(w), sw = Math.sin(w), cO = Math.cos(Om), sO = Math.sin(Om), cI = Math.cos(I), sI = Math.sin(I);
+			out.set(
+				(cw * cO - sw * sO * cI) * xp + (-sw * cO - cw * sO * cI) * yp,
+				(cw * sO + sw * cO * cI) * xp + (-sw * sO + cw * cO * cI) * yp,
+				(sw * sI) * xp + (cw * sI) * yp);
+			return out;
+		}
+		function nameSprite(text) {
+			const c = document.createElement('canvas');
+			c.width = 256; c.height = 64;
+			const g = c.getContext('2d');
+			g.font = 'bold 38px sans-serif';
+			g.textAlign = 'center';
+			g.textBaseline = 'middle';
+			g.fillStyle = '#dfe8ff';
+			g.fillText(text, 128, 34);
+			const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, opacity: 0.9, depthWrite: false }));
+			sp.scale.set(700, 175, 1);
+			return sp;
+		}
+		const planetObjs = [];
+		for (const p of PLANETS) {
+			const mesh = new THREE.Mesh(
+				new THREE.SphereGeometry(p.size, 24, 18),
+				new THREE.MeshStandardMaterial({ color: p.color, roughness: 1, emissive: p.color, emissiveIntensity: 0.12 })
+			);
+			if (p.ring) {
+				const ring = new THREE.Mesh(
+					new THREE.RingGeometry(p.size * 1.3, p.size * 1.9, 48),
+					new THREE.MeshBasicMaterial({ color: 0xcbb98a, transparent: true, opacity: 0.65, side: THREE.DoubleSide })
+				);
+				ring.rotation.x = -1.1;
+				mesh.add(ring);
+			}
+			const label = nameSprite(p.name);
+			label.position.y = p.size + 180;
+			mesh.add(label);
+			scene.add(mesh);
+			planetObjs.push({ el: p.el, mesh: mesh, color: p.color });
+		}
+		// ===== 準惑星 =====
+		// 軌道要素は JPL Small-Body Database の接点要素（a, e, i, Ω, ω, 元期の平均近点角 ma と元期JD）
+		const DWARFS = [
+			{ name: 'ケレス', color: 0xa8a098, size: 110, a: 2.765553, e: 0.079692, i: 10.588028, om: 80.248627, w: 73.294215, ma: 274.419346, epoch: 2461200.5 },
+			{ name: '冥王星', color: 0xc8a882, size: 160, a: 39.588629, e: 0.251838, i: 17.147711, om: 110.292384, w: 113.709002, ma: 38.683663, epoch: 2457588.5 },
+			{ name: 'ハウメア', color: 0xd0ccc4, size: 140, a: 43.060290, e: 0.194443, i: 28.208474, om: 121.786056, w: 240.690547, ma: 223.210412, epoch: 2461200.5 },
+			{ name: 'マケマケ', color: 0xc88a5a, size: 140, a: 45.570933, e: 0.158889, i: 29.027856, om: 79.294834, w: 297.092273, ma: 169.937996, epoch: 2461200.5 },
+			{ name: 'エリス', color: 0xdcdce4, size: 160, a: 67.933947, e: 0.438239, i: 43.925828, om: 36.004770, w: 150.794924, ma: 211.774434, epoch: 2461200.5 },
+			{ name: 'ゴンゴン', color: 0xc86a4a, size: 150, a: 66.866666, e: 0.504251, i: 30.899067, om: 336.838316, w: 206.623284, ma: 111.664542, epoch: 2461200.5 },
+			{ name: 'セドナ', color: 0xb85a48, size: 140, a: 543.719529, e: 0.859882, i: 11.925276, om: 144.506166, w: 311.098773, ma: 358.595694, epoch: 2461200.5 }
+		];
+		const dwarfObjs = [];
+		for (const dw of DWARFS) {
+			const mesh = new THREE.Mesh(
+				new THREE.SphereGeometry(dw.size, 24, 18),
+				new THREE.MeshStandardMaterial({ color: dw.color, roughness: 1, emissive: dw.color, emissiveIntensity: 0.12 })
+			);
+			const label = nameSprite(dw.name);
+			label.position.y = dw.size + 180;
+			mesh.add(label);
+			scene.add(mesh);
+			dwarfObjs.push(Object.assign({}, dw, { mesh: mesh }));
+		}
+		function dwarfPos(dw, jd, out) {
+			const n = 0.9856076686 / Math.pow(dw.a, 1.5); // 平均運動（度/日）
+			const M = THREE.MathUtils.degToRad(dw.ma + n * (jd - dw.epoch));
+			let E = M + dw.e * Math.sin(M);
+			for (let k = 0; k < 5; k++) E = E - (E - dw.e * Math.sin(E) - M) / (1 - dw.e * Math.cos(E));
+			const xp = dw.a * (Math.cos(E) - dw.e), yp = dw.a * Math.sqrt(1 - dw.e * dw.e) * Math.sin(E);
+			return rotPerifocal(xp, yp, THREE.MathUtils.degToRad(dw.w), THREE.MathUtils.degToRad(dw.i), THREE.MathUtils.degToRad(dw.om), out);
+		}
+		const planetTmpE = new THREE.Vector3(), planetTmpQ = new THREE.Vector3(), planetTmpH = new THREE.Vector3();
+		const PL_EPS = THREE.MathUtils.degToRad(23.43928), PL_CE = Math.cos(PL_EPS), PL_SE = Math.sin(PL_EPS);
+		// 黄道座標 (AU) をシーン座標へ: 赤道座標へ直し、太陽からの距離を 7500 * d^0.45 に圧縮する
+		// （指数を大きくして軌道同士の「間隔の比」自体を広げ、隣の軌道と被らないようにする）
+		function eclToSceneWarped(v, out) {
+			const dAU = Math.max(v.length(), 0.05);
+			const ey = v.y * PL_CE - v.z * PL_SE, ez = v.y * PL_SE + v.z * PL_CE;
+			return eciToScene(v.x, ey, ez, out).normalize().multiplyScalar(7500 * Math.pow(dAU, 0.45));
+		}
+		const sunDirScene = new THREE.Vector3(1, 0, 0); // 地球から見た太陽のシーン方向（updatePlanets が更新）
+		function placeBody(obj) {
+			eclToSceneWarped(planetTmpH, planetTmpQ); // 太陽中心の位置
+			obj.mesh.position.copy(planetTmpQ);
+		}
+		function updatePlanets() {
+			const jd = Date.now() / 86400000 + 2440587.5;
+			const T = (jd - 2451545.0) / 36525;
+			helioPos(EARTH_EL, T, planetTmpE);
+			// 地球系（地球・月・ISS・磁気圏の一式）を公転位置へ置き、太陽方向もここから決める
+			eclToSceneWarped(planetTmpE, earthSystem.position);
+			sunDirScene.copy(earthSystem.position).multiplyScalar(-1).normalize();
+			for (const p of planetObjs) { helioPos(p.el, T, planetTmpH); placeBody(p); }
+			for (const dw of dwarfObjs) { dwarfPos(dw, jd, planetTmpH); placeBody(dw); }
+		}
+		// 公転軌道のサンプリング（離心近点角を一周させ、惑星本体と同じ距離圧縮をかけて太陽中心に描く）
+		function helioOrbitPoints(el, T) {
+			const a = el[0] + el[6] * T, e = el[1] + el[7] * T;
+			const I = THREE.MathUtils.degToRad(el[2] + el[8] * T);
+			const lp = THREE.MathUtils.degToRad(el[4] + el[10] * T);
+			const Om = THREE.MathUtils.degToRad(el[5] + el[11] * T);
+			const pts = [], v = new THREE.Vector3();
+			for (let k = 0; k < 256; k++) {
+				const E = k / 256 * Math.PI * 2;
+				rotPerifocal(a * (Math.cos(E) - e), a * Math.sqrt(1 - e * e) * Math.sin(E), lp - Om, I, Om, v);
+				pts.push(eclToSceneWarped(v, new THREE.Vector3()));
+			}
+			return pts;
+		}
+		function dwarfOrbitPoints(dw) {
+			const pts = [], v = new THREE.Vector3();
+			for (let k = 0; k < 256; k++) {
+				const E = k / 256 * Math.PI * 2;
+				rotPerifocal(dw.a * (Math.cos(E) - dw.e), dw.a * Math.sqrt(1 - dw.e * dw.e) * Math.sin(E), THREE.MathUtils.degToRad(dw.w), THREE.MathUtils.degToRad(dw.i), THREE.MathUtils.degToRad(dw.om), v);
+				pts.push(eclToSceneWarped(v, new THREE.Vector3()));
+			}
+			return pts;
+		}
+		{
+			const Tnow = (Date.now() / 86400000 + 2440587.5 - 2451545.0) / 36525;
+			makeOrbitLine(helioOrbitPoints(EARTH_EL, Tnow), 0x6f87a8); // 地球の公転軌道
+			for (const p of planetObjs) makeOrbitLine(helioOrbitPoints(p.el, Tnow), p.color);
+			for (const dw of dwarfObjs) makeOrbitLine(dwarfOrbitPoints(dw), dw.color);
+		}
 
 		// 宇宙空間の空白が目立たないよう、遠方に淡い星雲を散らす
 		{
@@ -932,9 +1252,9 @@
 			const rnd = seededRandom(1234);
 			for (let i = 0; i < 7; i++) {
 				const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: nebColors[i % nebColors.length], transparent: true, opacity: 0.10, depthWrite: false }));
-				const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 20000;
+				const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 200000;
 				sp.position.set(r * Math.sin(ph) * Math.cos(th), r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th));
-				const s = (1500 + rnd() * 1400) * (20000 / 3400); // 距離を伸ばした分、見かけの大きさを維持
+				const s = (1500 + rnd() * 1400) * (200000 / 3400); // 距離を伸ばした分、見かけの大きさを維持
 				sp.scale.set(s, s, 1);
 				scene.add(sp);
 			}
@@ -944,8 +1264,27 @@
 		const wx = { on: false, kp: null, speed: null, density: null, bz: null, flare: '---', kpSeries: [], bzSeries: [] };
 		const wxBtn = document.getElementById('WXBTN');
 		const wxInfo = document.getElementById('WXINFO');
-		const wxLoading = document.getElementById('WXLOADING');
 		const wxChart = document.getElementById('WXCHART');
+
+		// 表示切替（右上のチェックボックス群）
+		const chkWx = document.getElementById('CHKWX');
+		chkWx.checked = wx.on; // 読み込み直後の状態をそろえる（ブラウザのフォーム復元でズレないように）
+		chkWx.addEventListener('change', () => { wx.on = chkWx.checked; applyWx(); }); // チェック状態そのものを正として反映する（反転が起きない形）
+		document.getElementById('CHKCONST').addEventListener('change', (e) => {
+			showConstLines = e.target.checked;
+			if (constLinesObj) constLinesObj.visible = showConstLines;
+		});
+		document.getElementById('CHKORBIT').addEventListener('change', (e) => {
+			ringGroup.visible = e.target.checked; // 太陽中心の公転軌道
+			moonRing.visible = e.target.checked; // 地球中心の月の軌道
+		});
+		document.getElementById('CHKMAG').addEventListener('change', (e) => {
+			showMagLines = e.target.checked;
+			magGroup.visible = wx.on && showMagLines;
+		});
+		document.getElementById('CHKSTORM').addEventListener('change', (e) => {
+			showStorms = e.target.checked;
+		});
 
 		// オーロラ層: OVATION モデルの出現確率を極域に光らせる
 		const auroraCanvas = document.createElement('canvas');
@@ -958,7 +1297,7 @@
 			new THREE.MeshBasicMaterial({ map: auroraTex, transparent: true, blending: THREE.AdditiveBlending, depthWrite: false })
 		);
 		aurora.visible = false;
-		scene.add(aurora);
+		earthSystem.add(aurora);
 
 		// 太陽風パーティクル: 太陽方向から地球へ流す
 		const WIND_N = 700;
@@ -971,7 +1310,7 @@
 		const wind = new THREE.Points(windGeo, windMat);
 		wind.visible = false;
 		wind.frustumCulled = false;
-		scene.add(wind);
+		earthSystem.add(wind);
 
 		// ===== 磁気圏（模式図）: 双極子磁力線を太陽側で圧縮し、夜側へ尾を引く =====
 		// 実縮尺ではなく地球半径500に対して見た目を圧縮した模式表現。圧縮率は太陽風の
@@ -979,7 +1318,7 @@
 		const MAG_S = 175; // 1 RE 分のシーン長さ
 		const magGroup = new THREE.Group();
 		magGroup.visible = false;
-		scene.add(magGroup);
+		earthSystem.add(magGroup);
 		const magLines = [];
 		const magShells = [
 			{ L: 2.2, color: 0xff4d2e },
@@ -1013,21 +1352,33 @@
 		sheet.position.x = -7.2 * MAG_S;
 		magGroup.add(sheet);
 		const magState = { comp: 0.85, stretch: 1.5 };
+		let showMagLines = true; // 磁力線の表示チェック（宇宙天気 ON のときだけ有効）
 		const magBasis = new THREE.Matrix4();
 		const magNorth = new THREE.Vector3(0, 1, 0);
 		const magMx = new THREE.Vector3(), magMy = new THREE.Vector3(), magMz = new THREE.Vector3();
-		function updateMagnetosphere(sd, nowSec) {
-			// 姿勢: ローカル +X を太陽方向、+Y を地磁気北極側へ
+		// 双極子軸: 地球固定の実軸（北地磁気極 80.65N / 72.68W、傾き約9.4°）を GMST で回したもの。
+		// 太陽基準の変形フレームの中で、この実軸に合わせて磁力線を傾ける
+		const magDipLocal = new THREE.Vector3();
+		const magDipQ = new THREE.Quaternion();
+		const magInvQ = new THREE.Quaternion();
+		const magP = new THREE.Vector3();
+		const MAG_Y = new THREE.Vector3(0, 1, 0);
+		function updateMagnetosphere(sd, nowSec, dipScene) {
+			// 変形フレームの姿勢: ローカル +X を太陽方向へ（圧縮・尾の伸びはこの系で計算）
 			magMx.copy(sd).normalize();
 			magMz.crossVectors(magMx, magNorth).normalize();
 			magMy.crossVectors(magMz, magMx).normalize();
 			magBasis.makeBasis(magMx, magMy, magMz);
 			magGroup.quaternion.setFromRotationMatrix(magBasis);
+			// 双極子軸をローカル系へ変換し、「軸まわりに生成した磁力線」を実軸へ合わせる回転を作る
+			magInvQ.copy(magGroup.quaternion).invert();
+			magDipLocal.copy(dipScene).applyQuaternion(magInvQ).normalize();
+			magDipQ.setFromUnitVectors(MAG_Y, magDipLocal);
 			// 実況からの目標値: 動圧で太陽側が潰れ、Bz 南向きと Kp で尾が伸びる
 			const spd = wx.speed || 400, den = wx.density || 5;
 			const pres = 1.6726e-6 * den * spd * spd;
-			const compT = THREE.MathUtils.clamp(0.88 - 0.07 * (pres - 1), 0.64, 0.93);
-			const stretchT = THREE.MathUtils.clamp(1.45 + (wx.kp || 0) * 0.09 + (wx.bz !== null && wx.bz < 0 ? Math.min(0.55, -wx.bz * 0.035) : 0), 1.3, 2.5);
+			const compT = THREE.MathUtils.clamp(0.88 - 0.07 * (pres - 1) - 0.10 * stormImpact, 0.60, 0.93);
+			const stretchT = THREE.MathUtils.clamp(1.45 + (wx.kp || 0) * 0.09 + (wx.bz !== null && wx.bz < 0 ? Math.min(0.55, -wx.bz * 0.035) : 0) + 0.25 * stormImpact, 1.3, 2.6);
 			magState.comp += (compT - magState.comp) * 0.04;
 			magState.stretch += (stretchT - magState.stretch) * 0.04;
 			const sheetT = (wx.bz !== null && wx.bz < 0) ? Math.min(0.3, 0.12 - wx.bz * 0.012) : 0.1;
@@ -1036,7 +1387,8 @@
 			for (const ml of magLines) {
 				const pos = ml.line.geometry.attributes.position;
 				for (let i = 0; i < ml.base.length; i++) {
-					let x = ml.base[i][0], y = ml.base[i][1], z = ml.base[i][2];
+					magP.set(ml.base[i][0], ml.base[i][1], ml.base[i][2]).applyQuaternion(magDipQ);
+					let x = magP.x, y = magP.y, z = magP.z;
 					if (x > 0) {
 						x *= magState.comp;
 					} else {
@@ -1049,6 +1401,72 @@
 					pos.setXYZ(i, x, y, z);
 				}
 				pos.needsUpdate = true;
+			}
+		}
+
+		// ===== 太陽嵐（CME の模式表示）: 太陽から膨らむ波面が惑星たちを洗い、地球に届くと磁気圏が反応する =====
+		// 実況の太陽風速度で伝播の速さを、Kp・フレアで発生頻度と明るさを変える模式表現（実 CME の到来予報ではない）
+		const stormGroup = new THREE.Group();
+		stormGroup.visible = false;
+		scene.add(stormGroup);
+		let showStorms = true; // 太陽嵐の表示チェック（宇宙天気 ON のときだけ有効）
+		let stormImpact = 0; // 嵐が地球へ到達した余韻（updateMagnetosphere の圧縮・伸長に使う）
+		const stormGeo = new THREE.SphereGeometry(1, 48, 32);
+		const stormFronts = [];
+		let stormLastEmit = 0;
+		const earthFlash = new THREE.Mesh(
+			new THREE.SphereGeometry(1, 32, 24),
+			new THREE.MeshBasicMaterial({ color: 0xbfe8ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide })
+		);
+		earthFlash.visible = false;
+		earthSystem.add(earthFlash);
+		let flashT = 1;
+		function stormActivity() {
+			let interval = 14, peak = 0.10;
+			if ((wx.speed || 0) > 550 || (wx.kp || 0) >= 4) { interval = 8; peak = 0.13; }
+			if ((wx.kp || 0) >= 5 || /^[MX]/.test(wx.flare || '')) { interval = 5; peak = 0.17; }
+			return { interval, peak };
+		}
+		function updateStorms(nowSec, dt) {
+			stormImpact = Math.max(0, stormImpact - dt / 7); // 到達の余韻は約7秒で減衰
+			if (flashT < 1) {
+				flashT = Math.min(1, flashT + dt / 1.6);
+				earthFlash.visible = true;
+				earthFlash.scale.setScalar(560 + 1050 * flashT);
+				earthFlash.material.opacity = 0.32 * (1 - flashT);
+			} else earthFlash.visible = false;
+			stormGroup.visible = wx.on && showStorms;
+			if (!stormGroup.visible) return;
+			const act = stormActivity();
+			if (nowSec - stormLastEmit > act.interval && stormFronts.length < 7) {
+				const mat = new THREE.MeshBasicMaterial({ color: (wx.kp || 0) >= 5 ? 0xff8a5f : 0xffc37a, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+				const m = new THREE.Mesh(stormGeo, mat);
+				m.frustumCulled = false;
+				stormGroup.add(m);
+				stormFronts.push({ mesh: m, r: 60, peak: act.peak, hit: false });
+				stormLastEmit = nowSec;
+			}
+			const transit = THREE.MathUtils.clamp(30 * 400 / (wx.speed || 400), 12, 48); // 太陽→地球（7,500）を何秒で届くか
+			const vScene = 7500 / transit;
+			const maxR = 39000; // 海王星の軌道（約34,700）の少し先まで
+			const earthDist = earthSystem.position.length();
+			for (let i = stormFronts.length - 1; i >= 0; i--) {
+				const f = stormFronts[i];
+				const prev = f.r;
+				f.r += vScene * dt;
+				if (!f.hit && prev < earthDist && f.r >= earthDist) {
+					f.hit = true;
+					stormImpact = 1;
+					flashT = 0;
+				}
+				const p = f.r / maxR;
+				f.mesh.scale.setScalar(f.r);
+				f.mesh.material.opacity = f.peak * Math.pow(Math.sin(Math.PI * Math.min(p, 1)), 0.7);
+				if (p >= 1) {
+					stormGroup.remove(f.mesh);
+					f.mesh.material.dispose();
+					stormFronts.splice(i, 1);
+				}
 			}
 		}
 
@@ -1226,59 +1644,156 @@
 				drawAurora(o.coordinates);
 			} catch (e) { /* 前のオーロラを保持する */ }
 		}
-		let wxTimer = null, auroraTimer = null;
-		wxBtn.addEventListener('click', () => {
-			wx.on = !wx.on;
+		function applyWx() {
 			wxBtn.textContent = wx.on ? '宇宙天気 ON' : '宇宙天気 OFF';
 			wxBtn.classList.toggle('ON', wx.on);
+			chkWx.checked = wx.on;
+			// 磁力線と太陽嵐のチェックは宇宙天気が ON のときだけ押せるようにする
+			const chkMag = document.getElementById('CHKMAG');
+			chkMag.disabled = !wx.on;
+			chkMag.parentElement.classList.toggle('OFF', !wx.on);
+			const chkStorm = document.getElementById('CHKSTORM');
+			chkStorm.disabled = !wx.on;
+			chkStorm.parentElement.classList.toggle('OFF', !wx.on);
 			aurora.visible = wx.on;
 			wind.visible = wx.on;
-			magGroup.visible = wx.on;
+			magGroup.visible = wx.on && showMagLines;
+			stormGroup.visible = wx.on && showStorms;
 			wxInfo.style.display = wx.on ? 'block' : 'none';
 			wxChart.style.display = wx.on ? 'block' : 'none';
-			if (wx.on) {
-				// 初回取得が終わるまで「読み込み中...」ダイアログを出す
-				wxLoading.style.display = 'block';
-				Promise.allSettled([updateWxData(), updateAurora()]).then(() => {
-					if (wx.on) wxLoading.style.display = 'none';
-				});
-				wxTimer = setInterval(updateWxData, 5 * 60 * 1000);
-				auroraTimer = setInterval(updateAurora, 10 * 60 * 1000);
-			} else {
-				wxLoading.style.display = 'none';
-				clearInterval(wxTimer);
-				clearInterval(auroraTimer);
-			}
-		});
+		}
+		// 宇宙天気のデータは表示の ON/OFF に関係なく常時取得しておく（ON にした瞬間に表示できるように）
+		Promise.allSettled([updateWxData(), updateAurora()]).then(() => bootDone('wx'));
+		setInterval(updateWxData, 5 * 60 * 1000);
+		setInterval(updateAurora, 10 * 60 * 1000);
+		wxBtn.addEventListener('click', () => { wx.on = !wx.on; applyWx(); });
 
 		function mat(color) {
-			return new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0.35 });
+			return new THREE.MeshStandardMaterial({ color, roughness: 0.55, metalness: 0.3, envMapIntensity: 0.55 });
 		}
 		function dishMat() {
 			// お椀は開いた円錐なので、内側からも見えるよう両面描画にする
-			return new THREE.MeshStandardMaterial({ color: 0xe8e8e8, roughness: 0.6, metalness: 0.35, side: THREE.DoubleSide });
+			return new THREE.MeshStandardMaterial({ color: 0xe8e8e8, roughness: 0.6, metalness: 0.35, side: THREE.DoubleSide, envMapIntensity: 0.55 });
 		}
-		function box(w, h, d, color, x = 0, y = 0, z = 0) {
-			const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(color));
+		// ===== 実物感を出すための簡易テクスチャ（Canvas 生成） =====
+		function canvasTex(w, h, draw) {
+			const c = document.createElement('canvas');
+			c.width = w; c.height = h;
+			draw(c.getContext('2d'), w, h);
+			const t = new THREE.CanvasTexture(c);
+			t.colorSpace = THREE.SRGBColorSpace;
+			t.wrapS = t.wrapT = THREE.RepeatWrapping;
+			t.anisotropy = 4;
+			return t;
+		}
+		const solarTex = canvasTex(256, 512, (g, w, h) => {
+			const grad = g.createLinearGradient(0, 0, w, 0);
+			grad.addColorStop(0, '#1d3f9e'); grad.addColorStop(0.5, '#2a55c4'); grad.addColorStop(1, '#1d3f9e');
+			g.fillStyle = grad; g.fillRect(0, 0, w, h);
+			const rnd = seededRandom(77);
+			for (let y = 0; y < h / 32; y++) for (let x = 0; x < w / 32; x++) {
+				g.fillStyle = 'rgba(' + (140 + rnd() * 60 | 0) + ',' + (170 + rnd() * 50 | 0) + ',255,' + (rnd() * 0.10) + ')';
+				g.fillRect(x * 32 + 1, y * 32 + 1, 30, 30);
+			}
+			g.strokeStyle = 'rgba(170,200,255,0.65)'; g.lineWidth = 1.4;
+			for (let x = 0; x <= w; x += 32) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+			for (let y = 0; y <= h; y += 32) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+			g.strokeStyle = 'rgba(10,16,40,0.8)'; g.lineWidth = 3;
+			g.strokeRect(0, 0, w, h);
+		});
+		const radiatorTex = canvasTex(256, 256, (g, w, h) => {
+			g.fillStyle = '#edf0f3'; g.fillRect(0, 0, w, h);
+			const rnd = seededRandom(31);
+			for (let i = 0; i < 40; i++) {
+				g.fillStyle = 'rgba(150,160,170,' + (rnd() * 0.06) + ')';
+				g.fillRect(rnd() * w, 0, 2 + rnd() * 5, h);
+			}
+			g.strokeStyle = 'rgba(110,120,130,0.6)'; g.lineWidth = 1.6;
+			for (let x = 0; x <= w; x += 64) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+			for (let y = 0; y <= h; y += 64) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+		});
+		const hullTex = canvasTex(256, 256, (g, w, h) => {
+			g.fillStyle = '#ffffff'; g.fillRect(0, 0, w, h);
+			g.strokeStyle = 'rgba(95,105,118,0.4)'; g.lineWidth = 1.6;
+			for (let y = 0; y <= h; y += 42) { g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+			g.strokeStyle = 'rgba(95,105,118,0.22)';
+			for (let x = 20; x <= w; x += 78) { g.beginPath(); g.moveTo(x, 0); g.lineTo(x, h); g.stroke(); }
+			g.fillStyle = 'rgba(80,90,102,0.5)';
+			const rnd = seededRandom(9);
+			for (let i = 0; i < 130; i++) g.fillRect(rnd() * w, rnd() * h, 1.6, 1.6);
+		});
+		const foilTex = canvasTex(128, 128, (g, w, h) => {
+			g.fillStyle = '#c99b45'; g.fillRect(0, 0, w, h);
+			const rnd = seededRandom(55);
+			for (let i = 0; i < 260; i++) {
+				g.strokeStyle = rnd() > 0.5 ? 'rgba(88,58,8,0.28)' : 'rgba(255,232,165,0.30)';
+				g.lineWidth = 1;
+				const x = rnd() * w, y = rnd() * h;
+				g.beginPath(); g.moveTo(x, y); g.lineTo(x + (rnd() - 0.5) * 26, y + (rnd() - 0.5) * 26); g.stroke();
+			}
+		});
+		const solarMat = new THREE.MeshStandardMaterial({ map: solarTex, roughness: 0.42, metalness: 0.55, envMapIntensity: 0.8 });
+		const radiatorMat = new THREE.MeshStandardMaterial({ map: radiatorTex, roughness: 0.7, metalness: 0.15, envMapIntensity: 0.4 });
+		const foilMat = new THREE.MeshStandardMaterial({ map: foilTex, roughness: 0.38, metalness: 0.85, envMapIntensity: 0.9 });
+		function hullMat(color) {
+			return new THREE.MeshStandardMaterial({ color, map: hullTex, roughness: 0.58, metalness: 0.28, envMapIntensity: 0.5 });
+		}
+		function box(w, h, d, color, x = 0, y = 0, z = 0, material) {
+			const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material || mat(color));
 			m.position.set(x, y, z);
 			return m;
 		}
-		function moduleCyl(r, len, color, x, y = 0, z = 0, axis = 'x') {
-			const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 20), mat(color));
+		function moduleCyl(r, len, color, x, y = 0, z = 0, axis = 'x', material) {
+			const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 24), material || hullMat(color));
 			if (axis === 'x') m.rotation.z = Math.PI / 2;
 			if (axis === 'z') m.rotation.x = Math.PI / 2;
+			// axis === 'y' は円筒の既定の向きのまま
 			m.position.set(x, y, z);
 			return m;
+		}
+		// トラスを格子状に組む（4本の縦材＋枠＋斜材）。原点から +X 方向へ伸ばす
+		function makeTruss(len, size, bayLen) {
+			const g = new THREE.Group();
+			const s = size / 2, t = 0.11;
+			const lm = mat(0x8b939c);
+			for (const sy of [-1, 1]) for (const sz of [-1, 1]) {
+				const lon = new THREE.Mesh(new THREE.BoxGeometry(len, t, t), lm);
+				lon.position.set(len / 2, sy * s, sz * s);
+				g.add(lon);
+			}
+			const bays = Math.max(1, Math.round(len / bayLen));
+			const bay = len / bays;
+			const diagLen = Math.hypot(bay, size);
+			const ang = Math.atan2(size, bay);
+			for (let i = 0; i <= bays; i++) {
+				const x = i * bay;
+				for (const sz of [-1, 1]) { const v = new THREE.Mesh(new THREE.BoxGeometry(t, size, t), lm); v.position.set(x, 0, sz * s); g.add(v); }
+				for (const sy of [-1, 1]) { const hz = new THREE.Mesh(new THREE.BoxGeometry(t, t, size), lm); hz.position.set(x, sy * s, 0); g.add(hz); }
+				if (i < bays) {
+					const xc = x + bay / 2, flip = i % 2 === 0 ? 1 : -1;
+					for (const sz of [-1, 1]) {
+						const d = new THREE.Mesh(new THREE.BoxGeometry(diagLen, t * 0.8, t * 0.8), lm);
+						d.position.set(xc, 0, sz * s); d.rotation.z = ang * flip;
+						g.add(d);
+					}
+					for (const sy of [-1, 1]) {
+						const d = new THREE.Mesh(new THREE.BoxGeometry(diagLen, t * 0.8, t * 0.8), lm);
+						d.position.set(xc, sy * s, 0); d.rotation.y = ang * flip;
+						g.add(d);
+					}
+				}
+			}
+			return g;
 		}
 
 		const station = new THREE.Group();
-		scene.add(station);
+		earthSystem.add(station);
 
 		// ===== 軌道連動（J2000 状態ベクトル） =====
 		// ECI(x, y, z) → シーン(x, z, -y) の右手系変換をして、地球半径 500 = 6371 km で縮尺する
 		const ORBIT_SCALE = 500 / 6371;
 		const EARTH_R = 500;
-		const ALT_EXAG = 3.5; // 高度の誇張倍率（地球との見た目の距離を空けるため）
+		const ALT_EXAG = 2.0; // 高度の誇張倍率（実寸だと約33単位で、実寸でないモデルの下部が地球に埋まるため。表示の高度数値は実数）
 		function eciToScene(x, y, z, out) { return out.set(x, z, -y); }
 		const orbitState = {
 			// テレメトリが届くまでの既定値（高度約400km・傾斜軌道）
@@ -1286,22 +1801,65 @@
 			vel: eciToScene(0, 4800, 5980, new THREE.Vector3()).normalize(),
 			hat: new THREE.Vector3(0, 1, 0),
 		};
-		// 太陽の慣性参照方向（この方向の「軌道面からの高さ」をベータ角で差し替える）
-		const SUN_REF = eciToScene(1, 0.35, 0.45, new THREE.Vector3()).normalize();
 		station.position.copy(orbitState.pos);
 		camera.position.set(orbitState.pos.x + 52, orbitState.pos.y + 30, orbitState.pos.z + 68);
 		controls.target.copy(orbitState.pos);
 		const prevStationPos = orbitState.pos.clone();
+		const stationWorld = new THREE.Vector3(); // ステーションのシーン座標（地球系の公転位置＋地球中心の位置）
 
-		// 中央部: S0トラス + 与圧モジュール群（簡略化）
-		station.add(box(28, 1.4, 1.4, 0x9aa0a8));
+		// 中央部: S0トラス（格子） + 与圧モジュール群
+		const s0 = makeTruss(28, 1.5, 4);
+		s0.position.x = -14;
+		station.add(s0);
 		station.add(moduleCyl(2.1, 8, 0xd8dde3, -2));        // Destiny（米国ラボ）
 		station.add(moduleCyl(2.1, 7, 0xd0d5db, 5));         // Harmony（ノード2）
 		station.add(moduleCyl(1.9, 6.5, 0xcdd6e4, 5, 0, 5, 'z'));  // Columbus
 		station.add(moduleCyl(1.9, 6.5, 0xe4dcc8, 5, 0, -5, 'z')); // きぼう
 		station.add(moduleCyl(2.0, 9, 0xcfc4ae, -11));       // Zvezda
+		station.add(moduleCyl(1.7, 3.4, 0xcfc4ae, -17.2, 0, 0, 'x', foilMat)); // Zvezda 後部（金色の断熱材）
 		station.add(moduleCyl(1.4, 5, 0xb9c0c9, -2, 0, -4.5, 'z')); // Unity 側
+		station.add(moduleCyl(1.9, 4.2, 0xd3d8de, -2, -3.9, -4.5, 'y')); // Node 3（トランクウィリティ）
+		// キューポラ: Node 3 の下に付く、窓の帯を持つ小さなドーム
+		station.add(moduleCyl(1.02, 0.75, 0x8f979f, -2, -6.3, -4.5, 'y'));
+		const cupolaGlass = new THREE.Mesh(
+			new THREE.SphereGeometry(0.98, 20, 10, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2),
+			new THREE.MeshStandardMaterial({ color: 0x141e2a, roughness: 0.15, metalness: 0.85, envMapIntensity: 0.9 })
+		);
+		cupolaGlass.position.set(-2, -6.62, -4.5);
+		station.add(cupolaGlass);
 		station.add(box(1, 4.5, 1, 0x9aa0a8, 0, 3.2, 0));    // Z1トラス
+		// ドッキングポートの輪（暗い金属の短い円筒）
+		station.add(moduleCyl(1.15, 0.7, 0x565d66, 8.8));
+		station.add(moduleCyl(1.15, 0.7, 0x565d66, -19.2));
+		// きぼう船外実験プラットフォーム（EF）: きぼう先端の小さな台 + 装置箱
+		station.add(box(3.4, 0.5, 2.6, 0x9aa0a8, 5, -0.4, -9.6));
+		station.add(box(1.1, 0.9, 1.1, 0xd8dde3, 4.2, 0.3, -9.6));
+		station.add(box(0.9, 0.7, 0.9, 0xc8922e, 5.9, 0.2, -9.6));
+		// Harmony 天頂にドッキング中のクルードラゴン風カプセル（円錐＋ドーム）
+		const capsule = new THREE.Group();
+		capsule.position.set(5, 3.6, 0);
+		const capBody = new THREE.Mesh(new THREE.CylinderGeometry(0.85, 1.55, 2.6, 20), hullMat(0xe8e9ea));
+		capsule.add(capBody);
+		const capNose = new THREE.Mesh(new THREE.SphereGeometry(0.85, 20, 12, 0, Math.PI * 2, 0, Math.PI / 2), hullMat(0xdfe1e3));
+		capNose.position.y = 1.3;
+		capsule.add(capNose);
+		station.add(capsule);
+		// Zvezda 後方にドッキング中のソユーズ風宇宙船（球＋円筒＋濃紺パネル2枚）
+		const soyuz = new THREE.Group();
+		soyuz.position.set(-21.6, 0, 0);
+		soyuz.rotation.z = Math.PI / 2;
+		const syBall = new THREE.Mesh(new THREE.SphereGeometry(1.05, 18, 14), hullMat(0x9aa48e));
+		syBall.position.y = 0.6;
+		soyuz.add(syBall);
+		const syBody = new THREE.Mesh(new THREE.CylinderGeometry(0.95, 0.95, 2.2, 18), foilMat);
+		syBody.position.y = -1.2;
+		soyuz.add(syBody);
+		for (const sd2 of [-1, 1]) {
+			const p = new THREE.Mesh(new THREE.BoxGeometry(4.6, 1.5, 0.12), solarMat);
+			p.position.set(sd2 * 3.1, -1.2, 0);
+			soyuz.add(p);
+		}
+		station.add(soyuz);
 
 		// Kuバンド SGANT（EL / クロスEL の2軸ジンバル）
 		const sgantBase = new THREE.Group();
@@ -1321,15 +1879,20 @@
 			const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 3, 10), mat(0x9aa0a8));
 			g.add(mast);
 			g.add(box(4.0, 21, 0.2, 0x707882, 0, 12.2 * dir, -0.38));
-			g.add(box(3.6, 20.4, 0.6, 0x2447b8, 0, 12.2 * dir, 0));
+			const panel = new THREE.Mesh(new THREE.BoxGeometry(3.6, 20.4, 0.6), solarMat);
+			panel.position.set(0, 12.2 * dir, 0);
+			g.add(panel);
 			return g;
 		}
 
 		// 熱放射ラジエーター（3枚組、TRRJピボット付き）
 		function makeRadiator() {
 			const g = new THREE.Group();
+			g.add(box(15.4, 0.1, 10.6, 0x707882, 0, -0.08, 5.8)); // フレーム
 			for (let i = 0; i < 3; i++) {
-				g.add(box(4.6, 0.12, 10, 0xe9edf2, (i - 1) * 5.0, 0, 5.8));
+				const p = new THREE.Mesh(new THREE.BoxGeometry(4.6, 0.14, 10), radiatorMat);
+				p.position.set((i - 1) * 5.0, 0, 5.8);
+				g.add(p);
 			}
 			return g;
 		}
@@ -1340,7 +1903,9 @@
 			const sarj = new THREE.Group();
 			sarj.position.x = 14 * sign;
 			station.add(sarj);
-			sarj.add(box(38, 1.1, 1.1, 0x9aa0a8, 19 * sign, 0, 0));
+			const truss = makeTruss(38, 1.2, 4.75);
+			if (sign < 0) truss.rotation.y = Math.PI;
+			sarj.add(truss);
 			const ring = new THREE.Mesh(new THREE.CylinderGeometry(1.6, 1.6, 1.2, 20), mat(0x7d838c));
 			ring.rotation.z = Math.PI / 2;
 			sarj.add(ring);
@@ -1366,6 +1931,18 @@
 		// 実配置: 左舷インボード=2A/2B, アウトボード=4A/4B / 右舷インボード=1A/1B, アウトボード=3A/3B
 		const port = makeSide(-1, ['beta2a', 'beta2b'], ['beta4a', 'beta4b']);
 		const stbd = makeSide(1, ['beta1a', 'beta1b'], ['beta3a', 'beta3b']);
+
+		// 環境光（IBL）: 金属や金色断熱材の質感を出す。効かせるのはステーションの部材だけにする
+		{
+			const pmrem = new THREE.PMREMGenerator(renderer);
+			scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+			scene.traverse((o) => {
+				if (!o.isMesh || !o.material || !o.material.isMeshStandardMaterial) return;
+				let inStation = false;
+				for (let q = o; q; q = q.parent) if (q === station) { inStation = true; break; }
+				if (!inStation) o.material.envMapIntensity = 0;
+			});
+		}
 
 		// Sバンドアンテナ（RFG）: 方位 / 仰角の2軸ジンバル。トラス上に置く
 		function makeSasa(parent, x) {
@@ -1562,11 +2139,15 @@
 		let focusObj = null;
 		let focusDist = 100;
 		let focusDir = null;
+		let focusKey = null;
+		let realFocusTargets = null; // リアルモデル用（GLB 読み込み時に構築）
 		const focusBtns = document.querySelectorAll('#FOCUSBAR BUTTON');
 		focusBtns.forEach(btn => {
 			btn.addEventListener('click', () => {
-				const t = focusTargets[btn.dataset.f];
+				const table = (realGroup.visible && realFocusTargets) ? realFocusTargets : focusTargets;
+				const t = table[btn.dataset.f];
 				if (!t) return;
+				focusKey = btn.dataset.f;
 				focusObj = t.obj;
 				focusDist = t.dist;
 				focusDir = t.dir;
@@ -1578,6 +2159,7 @@
 			autoFrame = false;
 			focusObj = null;
 			focusDir = null;
+			focusKey = null;
 			focusBtns.forEach(b => b.classList.remove('ON'));
 		});
 
@@ -1784,19 +2366,155 @@
 		}
 		setInterval(drawOrbitPanel, 1000);
 
+		// ステーションの全メッシュに影の生成・受けを有効化（太陽光のセルフシャドウ）
+		station.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+
+		// ===== リアルモデル（NASA 公式 ISS モデル iss.glb、44MB） =====
+		// 位置と姿勢に加え、SARJ と太陽電池パドル（BGA）もテレメトリ連動する。裏で先読みしておく
+		const realGroup = new THREE.Group();
+		realGroup.visible = false;
+		earthSystem.add(realGroup);
+		let realLoaded = false, realLoading = false;
+		const chkReal = document.getElementById('CHKREAL');
+		function setRealVisible(v) {
+			realGroup.visible = v;
+			station.visible = !v;
+			// フォーカス中なら、切り替えた先のモデルの同じ部位へ付け替える
+			if (focusKey) {
+				const table = v ? realFocusTargets : focusTargets;
+				const t = table && table[focusKey];
+				if (t) { focusObj = t.obj; focusDist = t.dist; focusDir = t.dir; }
+			}
+		}
+		function loadRealModel() {
+			if (realLoaded || realLoading) return;
+			realLoading = true;
+			new GLTFLoader().load('iss.glb', (gltf) => {
+				const model = gltf.scene;
+				const mid = new THREE.Group();
+				mid.add(model);
+				// 向きと大きさを連動モデルにそろえる: 最も長い軸をトラス方向（シーンX）へ回し、全長を約108に
+				// モデルは -X が右舷（S系）、+X が左舷（P系）。180°回して連動モデルと左右をそろえる
+				mid.rotation.y = Math.PI;
+				mid.updateMatrixWorld(true);
+				const box2 = new THREE.Box3().setFromObject(mid);
+				const size2 = box2.getSize(new THREE.Vector3());
+				const center2 = box2.getCenter(new THREE.Vector3());
+				const k = 108 / Math.max(size2.x, size2.y, size2.z);
+				mid.scale.setScalar(k);
+				mid.position.set(-center2.x * k, -center2.y * k, -center2.z * k);
+				model.traverse((o) => {
+					if (o.isMesh) {
+						o.castShadow = true;
+						o.receiveShadow = true;
+						if (o.material && o.material.isMeshStandardMaterial) o.material.envMapIntensity = 0.35;
+					}
+				});
+				realGroup.add(mid);
+				realGroup.updateMatrixWorld(true);
+				// ===== リアルモデルの関節連動（SARJ + BGA） =====
+				// SARJ: モデル側で回転関節として作られている S4 / P4 ノード（焼き込み 60°）をテレメトリの絶対角で駆動。
+				// 180°反転して配置したため、X 回転の符号は反転させる
+				const sarjS = model.getObjectByName('23 S4 Truss');
+				const sarjP = model.getObjectByName('20 P4 Truss');
+				if (sarjS) joints.push({ obj: sarjS, label: 'ssarj', axis: 'x', cur: -60, sign: -1 });
+				if (sarjP) joints.push({ obj: sarjP, label: 'psarj', axis: 'x', cur: -60, sign: -1 });
+				// BGA: 各ウイングの付け根（ベータ軸上）にピボットを作り、ブランケットを付け替えて回す
+				function makeBga(parentName, px, pz, blanketName) {
+					const parentObj = model.getObjectByName(parentName);
+					const blanket = model.getObjectByName(blanketName);
+					if (!parentObj || !blanket) return null;
+					const pivot = new THREE.Group();
+					pivot.position.set(px, 0, pz);
+					parentObj.add(pivot);
+					pivot.attach(blanket);
+					return pivot;
+				}
+				const bgaDefs = [
+					['24 S5 Truss', 0.49, -0.86, '23 S4 Truss_01', 'beta1a'],
+					['24 S5 Truss', 0.49, -0.86, '23 S4 Truss_02', 'beta1b'],
+					['32 S6 Truss', -13.49, 0, '32 S6 Truss_01', 'beta3a'],
+					['32 S6 Truss', -13.49, 0, '32 S6 Truss_02', 'beta3b'],
+					['21 P5 Truss', -0.49, 0.86, '20 P4 Truss_01', 'beta2a'],
+					['21 P5 Truss', -0.49, 0.86, '20 P4 Truss_02', 'beta2b'],
+					['08 P6 Truss', 13.49, 0, '08 P6 Truss_01', 'beta4a'],
+					['08 P6 Truss', 13.49, 0, '08 P6 Truss_02', 'beta4b'],
+				];
+				for (const [pn, px, pz, bn, label] of bgaDefs) {
+					const pivot = makeBga(pn, px, pz, bn);
+					if (pivot) joints.push({ obj: pivot, label, axis: 'z', cur: 0 });
+				}
+				// SSRMS（Canadarm2）: チェーン構造のノードへ7関節を割り当てる（_04 はブーム自体なので関節なし）。
+				// 軸は解剖学的な直交関係からの推定: ヨー=Y / ロール=ブーム軸 / ピッチ=Z
+				const ssrmsDefs = [
+					['11 Canadarm2', 'SSRMS SY Measured Joint Position', 'y'],
+					['11 Canadarm2_02', 'SSRMS SR Measured Joint Position', 'x'],
+					['11 Canadarm2_03', 'SSRMS SP Measured Joint Position', 'z'],
+					['11 Canadarm2_05', 'SSRMS EP Measured Joint Position', 'z'],
+					['11 Canadarm2_06', 'SSRMS WP Measured Joint Position', 'z'],
+					['11 Canadarm2_07', 'SSRMS WY Measured Joint Position', 'x'],
+					['11 Canadarm2_08', 'SSRMS WR Measured Joint Position', 'y'],
+				];
+				for (const [name, label, axis] of ssrmsDefs) {
+					const o = model.getObjectByName(name);
+					if (o) joints.push({ obj: o, label, axis, cur: 0 });
+				}
+				// リアルモデル用のフォーカス先（実モデルの形状に合わせた位置と距離）
+				function realAnchor(x, y, z) {
+					const a = new THREE.Object3D();
+					a.position.set(x, y, z);
+					realGroup.add(a);
+					return a;
+				}
+				realFocusTargets = {
+					all: { obj: realGroup, dist: 150, dir: new THREE.Vector3(0.55, 0.35, 0.75) },
+					modules: { obj: realAnchor(0, -5, 0), dist: 75, dir: new THREE.Vector3(0.5, 0.3, 1.0) },
+					array: { obj: realAnchor(46, 0, -4), dist: 95, dir: new THREE.Vector3(0.35, 0.45, 1.0) },
+					arm: { obj: realAnchor(9, 5, -14), dist: 32, dir: new THREE.Vector3(0.8, 0.55, 0.9) },
+					spdm: { obj: realAnchor(12, 11, -15), dist: 24, dir: new THREE.Vector3(0.55, 0.75, 0.85) },
+					sgant: { obj: realAnchor(-1, 3, -4), dist: 20, dir: new THREE.Vector3(0.75, 0.5, 0.85) },
+				};
+				realLoaded = true;
+				realLoading = false;
+				bootDone('real');
+				if (chkReal.checked) setRealVisible(true);
+			}, undefined, () => {
+				realLoading = false;
+				bootDone('real'); // 失敗でも読み込み中は解除する
+				chkReal.checked = false;
+			});
+		}
+		chkReal.addEventListener('change', () => {
+			if (chkReal.checked) {
+				if (realLoaded) setRealVisible(true);
+				else loadRealModel();
+			} else {
+				setRealVisible(false);
+			}
+		});
+		loadRealModel(); // 起動直後から取得しておき、切り替えた瞬間に表示できるようにする
+
 		function resize() {
 			const w = container.clientWidth, h = container.clientHeight;
 			if (!w || !h) return;
 			renderer.setSize(w, h);
 			camera.aspect = w / h;
 			camera.updateProjectionMatrix();
+			if (constLineMat) constLineMat.resolution.set(w, h);
+			if (ringLineMat) ringLineMat.resolution.set(w, h);
+			if (orbitLineMat) orbitLineMat.resolution.set(w, h);
 		}
 		new ResizeObserver(resize).observe(container);
 		resize();
 
+		let lastTickMs = performance.now();
 		function tick() {
 			requestAnimationFrame(tick);
 			const st = window.telemetryState || {};
+			const nowMs = performance.now();
+			const dtSec = Math.min(0.05, (nowMs - lastTickMs) / 1000);
+			lastTickMs = nowMs;
+			updatePlanets(); // 地球系の公転位置と惑星の位置を先に更新する（太陽方向・カメラ追従が依存する）
 			// ===== 軌道位置と姿勢の連動 =====
 			const px = parseFloat(st['position_x']), py = parseFloat(st['position_y']), pz = parseFloat(st['position_z']);
 			const vx = parseFloat(st['velocity_x']), vy = parseFloat(st['velocity_y']), vz = parseFloat(st['velocity_z']);
@@ -1827,6 +2545,7 @@
 			station.quaternion.slerp(orbitQ, 0.05);
 			// 位置へなめらかに追従し、カメラも同じだけ運んで相対視点を保つ
 			station.position.lerp(orbitState.pos, 0.08);
+			stationWorld.copy(earthSystem.position).add(station.position);
 			if (focusObj) {
 				// フォーカス中: 対象へ注視点を移し、部位ごとの向き（ステーション基準）から距離を詰める
 				focusObj.getWorldPosition(tmpV2);
@@ -1836,11 +2555,11 @@
 				camera.position.lerp(tmpV4, 0.06);
 				controls.target.lerp(tmpV2, 0.15);
 			} else {
-				tmpV1.copy(station.position).sub(prevStationPos);
+				tmpV1.copy(stationWorld).sub(prevStationPos);
 				camera.position.add(tmpV1);
-				controls.target.copy(station.position);
+				controls.target.copy(stationWorld);
 			}
-			prevStationPos.copy(station.position);
+			prevStationPos.copy(stationWorld);
 			// 直下点マーカーとラインを更新する
 			tmpV2.copy(station.position).setLength(EARTH_R + 3);
 			subMarker.position.copy(tmpV2);
@@ -1851,22 +2570,17 @@
 			// 未操作のあいだは地球が背景に入る位置へカメラを寄せ続ける
 			if (autoFrame && !focusObj) {
 				tmpV3.set(58, 34, 78).applyQuaternion(frameQ);
-				tmpV4.copy(station.position).add(tmpV3);
+				tmpV4.copy(stationWorld).add(tmpV3);
 				camera.position.lerp(tmpV4, 0.06);
 			}
 
-			// ===== 太陽の連動（太陽ベータ角） =====
-			// 慣性参照方向の「軌道面内の向き」は保ち、面からの高さだけベータ角に一致させる
-			const betaDeg = parseFloat(st['USGNC_PS_Solar_Beta_Angle']);
-			const inPlane = tmpV2.copy(SUN_REF).addScaledVector(orbitState.hat, -SUN_REF.dot(orbitState.hat)).normalize();
-			const betaRad = THREE.MathUtils.degToRad(Number.isFinite(betaDeg)
-				? betaDeg
-				: THREE.MathUtils.radToDeg(Math.asin(THREE.MathUtils.clamp(SUN_REF.dot(orbitState.hat), -1, 1))));
-			const sunDir = tmpV3.copy(inPlane).multiplyScalar(Math.cos(betaRad)).addScaledVector(orbitState.hat, Math.sin(betaRad)).normalize();
-			sunBall.position.copy(station.position).addScaledVector(sunDir, 1100);
-			sunGlow.position.copy(sunBall.position);
-			sun.position.copy(station.position).addScaledVector(sunDir, 200);
-			sun.target.position.copy(station.position);
+			// ===== 太陽の連動 =====
+			// 太陽はシーン原点に固定され、地球系がそのまわりを公転する。地球から見た太陽方向は
+			// 公転位置から決まる実方向（テレメトリのベータ角とも整合する）。光と影はシーン座標基準
+			const sunDir = tmpV3.copy(sunDirScene);
+			sun.position.copy(stationWorld).addScaledVector(sunDir, 170);
+			sun.target.position.copy(stationWorld); // 影のカメラをステーションに追従させる
+			sun.target.updateMatrixWorld();
 			// 太陽方向に地球があれば影に入ったとみなして光を落とす
 			const tca = -tmpV4.copy(station.position).dot(sunDir);
 			let targetIntensity = 1.7;
@@ -1878,7 +2592,7 @@
 				// 360°の折り返しをまたいでも最短方向へ追従させる
 				const delta = ((raw - j.cur + 540) % 360) - 180;
 				j.cur += delta * 0.06;
-				j.obj.rotation[j.axis] = THREE.MathUtils.degToRad(j.cur);
+				j.obj.rotation[j.axis] = THREE.MathUtils.degToRad(j.cur) * (j.sign || 1);
 			}
 			// 天体の動き: すべて実時刻ベース（実速度）
 			// 地球は GMST で回してテクスチャの国と直下表示を一致させる
@@ -1887,18 +2601,24 @@
 			aurora.rotation.y = gmst;
 			// 雲は地表に対して4日で1周分だけずれる（気象スケールの近似）
 			clouds.rotation.y = gmst + (Date.now() / 1000) * (Math.PI * 2 / (4 * 86400));
-			// 月は平均黄経の式から実位置を出す（公転周期 27.3日）
-			const tCent = (Date.now() / 86400000 + 2440587.5 - 2451545.0) / 36525;
-			moonAngle = THREE.MathUtils.degToRad(218.316 + 481267.8813 * tCent);
-			moon.position.set(
-				Math.cos(moonAngle) * 1500,
-				Math.sin(moonAngle) * 520,
-				Math.sin(moonAngle) * 1500
-			);
-			moon.lookAt(0, 0, 0); // 潮汐ロック: 常に同じ面を地球へ向ける
+			// 月: 簡易の位置計算（平均黄経＋主な摂動項、精度は数度程度）で実方向・実距離に置く
+			const dDay = Date.now() / 86400000 + 2440587.5 - 2451545.0;
+			const mLon = THREE.MathUtils.degToRad(218.316 + 13.176396 * dDay);
+			const mAnom = THREE.MathUtils.degToRad(134.963 + 13.064993 * dDay);
+			const mArg = THREE.MathUtils.degToRad(93.272 + 13.229350 * dDay);
+			const mLonEcl = mLon + THREE.MathUtils.degToRad(6.289) * Math.sin(mAnom);
+			const mLatEcl = THREE.MathUtils.degToRad(5.128) * Math.sin(mArg);
+			const mDistKm = 385001 - 20905 * Math.cos(mAnom);
+			const mEps = THREE.MathUtils.degToRad(23.43928), mCe = Math.cos(mEps), mSe = Math.sin(mEps);
+			const mX = Math.cos(mLatEcl) * Math.cos(mLonEcl), mYE = Math.cos(mLatEcl) * Math.sin(mLonEcl), mZE = Math.sin(mLatEcl);
+			const mSceneDist = mDistKm * (2650 / 385001); // 実距離を図のサイズ感（平均2,650）へ圧縮、遠近の変動は残す。水星の軌道（最小約2,840）より内側の殻にして衝突を避ける
+			eciToScene(mX, mYE * mCe - mZE * mSe, mYE * mSe + mZE * mCe, tmpV1).multiplyScalar(mSceneDist);
+			moon.position.copy(tmpV1);
+			moonRing.scale.setScalar(mSceneDist);
+			moon.lookAt(earthSystem.position); // 潮汐ロック: 常に同じ面を地球へ向ける
 			// 太陽風パーティクル: 太陽方向から流れ、地球の手前で磁気圏のように膨らむ
 			if (wx.on) {
-				const sd = tmpV1.copy(sunBall.position).normalize();
+				const sd = tmpV1.copy(sunDirScene); // 地球から見た太陽方向
 				const u = tmpV2.crossVectors(sd, Math.abs(sd.y) > 0.9 ? tmpV3.set(1, 0, 0) : tmpV3.set(0, 1, 0)).normalize();
 				const v = tmpV4.crossVectors(sd, u);
 				const spd = 0.0016 * ((wx.speed || 400) / 400);
@@ -1915,8 +2635,19 @@
 					windPos[i * 3 + 2] = sd.z * axial + u.z * ca + v.z * sa;
 				}
 				windGeo.attributes.position.needsUpdate = true;
+				// 地磁気双極子軸のシーン方向（地球固定の軸を GMST で回す。磁力線の収束点＝地磁気極が
+				// オーロラのある極域と一致するようにするため）
+				const dipLat = THREE.MathUtils.degToRad(80.65), dipLon = THREE.MathUtils.degToRad(-72.68);
+				const gAng = gmst + dipLon;
+				tmpV3.set(Math.cos(dipLat) * Math.cos(gAng), Math.sin(dipLat), -Math.cos(dipLat) * Math.sin(gAng));
+				// 太陽嵐: 太陽から波面を出し、地球へ届いたら磁気圏が圧縮される（updateMagnetosphere より先に更新）
+				updateStorms(nowMs / 1000, dtSec);
 				// 磁気圏: 太陽方向へ向け、実況（動圧・Bz・Kp）で形を変える
-				updateMagnetosphere(sd, performance.now() / 1000);
+				updateMagnetosphere(sd, nowMs / 1000, tmpV3);
+			}
+			if (realGroup.visible) { // リアルモデルは位置・姿勢だけ連動モデルに同期
+				realGroup.position.copy(station.position);
+				realGroup.quaternion.copy(station.quaternion);
 			}
 			updateReadout(st);
 			controls.update();
