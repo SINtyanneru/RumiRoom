@@ -1,0 +1,434 @@
+<!DOCTYPE HTML>
+<HTML LANG="ja">
+<HEAD>
+<META CHARSET="UTF-8">
+<META NAME="viewport" CONTENT="width=device-width, initial-scale=1">
+<TITLE>松山空港 ライブボード＆レーダー（RJOM / MYJ）</TITLE>
+<STYLE>
+	* { margin: 0; padding: 0; box-sizing: border-box; }
+	BODY { background: #0a0f16; color: #dfe9f5; font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+	HEADER { display: flex; align-items: baseline; gap: 16px; padding: 10px 16px; background: #0d1520; border-bottom: 1px solid #1d2c42; flex-wrap: wrap; }
+	HEADER H1 { font-size: 19px; letter-spacing: .04em; }
+	HEADER H1 .CODE { color: #7fd4ff; font-family: monospace; font-size: 14px; margin-left: 6px; }
+	#HDRIGHT { margin-left: auto; display: flex; gap: 16px; align-items: baseline; font-family: monospace; font-size: 13px; color: #9db4cc; }
+	#CLOCK { font-size: 17px; color: #fff; }
+	#MAIN { flex: 1; display: flex; min-height: 0; }
+	#MAPWRAP { flex: 1; position: relative; min-width: 0; overflow: hidden; background: #060a10; }
+	#STAGE { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+	#STAGE IMG.BASE { position: absolute; inset: 0; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+	.RING { position: absolute; border: 1px dashed rgba(207,230,255,.55); border-radius: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+	#APT { position: absolute; transform: translate(6px, -50%); font-family: monospace; font-size: 11px; color: #fff; text-shadow: 0 1px 3px #000, 0 0 5px #000; white-space: nowrap; pointer-events: none; }
+	.PLANE { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; color: #7fd4ff; cursor: pointer; }
+	.PLANE.MATCH { color: #ffb340; }
+	.PLANE.PARKED { color: #a794e0; cursor: pointer; }
+	.PLANE.PARKED .LBL { color: #d9ccff; }
+	.PLANE .LBL { position: absolute; left: 15px; top: 2px; font-family: monospace; font-size: 10.5px; color: #eaf4ff; text-shadow: 0 1px 3px #000, 0 0 4px #000; white-space: nowrap; }
+	.PLANE.MATCH .LBL { color: #ffd9a0; }
+	#DETAIL { position: absolute; left: 10px; bottom: 10px; z-index: 5; background: rgba(10,18,28,.92); border: 1px solid #2b4365; border-radius: 8px; padding: 9px 13px; font-size: 13px; max-width: 92%; display: none; }
+	#DETAIL .F { font-family: monospace; font-size: 16px; color: #ffb340; }
+	#DETAIL .SUB { color: #9db4cc; font-family: monospace; font-size: 12px; margin-top: 2px; }
+	#VIEWBAR { position: absolute; left: 10px; top: 10px; z-index: 5; display: flex; gap: 6px; }
+	#VIEWBAR BUTTON { background: rgba(10,18,28,.88); color: #cfe6ff; border: 1px solid #2b4365; border-radius: 6px; padding: 6px 12px; font-size: 12.5px; cursor: pointer; font-family: inherit; }
+	#VIEWBAR BUTTON.ON { background: #ffb340; color: #1a1206; border-color: #ffb340; font-weight: bold; }
+	#LEGEND { position: absolute; right: 10px; bottom: 10px; z-index: 5; background: rgba(10,18,28,.85); border: 1px solid #22344e; border-radius: 8px; padding: 7px 11px; font-size: 11.5px; color: #9db4cc; line-height: 1.7; }
+	#LEGEND .SW { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; }
+	.MODALWRAP { position: fixed; inset: 0; background: rgba(3,6,10,.68); display: none; z-index: 50; }
+	.MODALWRAP.OPEN { display: flex; align-items: center; justify-content: center; }
+	.MODAL { background: #0e1624; border: 1px solid #2b4365; border-radius: 12px; max-width: 540px; width: 92%; max-height: 88vh; overflow-y: auto; padding: 22px 26px; box-shadow: 0 12px 40px rgba(0,0,0,.6); }
+	.MODAL H2 { font-size: 17px; margin-bottom: 12px; }
+	.MODAL P, .MODAL LI { font-size: 13.5px; line-height: 1.8; color: #c3d4ea; }
+	.MODAL UL { padding-left: 20px; margin: 6px 0 10px; }
+	.MODAL .BTNROW { text-align: right; margin-top: 14px; }
+	.MODAL BUTTON { background: #ffb340; color: #1a1206; border: none; border-radius: 6px; padding: 8px 18px; font-size: 13.5px; font-weight: bold; cursor: pointer; font-family: inherit; }
+	#BOARD { width: 440px; max-width: 46vw; border-left: 1px solid #1d2c42; display: flex; flex-direction: column; background: #0c1320; min-height: 0; }
+	#TABS { display: flex; }
+	#TABS BUTTON { flex: 1; padding: 10px 0; background: #101b2c; color: #9db4cc; border: none; border-bottom: 2px solid transparent; font-size: 15px; cursor: pointer; font-family: inherit; }
+	#TABS BUTTON.ON { color: #fff; border-bottom-color: #ffb340; background: #0c1320; }
+	#UPDATED { padding: 6px 12px; font-size: 11.5px; color: #6f87a3; font-family: monospace; }
+	#ROWS { flex: 1; overflow-y: auto; min-height: 0; }
+	.ROW { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-bottom: 1px solid #16233a; }
+	.ROW .TIME { font-family: monospace; font-size: 18px; color: #fff; min-width: 52px; }
+	.ROW .TIME .REV { display: block; font-size: 12px; color: #ff7d6b; }
+	.ROW .MID { flex: 1; min-width: 0; }
+	.ROW .PLACE { font-size: 15px; }
+	.ROW .FL { font-family: monospace; font-size: 12px; color: #7fd4ff; margin-top: 1px; }
+	.ROW .RK { font-size: 11.5px; padding: 3px 8px; border-radius: 9px; background: #1a2a44; color: #b9cee6; white-space: nowrap; }
+	.ROW .RK.DONE { background: #173526; color: #7de2a8; }
+	.ROW .RK.LATE { background: #3d2320; color: #ff9d8f; }
+	.ROW .RK.PARK { background: #2c2440; color: #c9aef5; }
+	.ROW .FLY { color: #ffb340; font-size: 11px; white-space: nowrap; }
+	.EMPTY { padding: 22px; color: #6f87a3; font-size: 13px; }
+	FOOTER { padding: 5px 16px; font-size: 11px; color: #58708f; background: #0d1520; border-top: 1px solid #1d2c42; }
+	@media (max-width: 860px) {
+		BODY { overflow: auto; height: auto; }
+		#MAIN { flex-direction: column; }
+		#MAPWRAP { height: 52vh; flex: none; }
+		#BOARD { width: 100%; max-width: none; border-left: none; border-top: 1px solid #1d2c42; }
+		#ROWS { overflow: visible; }
+	}
+</STYLE>
+</HEAD>
+<BODY>
+<HEADER>
+	<H1>松山空港 ライブボード＆レーダー<SPAN CLASS="CODE">RJOM / MYJ</SPAN></H1>
+	<DIV ID="HDRIGHT">
+		<SPAN ID="PARKEDCNT">駐機中（推定） - 機</SPAN>
+		<SPAN ID="AIRBORNE">飛行中 - 機</SPAN>
+		<SPAN ID="CLOCK">--:--:--</SPAN>
+	</DIV>
+</HEADER>
+<DIV ID="MAIN">
+	<DIV ID="MAPWRAP">
+		<DIV ID="STAGE">
+			<IMG CLASS="BASE" ID="BASEIMG" SRC="myj-rwy.webp" ALT="">
+			<DIV CLASS="RING" DATA-NM="25"></DIV>
+			<DIV CLASS="RING" DATA-NM="50"></DIV>
+			<DIV CLASS="RING" DATA-NM="100"></DIV>
+			<DIV ID="APT">✚ MYJ 松山空港</DIV>
+			<DIV ID="PLANES"></DIV>
+			<DIV ID="PARKEDLAYER"></DIV>
+		</DIV>
+		<DIV ID="VIEWBAR">
+			<BUTTON ID="VIEWRWY" CLASS="ON">滑走路</BUTTON>
+			<BUTTON ID="VIEWWIDE">広域レーダー</BUTTON>
+			<BUTTON ID="HELPBTN">使い方</BUTTON>
+		</DIV>
+		<DIV ID="DETAIL"></DIV>
+		<DIV ID="LEGEND">
+			<DIV><SPAN CLASS="SW" STYLE="background:#ffb340"></SPAN>松山 発着便</DIV>
+			<DIV><SPAN CLASS="SW" STYLE="background:#7fd4ff"></SPAN>その他の機体</DIV>
+			<DIV><SPAN CLASS="SW" STYLE="background:#a794e0"></SPAN>駐機中（推定・滑走路ビューのみ）</DIV>
+			<DIV>円は松山空港から 25 / 50 / 100 NM（広域のみ）</DIV>
+		</DIV>
+	</DIV>
+	<DIV ID="BOARD">
+		<DIV ID="TABS">
+			<BUTTON ID="TABDEP" CLASS="ON">出発</BUTTON>
+			<BUTTON ID="TABARR">到着</BUTTON>
+		</DIV>
+		<DIV ID="UPDATED">ボード取得中…</DIV>
+		<DIV ID="ROWS"><DIV CLASS="EMPTY">読み込み中…</DIV></DIV>
+	</DIV>
+</DIV>
+<FOOTER>データ: 発着情報＝松山空港公式サイト（本日のフライト情報）、飛行位置＝adsb.lol（ADS-B）。駐機中は発着情報からの推定表示で、実際の位置・機体とは異なる場合があります。地図は Esri World Imagery の衛星写真を合成した静止画です。非公式の個人用ビューアです。位置は数秒〜十数秒の遅延があります。</FOOTER>
+
+<DIV CLASS="MODALWRAP" ID="INTRO">
+	<DIV CLASS="MODAL">
+		<H2>松山空港 ライブボード＆レーダーについて</H2>
+		<P>松山空港（RJOM / MYJ）の発着情報と、周辺を飛行中の飛行機の位置をリアルタイムに表示する、個人用のビューアです。</P>
+		<UL>
+			<LI>発着情報は松山空港公式サイト、飛行位置は ADS-B の実データ（adsb.lol）を使っています</LI>
+			<LI>地図は衛星写真の静止画で、その上に飛行機の位置を重ねています。滑走路ビューでは空港のクローズアップ、広域レーダーでは周辺の分布が見られます</LI>
+			<LI>紫色の「駐機中（推定）」は発着情報からの推定表示で、実際の駐機位置・機体とは異なる場合があります（駐機中の飛行機は電波を出さないため、実位置は分かりません）</LI>
+			<LI>非公式の個人用ページです。実際の運航情報は公式サイトで確認してください</LI>
+			<LI>このページのコードは、ISS テレメトリビューアに続いて Muse（AIアシスタント・きなこ）に書かせたバイブコーディングです</LI>
+		</UL>
+		<DIV CLASS="BTNROW"><BUTTON ID="INTROOK">わかった（操作方法へ）</BUTTON></DIV>
+	</DIV>
+</DIV>
+<DIV CLASS="MODALWRAP" ID="HELP">
+	<DIV CLASS="MODAL">
+		<H2>操作方法</H2>
+		<UL>
+			<LI>左上の「滑走路 / 広域レーダー」ボタンで、空港クローズアップと周辺の飛行機分布を切り替えます</LI>
+			<LI>飛行機のアイコンをクリックすると、便名・機材・高度・速度などの詳細が左下に出ます</LI>
+			<LI>オレンジ色の飛行機は松山空港の発着便、紫色は駐機中（推定）です。駐機アイコンのクリックで次の出発便が分かります</LI>
+			<LI>右側のボードは「出発 / 到着」タブで切り替えます。「✈ 飛行中」が付いた便は、いま実際に飛んでいます</LI>
+			<LI>自動更新: レーダーは10秒ごと、ボードは60秒ごと</LI>
+		</UL>
+		<DIV CLASS="BTNROW"><BUTTON ID="HELPCLOSE">閉じる</BUTTON></DIV>
+	</DIV>
+</DIV>
+
+<SCRIPT>
+"use strict";
+const MYJ = [33.8272222, 132.6997222];
+// 衛星写真（静止画）の地理範囲。Leaflet 等の地図エンジンは使わず、座標計算だけで機体を重ねる
+const VIEWS = {
+	rwy:  { src: "myj-rwy.webp",  w: 1280, h: 1280, z: 16, rings: false, west: 132.6873779296875, east: 132.71484375, north: 33.838482755995145, south: 33.815666308702774 },
+	wide: { src: "myj-wide.webp", w: 1024, h: 768,  z: 9,  rings: true,  west: 130.78125, east: 133.59375, north: 34.885930940753155, south: 33.137551192346145 }
+};
+let view = "rwy";
+function merc(lat) { const r = lat * Math.PI / 180; return Math.log(Math.tan(r) + 1 / Math.cos(r)); }
+Object.keys(VIEWS).forEach(function(k) {
+	const v = VIEWS[k];
+	v.mercN = merc(v.north); v.mercS = merc(v.south);
+	const p = projectIn(v, MYJ[0], MYJ[1]);
+	v.aptX = p[0]; v.aptY = p[1];
+});
+function projectIn(v, lat, lon) {
+	const x = (lon - v.west) / (v.east - v.west) * 100;
+	const y = (v.mercN - merc(lat)) / (v.mercN - v.mercS) * 100;
+	return [x, y];
+}
+function project(lat, lon) { return projectIn(VIEWS[view], lat, lon); }
+function invProject(v, xPct, yPct) {
+	const lon = v.west + (xPct / 100) * (v.east - v.west);
+	const m = v.mercN - (yPct / 100) * (v.mercN - v.mercS);
+	return [Math.atan(Math.sinh(m)) * 180 / Math.PI, lon];
+}
+// 駐機スポット（滑走路ビュー画像上のエプロン位置 % を緯度経度に変換したもの）
+const APRON = [[45.5, 45.5], [47.5, 44.8], [49.5, 44.1], [51.5, 43.4], [53.5, 42.7], [55.5, 42.0]]
+	.map(function(p) { return invProject(VIEWS.rwy, p[0], p[1]); });
+
+const stage = document.getElementById("STAGE");
+function layoutStage() {
+	const wrap = document.getElementById("MAPWRAP");
+	const v = VIEWS[view];
+	const scale = Math.min(wrap.clientWidth / v.w, wrap.clientHeight / v.h);
+	const sw = Math.floor(v.w * scale), sh = Math.floor(v.h * scale);
+	stage.style.width = sw + "px";
+	stage.style.height = sh + "px";
+	const mPerPx = 40075016.686 * Math.cos(MYJ[0] * Math.PI / 180) / (256 * Math.pow(2, v.z)) * (v.w / sw);
+	document.querySelectorAll(".RING").forEach(function(r) {
+		const d = 2 * parseFloat(r.getAttribute("DATA-NM")) * 1852 / mPerPx;
+		r.style.width = d + "px";
+		r.style.height = d + "px";
+		r.style.left = v.aptX + "%";
+		r.style.top = v.aptY + "%";
+		r.style.display = v.rings ? "block" : "none";
+	});
+	const apt = document.getElementById("APT");
+	apt.style.left = v.aptX + "%";
+	apt.style.top = v.aptY + "%";
+}
+window.addEventListener("resize", layoutStage);
+
+function setView(name) {
+	view = name;
+	document.getElementById("BASEIMG").src = VIEWS[name].src;
+	document.getElementById("VIEWRWY").classList.toggle("ON", name === "rwy");
+	document.getElementById("VIEWWIDE").classList.toggle("ON", name === "wide");
+	layoutStage();
+	renderMarkers();
+	renderParked();
+}
+document.getElementById("VIEWRWY").addEventListener("click", function() { setView("rwy"); });
+document.getElementById("VIEWWIDE").addEventListener("click", function() { setView("wide"); });
+
+// ---- レーダー（飛行位置） ----
+const PLANE_SVG = "<svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z\"/></svg>";
+const markers = new Map();   // hex -> {el, rot, lbl, data, iconKey, posKey}
+let airborneIdents = new Set();
+let selectedHex = null;
+let lastAc = [];
+
+function iconKey(a, matched) {
+	return (matched ? "M" : "-") + "|" + Math.round(a.track || 0) + "|" + (a.flight || a.reg || "");
+}
+function renderMarkers() {
+	const box = document.getElementById("PLANES");
+	const seen = new Set();
+	lastAc.forEach(function(a) {
+		if (!a.hex) return;
+		const p = project(a.lat, a.lon);
+		let cur = markers.get(a.hex);
+		if (p[0] < -3 || p[0] > 103 || p[1] < -3 || p[1] > 103) {
+			if (cur) cur.el.style.display = "none";
+			return;
+		}
+		seen.add(a.hex);
+		const matched = !!(a.flight && airborneIdents.has(a.flight));
+		const key = iconKey(a, matched);
+		if (!cur) {
+			const el = document.createElement("DIV");
+			el.innerHTML = "<DIV CLASS=\"ROT\" STYLE=\"width:22px;height:22px\">" + PLANE_SVG + "</DIV><SPAN CLASS=\"LBL\"></SPAN>";
+			el.addEventListener("click", function() {
+				const m = markers.get(a.hex);
+				if (m) { selectedHex = a.hex; showDetail(m.data); }
+			});
+			box.appendChild(el);
+			cur = { el: el, rot: el.firstChild, lbl: el.lastChild, data: a, iconKey: "", posKey: "" };
+			markers.set(a.hex, cur);
+		}
+		cur.data = a;
+		cur.el.style.display = "block";
+		if (cur.iconKey !== key) {
+			cur.el.className = "PLANE" + (matched ? " MATCH" : "");
+			cur.rot.style.transform = "rotate(" + (a.track || 0) + "deg)";
+			cur.lbl.textContent = a.flight || a.reg || "";
+			cur.iconKey = key;
+		}
+		const posKey = p[0].toFixed(2) + "," + p[1].toFixed(2);
+		if (cur.posKey !== posKey) {
+			cur.el.style.left = p[0] + "%";
+			cur.el.style.top = p[1] + "%";
+			cur.posKey = posKey;
+		}
+		if (selectedHex === a.hex) showDetail(a);
+	});
+	markers.forEach(function(v, hex) {
+		if (!seen.has(hex)) { v.el.remove(); markers.delete(hex); }
+	});
+}
+function fmtAlt(a) {
+	if (a.alt === "ground" || a.alt === 0) return "地上";
+	if (typeof a.alt === "number") return Math.round(a.alt).toLocaleString() + " ft";
+	return "-";
+}
+function showDetail(a) {
+	const d = document.getElementById("DETAIL");
+	let vr = "";
+	if (typeof a.vrate === "number" && a.vrate !== 0) vr = a.vrate > 0 ? " / 上昇 " + a.vrate + " ft/min" : " / 降下 " + Math.abs(a.vrate) + " ft/min";
+	d.innerHTML = "<SPAN CLASS=\"F\">" + (a.flight || "(コールサインなし)") + "</SPAN> " + a.type + " " + a.reg
+		+ "<DIV CLASS=\"SUB\">高度 " + fmtAlt(a) + " / 速度 " + (a.gs != null ? Math.round(a.gs) + " kt" : "-")
+		+ " / 針路 " + (a.track != null ? Math.round(a.track) + "°" : "-") + vr
+		+ "<BR>松山空港から約 " + (a.dst != null ? Math.round(a.dst) + " NM" : "-") + "</DIV>";
+	d.style.display = "block";
+}
+async function loadRadar() {
+	try {
+		const res = await fetch("flight-data.php?radar=1", { cache: "no-store" });
+		const j = await res.json();
+		lastAc = j.ac || [];
+		renderMarkers();
+		document.getElementById("AIRBORNE").textContent = "飛行中 " + lastAc.length + " 機";
+	} catch (e) { /* 次周期で再試行 */ }
+}
+
+// ---- 発着ボード ----
+const ICAO_PREFIX = { "ANA": "ANA", "JAL": "JAL", "JJP": "JJP", "IBX": "IBX", "SFJ": "SFJ", "JEJU": "JJA", "7C": "JJA", "EVA": "EVA", "BR": "EVA", "BX": "ABL", "BUSAN": "ABL", "CAL": "CAL", "CI": "CAL", "APJ": "APJ", "SPRING": "CQH" };
+let board = { dep: [], arr: [] };
+let tab = "dep";
+let parkedList = [];
+let parkedRowSet = new Set();
+
+function hhmmToMin(s) { const p = String(s).split(":"); return (+p[0]) * 60 + (+p[1]); }
+// 到着済み便を航空会社ごとに FIFO で数え、出発済みで引いて残ったものを「駐機中（推定）」とする
+function estimateParked() {
+	const events = [];
+	board.arr.forEach(function(r) {
+		if (/到着済み|ただいま到着/.test(r.remark || "")) {
+			events.push({ type: "arr", airline: r.airline, min: hhmmToMin(r.revised || r.time), row: r });
+		}
+	});
+	board.dep.forEach(function(r) {
+		if (/出発済み/.test(r.remark || "")) {
+			events.push({ type: "dep", airline: r.airline, min: hhmmToMin(r.revised || r.time), row: r });
+		}
+	});
+	events.sort(function(a, b) { return a.min - b.min; });
+	const ground = {};
+	events.forEach(function(ev) {
+		const g = ground[ev.airline] = ground[ev.airline] || [];
+		if (ev.type === "arr") g.push(ev); else if (g.length) g.shift();
+	});
+	const list = [];
+	const rowSet = new Set();
+	Object.keys(ground).forEach(function(al) {
+		ground[al].forEach(function(ev) {
+			let next = null;
+			board.dep.forEach(function(r) {
+				if (r.airline !== al || /出発済み/.test(r.remark || "")) return;
+				const m = hhmmToMin(r.revised || r.time);
+				if (!next || m < next.min) next = { flight: r.flight, time: r.revised || r.time, min: m };
+			});
+			list.push({ airline: al, flight: ev.row.flight, arrTime: ev.row.revised || ev.row.time, nextDep: next });
+			rowSet.add(ev.row);
+		});
+	});
+	return { list: list, rowSet: rowSet };
+}
+function renderParked() {
+	const box = document.getElementById("PARKEDLAYER");
+	box.innerHTML = "";
+	document.getElementById("PARKEDCNT").textContent = "駐機中（推定） " + parkedList.length + " 機";
+	if (view !== "rwy") return;
+	parkedList.slice(0, APRON.length).forEach(function(pk, i) {
+		const p = project(APRON[i][0], APRON[i][1]);
+		const el = document.createElement("DIV");
+		el.className = "PLANE PARKED";
+		el.innerHTML = "<DIV CLASS=\"ROT\" STYLE=\"width:22px;height:22px;transform:rotate(45deg)\">" + PLANE_SVG + "</DIV><SPAN CLASS=\"LBL\">" + pk.airline + pk.flight + "</SPAN>";
+		el.style.left = p[0] + "%";
+		el.style.top = p[1] + "%";
+		el.addEventListener("click", function() {
+			const d = document.getElementById("DETAIL");
+			d.innerHTML = "<SPAN CLASS=\"F\">" + pk.airline + " " + pk.flight + "</SPAN> 駐機中（推定）"
+				+ "<DIV CLASS=\"SUB\">" + pk.arrTime + " 到着済み。次の出発: " + (pk.nextDep ? pk.airline + " " + pk.nextDep.flight + " " + pk.nextDep.time : "本日この後の出発なし（滞泊の可能性）")
+				+ "<BR>発着情報からの推定表示です（実際の駐機位置・機体とは異なる場合があります）</DIV>";
+			d.style.display = "block";
+		});
+		box.appendChild(el);
+	});
+}
+
+function identsOf(row) {
+	const p = ICAO_PREFIX[row.airline] || row.airline || "";
+	return String(row.flight || "").split("/").map(function(n) { return p + n.trim(); }).filter(function(s) { return s.length > 1; });
+}
+function remarkClass(rk) {
+	if (/出発済み|到着済み|ただいま到着/.test(rk)) return "RK DONE";
+	if (/欠航|遅れ|変更/.test(rk)) return "RK LATE";
+	return "RK";
+}
+function renderBoard() {
+	const rows = board[tab] || [];
+	const box = document.getElementById("ROWS");
+	if (!rows.length) { box.innerHTML = "<DIV CLASS=\"EMPTY\">本日の便はありません（または取得できませんでした）</DIV>"; return; }
+	box.innerHTML = rows.map(function(r) {
+		const flying = identsOf(r).some(function(id) { return airborneIdents.has(id); });
+		const rev = r.revised ? "<SPAN CLASS=\"REV\">→ " + r.revised + "</SPAN>" : "";
+		const rk = r.remark ? "<SPAN CLASS=\"" + remarkClass(r.remark) + "\">" + r.remark + "</SPAN>" : "";
+		const chg = (r.change && r.change !== "-") ? "<DIV CLASS=\"FL\" STYLE=\"color:#ff9d8f\">" + r.change + "</DIV>" : "";
+		const pk = (tab === "arr" && parkedRowSet.has(r)) ? "<SPAN CLASS=\"RK PARK\">駐機中（推定）</SPAN>" : "";
+		return "<DIV CLASS=\"ROW\"><DIV CLASS=\"TIME\">" + r.time + rev + "</DIV>"
+			+ "<DIV CLASS=\"MID\"><DIV CLASS=\"PLACE\">" + r.place + "</DIV>"
+			+ "<DIV CLASS=\"FL\">" + (r.airline || "") + " " + r.flight + "</DIV>" + chg + "</DIV>"
+			+ (flying ? "<SPAN CLASS=\"FLY\">✈ 飛行中</SPAN>" : "") + pk + rk + "</DIV>";
+	}).join("");
+}
+async function loadBoard() {
+	try {
+		const res = await fetch("flight-data.php?board=1", { cache: "no-store" });
+		const j = await res.json();
+		board = { dep: j.dep || [], arr: j.arr || [] };
+		airborneIdents = new Set();
+		board.dep.concat(board.arr).forEach(function(r) { identsOf(r).forEach(function(id) { airborneIdents.add(id); }); });
+		const est = estimateParked();
+		parkedList = est.list;
+		parkedRowSet = est.rowSet;
+		const t = new Date(j.time * 1000);
+		document.getElementById("UPDATED").textContent = "ボード更新 " + t.toLocaleTimeString("ja-JP") + "（公式サイト準拠）";
+		renderBoard();
+		renderMarkers();
+		renderParked();
+	} catch (e) { document.getElementById("UPDATED").textContent = "ボード取得に失敗しました"; }
+}
+document.getElementById("TABDEP").addEventListener("click", function() {
+	tab = "dep";
+	this.classList.add("ON"); document.getElementById("TABARR").classList.remove("ON");
+	renderBoard();
+});
+document.getElementById("TABARR").addEventListener("click", function() {
+	tab = "arr";
+	this.classList.add("ON"); document.getElementById("TABDEP").classList.remove("ON");
+	renderBoard();
+});
+
+// ---- 初回ダイアログ（ISS ビューアと同じ方式: Cookie で初回だけ表示） ----
+function hasIntroCookie() {
+	return document.cookie.split("; ").some(function(c) { return c.indexOf("myj_live_intro=") === 0; });
+}
+function openModal(id) { document.getElementById(id).classList.add("OPEN"); }
+function closeModal(id) { document.getElementById(id).classList.remove("OPEN"); }
+document.getElementById("INTROOK").addEventListener("click", function() {
+	document.cookie = "myj_live_intro=1; max-age=31536000; path=/";
+	closeModal("INTRO");
+	openModal("HELP");
+});
+document.getElementById("HELPCLOSE").addEventListener("click", function() { closeModal("HELP"); });
+document.getElementById("HELPBTN").addEventListener("click", function() { openModal("HELP"); });
+if (!hasIntroCookie()) openModal("INTRO");
+
+setInterval(function() {
+	const now = new Date();
+	document.getElementById("CLOCK").textContent = now.toLocaleTimeString("ja-JP");
+}, 500);
+layoutStage();
+loadBoard();
+loadRadar();
+setInterval(function() { if (!document.hidden) loadRadar(); }, 10000);
+setInterval(function() { if (!document.hidden) loadBoard(); }, 60000);
+</SCRIPT>
+</BODY>
+</HTML>
