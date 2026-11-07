@@ -74,6 +74,7 @@
 		#FOCUSBAR BUTTON.ON { color: #ffe28a; border-color: #a8842c; }
 		#WXBTN.ON { color: #ffe28a; border-color: #a8842c; }
 		#WXINFO { position: absolute; top: 66px; left: 10px; z-index: 3; color: #cfe8ff; font-family: monospace; font-size: 12px; line-height: 1.6; white-space: pre-line; text-shadow: 0 0 4px rgba(0, 0, 0, 0.9); display: none; pointer-events: none; }
+		#WXCHART { position: absolute; top: 152px; left: 10px; z-index: 3; width: 300px; height: 115px; background: rgba(8, 12, 22, 0.78); border: 1px solid #22344e; display: none; }
 		#WXLOADING { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4; background: rgba(8, 12, 22, 0.92); color: #cfe8ff; border: 1px solid #3a5a78; padding: 16px 26px; font-size: 14px; letter-spacing: 2px; display: none; }
 		#WXLOADING .SPIN { display: inline-block; width: 14px; height: 14px; border: 2px solid #3a5a78; border-top-color: #9fdcff; border-radius: 50%; animation: WXSPIN 0.8s linear infinite; vertical-align: -2px; margin-right: 10px; }
 		@keyframes WXSPIN { to { transform: rotate(360deg); } }
@@ -140,6 +141,7 @@
 			<DIV ID="VIEW3D-TITLE">ISS 3D MODEL（実テレメトリ連動）</DIV>
 			<BUTTON ID="WXBTN" TYPE="BUTTON">宇宙天気 OFF</BUTTON>
 			<DIV ID="WXINFO"></DIV>
+			<CANVAS ID="WXCHART" WIDTH="600" HEIGHT="230"></CANVAS>
 			<DIV ID="WXLOADING"><SPAN CLASS="SPIN"></SPAN>読み込み中...</DIV>
 			<BUTTON ID="HELPBTN" TYPE="BUTTON">操作方法</BUTTON>
 			<DIV ID="FOCUSBAR">
@@ -240,7 +242,7 @@
 			・ドラッグ： 回転<BR>
 			・ホイール / ピンチ： ズーム<BR>
 			・右ドラッグ： 視点の移動<BR>
-			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面下部のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。左上の「宇宙天気」ボタンでは、オーロラや太陽風の可視化もできます。</P>
+			モデルは実テレメトリと連動していて、関節・姿勢・軌道がリアルタイムに動きます。画面下部のボタンでは、全体・与圧部・アレイ・アーム2・デクスター・アンテナへカメラをフォーカスできます（ドラッグすると解除）。左上の「宇宙天気」ボタンでは、オーロラや太陽風、地球の磁気圏（模式図）の可視化もできます。</P>
 			<P><B>テレメトリのセル（右側）</B><BR>
 			・セルをクリックすると、右側にその項目の履歴パネルが開き、過去100件の値がリアルタイムで更新されます。別のセルをクリックすると表示が切り替わり、閉じるときはパネル右上の × を押してください。</P>
 			<BUTTON ID="HELP-CLOSE" TYPE="button">閉じる</BUTTON>
@@ -605,7 +607,7 @@
 
 		const scene = new THREE.Scene();
 		scene.background = new THREE.Color(0x05070d);
-		const camera = new THREE.PerspectiveCamera(45, 1, 1, 9000); // near を 1 にし、薄い部品の前後面の深度競合（見え透け）を抑える
+		const camera = new THREE.PerspectiveCamera(45, 1, 1, 30000); // near を 1 にし、薄い部品の前後面の深度競合（見え透け）を抑える。far は磁気圏全体を引いて見るために広げた
 		camera.position.set(48, 30, 64);
 
 		const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -614,7 +616,7 @@
 
 		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.minDistance = 10; // 近づきすぎてモデルにめり込むのを防ぐ
-		controls.maxDistance = 1500; // 引きすぎて何も見えなくなるのを防ぐ
+		controls.maxDistance = 7000; // 磁気圏（尾の先まで約3,300）全体を引いて見られるように
 		controls.enableDamping = true;
 
 		scene.add(new THREE.AmbientLight(0xffffff, 0.55));
@@ -626,7 +628,7 @@
 		{
 			const pos = new Float32Array(2600 * 3);
 			for (let i = 0; i < 2600; i++) {
-				const r = 4000, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+				const r = 22000, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
 				pos[i * 3] = r * Math.sin(ph) * Math.cos(th);
 				pos[i * 3 + 1] = r * Math.cos(ph);
 				pos[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th);
@@ -930,19 +932,20 @@
 			const rnd = seededRandom(1234);
 			for (let i = 0; i < 7; i++) {
 				const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), color: nebColors[i % nebColors.length], transparent: true, opacity: 0.10, depthWrite: false }));
-				const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 3400;
+				const th = rnd() * Math.PI * 2, ph = Math.acos(2 * rnd() - 1), r = 20000;
 				sp.position.set(r * Math.sin(ph) * Math.cos(th), r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th));
-				const s = 1500 + rnd() * 1400;
+				const s = (1500 + rnd() * 1400) * (20000 / 3400); // 距離を伸ばした分、見かけの大きさを維持
 				sp.scale.set(s, s, 1);
 				scene.add(sp);
 			}
 		}
 
 		// ===== 宇宙天気（NOAA SWPC の実データで可視化する） =====
-		const wx = { on: false, kp: null, speed: null, density: null, bz: null, flare: '---' };
+		const wx = { on: false, kp: null, speed: null, density: null, bz: null, flare: '---', kpSeries: [], bzSeries: [] };
 		const wxBtn = document.getElementById('WXBTN');
 		const wxInfo = document.getElementById('WXINFO');
 		const wxLoading = document.getElementById('WXLOADING');
+		const wxChart = document.getElementById('WXCHART');
 
 		// オーロラ層: OVATION モデルの出現確率を極域に光らせる
 		const auroraCanvas = document.createElement('canvas');
@@ -969,6 +972,85 @@
 		wind.visible = false;
 		wind.frustumCulled = false;
 		scene.add(wind);
+
+		// ===== 磁気圏（模式図）: 双極子磁力線を太陽側で圧縮し、夜側へ尾を引く =====
+		// 実縮尺ではなく地球半径500に対して見た目を圧縮した模式表現。圧縮率は太陽風の
+		// 動圧で変わり、Bz が南向きだと尾が伸びてプラズマシートが明るくなる。Kp で尾が揺れる。
+		const MAG_S = 175; // 1 RE 分のシーン長さ
+		const magGroup = new THREE.Group();
+		magGroup.visible = false;
+		scene.add(magGroup);
+		const magLines = [];
+		const magShells = [
+			{ L: 2.2, color: 0xff4d2e },
+			{ L: 3.0, color: 0xff9430 },
+			{ L: 4.2, color: 0xb7e04a },
+			{ L: 5.5, color: 0x4ae08a },
+			{ L: 7.5, color: 0x37c8c8 }
+		];
+		for (const sh of magShells) {
+			for (let lonDeg = 0; lonDeg < 360; lonDeg += 30) {
+				const lon = THREE.MathUtils.degToRad(lonDeg);
+				const base = [];
+				for (let i = 0; i <= 60; i++) {
+					const lam = THREE.MathUtils.degToRad(-78 + 156 * i / 60);
+					const r = sh.L * Math.pow(Math.cos(lam), 2);
+					if (r < 1.03) continue;
+					base.push([r * Math.cos(lam) * Math.cos(lon) * MAG_S, r * Math.sin(lam) * MAG_S, r * Math.cos(lam) * Math.sin(lon) * MAG_S]);
+				}
+				const geo = new THREE.BufferGeometry();
+				geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(base.length * 3), 3));
+				const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ color: sh.color, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));
+				line.frustumCulled = false;
+				magGroup.add(line);
+				magLines.push({ line: line, base: base, phase: Math.random() * Math.PI * 2 });
+			}
+		}
+		// プラズマシート（尾の赤道面のシアンの帯）
+		const sheetMat = new THREE.MeshBasicMaterial({ color: 0x2fd8c8, transparent: true, opacity: 0.1, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide });
+		const sheet = new THREE.Mesh(new THREE.PlaneGeometry(12 * MAG_S, 5.4 * MAG_S), sheetMat);
+		sheet.rotation.x = -Math.PI / 2;
+		sheet.position.x = -7.2 * MAG_S;
+		magGroup.add(sheet);
+		const magState = { comp: 0.85, stretch: 1.5 };
+		const magBasis = new THREE.Matrix4();
+		const magNorth = new THREE.Vector3(0, 1, 0);
+		const magMx = new THREE.Vector3(), magMy = new THREE.Vector3(), magMz = new THREE.Vector3();
+		function updateMagnetosphere(sd, nowSec) {
+			// 姿勢: ローカル +X を太陽方向、+Y を地磁気北極側へ
+			magMx.copy(sd).normalize();
+			magMz.crossVectors(magMx, magNorth).normalize();
+			magMy.crossVectors(magMz, magMx).normalize();
+			magBasis.makeBasis(magMx, magMy, magMz);
+			magGroup.quaternion.setFromRotationMatrix(magBasis);
+			// 実況からの目標値: 動圧で太陽側が潰れ、Bz 南向きと Kp で尾が伸びる
+			const spd = wx.speed || 400, den = wx.density || 5;
+			const pres = 1.6726e-6 * den * spd * spd;
+			const compT = THREE.MathUtils.clamp(0.88 - 0.07 * (pres - 1), 0.64, 0.93);
+			const stretchT = THREE.MathUtils.clamp(1.45 + (wx.kp || 0) * 0.09 + (wx.bz !== null && wx.bz < 0 ? Math.min(0.55, -wx.bz * 0.035) : 0), 1.3, 2.5);
+			magState.comp += (compT - magState.comp) * 0.04;
+			magState.stretch += (stretchT - magState.stretch) * 0.04;
+			const sheetT = (wx.bz !== null && wx.bz < 0) ? Math.min(0.3, 0.12 - wx.bz * 0.012) : 0.1;
+			sheetMat.opacity += (sheetT - sheetMat.opacity) * 0.04;
+			const wigAmp = 2 + (wx.kp || 0) * 2.4;
+			for (const ml of magLines) {
+				const pos = ml.line.geometry.attributes.position;
+				for (let i = 0; i < ml.base.length; i++) {
+					let x = ml.base[i][0], y = ml.base[i][1], z = ml.base[i][2];
+					if (x > 0) {
+						x *= magState.comp;
+					} else {
+						const tail = Math.min(1, -x / (9 * MAG_S));
+						x *= magState.stretch;
+						y *= (1 - 0.38 * tail);
+						z *= (1 - 0.15 * tail);
+						z += Math.sin(nowSec * 0.7 + ml.phase + (-x) * 0.004) * wigAmp * tail;
+					}
+					pos.setXYZ(i, x, y, z);
+				}
+				pos.needsUpdate = true;
+			}
+		}
 
 		function drawAurora(coords) {
 			const g = auroraCanvas.getContext('2d');
@@ -1018,17 +1100,42 @@
 				const arr = await fetchJson('https://services.swpc.noaa.gov/json/planetary_k_index_1m.json');
 				const last = arr[arr.length - 1];
 				wx.kp = last.estimated_kp !== undefined && last.estimated_kp !== null ? last.estimated_kp : last.kp_index;
+				wx.kpSeries = arr.slice(-360).map(function(r) {
+					return { t: r.time_tag, v: (r.estimated_kp !== undefined && r.estimated_kp !== null) ? r.estimated_kp : r.kp_index };
+				});
 			} catch (e) { /* 前の値を保持する */ }
 			try {
+				// RTSW の JSON は新しい順（降順）で、複数衛星の行が混在する。
+				// 末尾から探すと約1日前の値になり、非アクティブ衛星の値も混ざるため、
+				// active な衛星の行から time_tag が最大のものを選ぶ（並び順に依存しない）。
 				const w = await fetchJson('https://services.swpc.noaa.gov/json/rtsw/rtsw_wind_1m.json');
-				for (let i = w.length - 1; i >= 0; i--) {
-					if (w[i].proton_speed) { wx.speed = w[i].proton_speed; wx.density = w[i].proton_density; break; }
+				let bestW = null;
+				for (const row of w) {
+					if (row.active && row.proton_speed && (!bestW || row.time_tag > bestW.time_tag)) bestW = row;
 				}
+				if (!bestW) {
+					for (const row of w) {
+						if (row.proton_speed && (!bestW || row.time_tag > bestW.time_tag)) bestW = row;
+					}
+				}
+				if (bestW) { wx.speed = bestW.proton_speed; wx.density = bestW.proton_density; }
 			} catch (e) { /* 前の値を保持する */ }
 			try {
 				const m = await fetchJson('https://services.swpc.noaa.gov/json/rtsw/rtsw_mag_1m.json');
-				for (let i = m.length - 1; i >= 0; i--) {
-					if (m[i].active && m[i].bz_gsm !== null && m[i].bz_gsm !== undefined) { wx.bz = m[i].bz_gsm; break; }
+				let bestM = null;
+				for (const row of m) {
+					if (row.active && row.bz_gsm !== null && row.bz_gsm !== undefined && (!bestM || row.time_tag > bestM.time_tag)) bestM = row;
+				}
+				if (bestM) wx.bz = bestM.bz_gsm;
+				// Bz の時系列（アクティブ衛星のみ、直近6時間分）もチャート用に保持する
+				const bzRows = [];
+				for (const row of m) {
+					if (row.active && row.bz_gsm !== null && row.bz_gsm !== undefined) bzRows.push({ t: row.time_tag, v: row.bz_gsm });
+				}
+				bzRows.sort(function(a, b) { return a.t < b.t ? -1 : 1; });
+				if (bzRows.length) {
+					const tEnd = new Date(bzRows[bzRows.length - 1].t + 'Z').getTime();
+					wx.bzSeries = bzRows.filter(function(r) { return new Date(r.t + 'Z').getTime() >= tEnd - 6 * 3600 * 1000; });
 				}
 			} catch (e) { /* 前の値を保持する */ }
 			try {
@@ -1039,6 +1146,79 @@
 			} catch (e) { /* 前の値を保持する */ }
 			if (wx.kp !== null) windMat.color.setHSL(Math.max(0, 0.38 - wx.kp * 0.045), 1, 0.65);
 			updateWxInfo();
+			drawWxChart();
+		}
+		function hmOf(t) {
+			const d = new Date(t + 'Z');
+			return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+		}
+		// Kp と Bz の時系列ストリップチャート（いわゆる磁気嵐の「線」）
+		function drawWxChart() {
+			const g = wxChart.getContext('2d');
+			const W = wxChart.width, H = wxChart.height;
+			g.clearRect(0, 0, W, H);
+			g.font = '19px monospace';
+			g.textBaseline = 'alphabetic';
+			// --- Kp（0〜9、G1=5 に基準線） ---
+			g.fillStyle = '#9fdcff';
+			g.fillText('Kp', 10, 24);
+			const ks = wx.kpSeries;
+			if (ks.length >= 2) {
+				g.fillStyle = '#5f7d99';
+				g.font = '16px monospace';
+				g.fillText(hmOf(ks[0].t) + '-' + hmOf(ks[ks.length - 1].t), 470, 24);
+				g.font = '19px monospace';
+				const y0 = 34, y1 = 104;
+				const yOf = function(v) { return y1 - (v / 9) * (y1 - y0); };
+				// G1 基準線
+				g.strokeStyle = 'rgba(255, 90, 70, 0.75)';
+				g.setLineDash([6, 5]);
+				g.beginPath(); g.moveTo(8, yOf(5)); g.lineTo(W - 34, yOf(5)); g.stroke();
+				g.setLineDash([]);
+				g.fillStyle = '#ff8a76';
+				g.fillText('G1', W - 30, yOf(5) + 6);
+				// ライン本体
+				g.strokeStyle = '#8affc1';
+				g.lineWidth = 2;
+				g.beginPath();
+				ks.forEach(function(p, i) {
+					const x = 8 + (W - 16) * i / (ks.length - 1);
+					if (i === 0) g.moveTo(x, yOf(p.v)); else g.lineTo(x, yOf(p.v));
+				});
+				g.stroke();
+				// Kp>=5 の区間を赤で塗り直す
+				g.strokeStyle = '#ff7d6b';
+				ks.forEach(function(p, i) {
+					if (p.v < 5 || i === 0) return;
+					const x1 = 8 + (W - 16) * (i - 1) / (ks.length - 1), x2 = 8 + (W - 16) * i / (ks.length - 1);
+					g.beginPath(); g.moveTo(x1, yOf(ks[i - 1].v)); g.lineTo(x2, yOf(p.v)); g.stroke();
+				});
+				g.lineWidth = 1;
+			}
+			// --- Bz（0をはさんで上下、南向きマイナスは赤） ---
+			g.fillStyle = '#9fdcff';
+			g.fillText('Bz nT', 10, 138);
+			const bs = wx.bzSeries;
+			if (bs.length >= 2) {
+				let mx = 10;
+				for (const p of bs) mx = Math.max(mx, Math.abs(p.v));
+				mx = Math.ceil(mx / 5) * 5;
+				g.fillStyle = '#5f7d99';
+				g.font = '16px monospace';
+				g.fillText('±' + mx, 470, 138);
+				g.font = '19px monospace';
+				const y0 = 148, y1 = 218;
+				const yOf = function(v) { return y0 + (mx - v) / (2 * mx) * (y1 - y0); };
+				g.strokeStyle = 'rgba(200, 220, 240, 0.35)';
+				g.beginPath(); g.moveTo(8, yOf(0)); g.lineTo(W - 8, yOf(0)); g.stroke();
+				g.lineWidth = 2;
+				for (let i = 1; i < bs.length; i++) {
+					const x1 = 8 + (W - 16) * (i - 1) / (bs.length - 1), x2 = 8 + (W - 16) * i / (bs.length - 1);
+					g.strokeStyle = (bs[i - 1].v + bs[i].v) / 2 < 0 ? '#ff9d8f' : '#9fdcff';
+					g.beginPath(); g.moveTo(x1, yOf(bs[i - 1].v)); g.lineTo(x2, yOf(bs[i].v)); g.stroke();
+				}
+				g.lineWidth = 1;
+			}
 		}
 		async function updateAurora() {
 			try {
@@ -1053,7 +1233,9 @@
 			wxBtn.classList.toggle('ON', wx.on);
 			aurora.visible = wx.on;
 			wind.visible = wx.on;
+			magGroup.visible = wx.on;
 			wxInfo.style.display = wx.on ? 'block' : 'none';
+			wxChart.style.display = wx.on ? 'block' : 'none';
 			if (wx.on) {
 				// 初回取得が終わるまで「読み込み中...」ダイアログを出す
 				wxLoading.style.display = 'block';
@@ -1733,6 +1915,8 @@
 					windPos[i * 3 + 2] = sd.z * axial + u.z * ca + v.z * sa;
 				}
 				windGeo.attributes.position.needsUpdate = true;
+				// 磁気圏: 太陽方向へ向け、実況（動圧・Bz・Kp）で形を変える
+				updateMagnetosphere(sd, performance.now() / 1000);
 			}
 			updateReadout(st);
 			controls.update();
