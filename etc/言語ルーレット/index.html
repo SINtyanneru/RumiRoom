@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<HTML>
+	<HEAD>
+		<TITLE>言語選定くん</TITLE>
+
+		<STYLE>
+			#RESULT{
+				font-size: 40px;
+			}
+		</STYLE>
+	</HEAD>
+	<BODY>
+		<CENTER>
+			<H1>言語選定くん</H1>
+			<H1 ID="RESULT"></H1>
+			<BUTTON ID="BTN">プロジェクトを開始する</BUTTON>
+		</CENTER>
+		<CENTER>
+			音: 効果音ラボ
+		</CENTER>
+	</BODY>
+	<SCRIPT>
+		const list = [
+			"x86機械語",
+			"AMD64機械語",
+			"アセンブリ",
+			"B",
+			"C",
+			"Objective-C",
+			"C++",
+			"D",
+			"Rust",
+			"Java",
+			"WebAssembly",
+			"JVMバイトコード",
+			"Go",
+			"BrainFuck",
+			"PHP",
+			"PHPFuck",
+			"JSFuck"
+		];
+		const dlam_roll = new Audio("SE/ドラムロール.mp3");
+		const dlam_end = new Audio("SE/ロールの閉め.mp3");
+
+		function random_pick() {
+			const buf = new Uint32Array(1);
+			crypto.getRandomValues(buf);
+			const picked = list[buf[0] % list.length];
+			return picked;
+		}
+
+		async function wait(ms) {
+			return new Promise((resolve) => {
+				setTimeout(() => {
+					resolve();
+				}, ms);
+			});
+		}
+
+		document.getElementById("BTN").addEventListener("click", async function() {
+			document.getElementById("BTN").setAttribute("disabled", "");
+
+			//選ぶ
+			const last_picked = random_pick();
+
+			dlam_roll.play();
+
+			//なんかれいのあれ
+			for (let i = 0; i < 45; i++) {
+				document.getElementById("RESULT").innerText = random_pick();
+				await wait(100);
+			}
+
+			document.getElementById("RESULT").innerText = `このプロジェクトで使うべき言語は\n「${last_picked}」\nです！\nこれ以外考えられない！`;
+			dlam_end.play();
+
+			document.getElementById("BTN").removeAttribute("disabled");
+		});
+	</SCRIPT>
+</HTML>
