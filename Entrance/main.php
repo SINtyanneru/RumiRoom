@@ -10,6 +10,13 @@ require_once(__DIR__."/src/page.php");
 require_once(__DIR__."/src/path.php");
 require_once(__DIR__."/src/const.php");
 require_once(__DIR__."/../OGP.php");
+require_once(__DIR__."/src/device_check.php");
+
+if (is_smartphone()) {
+	header("Location: /imode/", true, 302);
+	exit;
+}
+
 
 //↓Tor
 header("onion-location: http://rumi32qpqupmml55krw75ue522lxhei2g2gmq2ktyzvlb6os3vd4beqd.onion/");
