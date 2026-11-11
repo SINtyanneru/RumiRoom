@@ -15,7 +15,7 @@
 			苦手な方は立ち去りましょう。<BR>
 
 			<A HREF="main.php"><BUTTON>入る</BUTTON></A>
-			<A HREF="http://u.ae/"><BUTTON>やめておく</BUTTON></A>
+			<A HREF="https://twitter.com/search?q=%E9%AB%98%E5%B8%82&src=typed_query&f=live"><BUTTON>やめておく</BUTTON></A>
 		</CENTER>
 	</BODY>
 </HTML>
