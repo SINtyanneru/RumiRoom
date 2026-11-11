@@ -3,6 +3,8 @@
 	<HEAD>
 		<TITLE>るみさんのお部屋</TITLE>
 
+		<META NAME="viewport" CONTENT="width=device-width, initial-scale=1">
+
 		<?php
 		require_once(__DIR__."/../OGP.php");
 		ogp("るみさんのお部屋", "入り口", "ん");

@@ -7,7 +7,7 @@ date_default_timezone_set("Asia/Tokyo");
 $r = $_SERVER["QUERY_STRING"];
 ?>
 <MARQUEE BEHAVIOR="alternate">
-	<A HREF="/"><IMG SRC="/Asset/logo.gif" ALT="るみさんのお部屋"></A>
+	<A HREF="/main.php"><IMG SRC="/Asset/logo.gif" ALT="るみさんのお部屋"></A>
 </MARQUEE>
 <BR>
 SINCE 2020 <?php
