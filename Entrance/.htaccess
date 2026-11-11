@@ -19,7 +19,7 @@ RewriteRule ^rumiart/dairi https://rumi-room.net/art/shiryou.html [R=308,L]
 #rumi-room.net/rumiart → rumi-room.net/art
 RewriteRule ^rumiart https://rumi-room.net/art [R=308,L]
 
-#---------------ルート変更(index.phpへ)---------------
+#---------------ルート変更(main.phpへ)---------------
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+RewriteRule ^(.*)$ main.php [QSA,L]
